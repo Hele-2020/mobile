@@ -20,6 +20,7 @@ const AppStack = createStackNavigator({
     // Chat: ChatScreen,
     // Map: MapScreen,
 });
+  
 
 const AuthStack = createSwitchNavigator({
     Login: LoginScreen,
