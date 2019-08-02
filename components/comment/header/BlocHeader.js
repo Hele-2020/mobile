@@ -6,7 +6,7 @@ export default class BlocHeader extends Component {
   render() {
     return (
       <View style={{ flex: 0.8, alignContent:"space-around", alignItems:"center",
-      justifyContent: "center", flexDirection: 'row' , width:"100%", backgroundColor:"white" }}>
+      justifyContent: "left", marginLeft:40, marginTop:20, flexDirection: 'row' , width:"100%", backgroundColor:"white" }}>
         <LogoHele />
       </View>
     );
