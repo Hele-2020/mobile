@@ -23,6 +23,7 @@ export default class PostNewComment extends Component {
 const styles = StyleSheet.create({
 btnConnexion: {
     // backgroundColor: "#FBBA00",
+    height: 40,
     backgroundColor: "#59358B",
     marginLeft: 10,
     color: "white",
