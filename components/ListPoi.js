@@ -1,7 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text,View } from 'react-native'; 
 
-
 export default class ListPoi extends React.Component
 {
     constructor(props){
