@@ -5,7 +5,8 @@ import LogoHele from './LogoHele.js';
 export default class BlocHeader extends Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "blue",width:'100%' }}>
+      <View style={{ flex: 0.8, alignContent:"space-around", alignItems:"center",
+      justifyContent: "center", flexDirection: 'row' , width:"100%", backgroundColor:"white" }}>
         <LogoHele />
       </View>
     );

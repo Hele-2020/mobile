@@ -1,9 +1,9 @@
 import React from 'react';
 // import 'bootstrap/dist/css/bootstrap.css';
 import { StyleSheet, View } from 'react-native';
-import BlocHeader from './components/header/BlocHeader.js';
-import BodyComplete from './components/body/BodyComplete.js';
-import PostNewComment from './components/footer/PostNewComment.js';
+import BlocHeader from './components/comment/header/BlocHeader.js';
+import BodyComplete from './components/comment/body/BodyComplete.js';
+import PostNewComment from './components/comment/footer/PostNewComment.js';
 
 export default function App() {
   return (
