@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import ReturnPost from './ReturnPost.js';
 import BlocInfoPost from '././infoPost/BlocInfoPost.js';
+import BlocReaction from '././reaction/BlocReaction.js';
 
 export default class BodyComplete extends Component {
   render() {
@@ -9,6 +10,7 @@ export default class BodyComplete extends Component {
       <View style={styles.view}>
         <ReturnPost /> 
         <BlocInfoPost /> 
+        <BlocReaction /> 
       </View>
     );
   }
