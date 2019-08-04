@@ -5,16 +5,16 @@ export default class LogoHele extends Component {
     render() {
     return (
         <View>
-        <Image style={styles.stretch}
+        <Image style={styles.stretchImg}
         source={require('../../../assets/logohele.png')} />
         </View>
         );
     }
 }
 const styles = StyleSheet.create({
-    stretch: {
-    resizeMode:"contain",
-      width: 55,
+    stretchImg: {
+        resizeMode:"contain",
+        width: 55,
     //   height: 70
     }
   });
