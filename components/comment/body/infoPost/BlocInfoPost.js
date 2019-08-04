@@ -9,9 +9,13 @@ export default class BlocInfoPost extends Component {
   render() {
     return (
       <View style={styles.view}>
+        <View style={styles.viewInfoProfil}>  
         <ProfilPicturePost />
-        <NamePsy />
-        <DatePost />
+            <View style={styles.viewInfo}>
+                <NamePsy />
+                <DatePost />
+            </View>
+        </View>
         <BlocPost />
       </View>
     );
@@ -19,14 +23,20 @@ export default class BlocInfoPost extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    flex: 0.8,
-    alignContent: "space-around",
-    alignItems: "center",
-    // justifyContent: "flex-start",
-    marginLeft: 40,
-    marginTop: 20,
+    alignItems: "stretch",
+    // flexDirection: "column",
+    backgroundColor: "red",
+    height: "auto",
+    
+},
+viewInfoProfil: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    // flexWrap: "nowrap"
+},
+viewInfo: {
     flexDirection: "column",
-    width: "100%",
-    backgroundColor: "red"
-  }
+    width: "90%",
+    height: "40%"
+    },
 });

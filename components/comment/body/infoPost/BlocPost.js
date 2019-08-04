@@ -20,11 +20,11 @@ export default class ReturnPost extends Component {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: "orange",
-    alignItems: "flex-start",
+    alignItems: "stretch",
     justifyContent: "center",
-    alignContent: "space-around",
-    flexDirection: "column" ,
-    width: "100%",
+    // alignContent: "space-around",
+    flexDirection: "row" ,
+    // width: "100%",
   },
   text: {
     fontSize: 17,

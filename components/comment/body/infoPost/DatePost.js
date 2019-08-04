@@ -19,12 +19,12 @@ export default class DatePost extends Component {
 }
 const styles = StyleSheet.create({
   view: {
+    position: "relative",
+    paddingLeft: 10,
     backgroundColor: "lightblue",
     alignItems: "flex-start",
     justifyContent: "center",
-    alignContent: "space-around",
-    flexDirection: "column" ,
-    width: "100%",
+    height: "50%"
   },
   text: {
     fontSize: 17,

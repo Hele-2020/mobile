@@ -19,12 +19,15 @@ export default class NamePsy extends Component {
 }
 const styles = StyleSheet.create({
   view: {
+    position: "relative",
+    paddingLeft: 10,
     backgroundColor: "green",
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "space-around",
-    flexDirection: "column" ,
-    width: "100%",
+    height: "50%"
+
+    // width: "100%",
   },
   text: {
     fontSize: 17,
