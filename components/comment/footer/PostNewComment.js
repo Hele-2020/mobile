@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView,TextInput, Button , StyleSheet, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView,TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 // import { KeyboardAvoidingView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class PostNewComment extends Component {
@@ -15,7 +15,7 @@ export default class PostNewComment extends Component {
               onChangeText={(text) => this.setState({text})}
               value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
           <TouchableOpacity style={styles.touchableButton}>
-              <Button style={styles.button} onPress={ () => this._submit()} color="white" title="envoyer"/>
+            <Text style={styles.text}>envoyer</Text>
           </TouchableOpacity>
       </View>
     );
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     marginBottom: 0,
-    height: 37,
+    height: "50%",
     borderRadius: 50,
     backgroundColor: "#F1F0EF",
     color: "grey",
@@ -51,9 +51,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     fontSize: 17,
   },
+  text: {
+    color: "white"
+  },
   touchableButton: {
     backgroundColor: "#59358B",
     marginLeft: 10,
+    padding: 10,
+    width: "auto",
     color: "white",
     textDecorationColor: "white",
     borderRadius: 50,
