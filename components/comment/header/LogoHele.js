@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 
 export default class LogoHele extends Component {
     render() {
     return (
         <View>
-        <Image style={styles.stretchImg}
-        source={require('../../../assets/logohele.png')} />
+            <Image style={styles.stretchImg}
+            source={require('../../../assets/logohele.png')} />
         </View>
         );
     }

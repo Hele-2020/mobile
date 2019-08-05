@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, Button , StyleSheet, TouchableOpacity} from 'react-native';
+import { View, TextInput, Button , StyleSheet, TouchableOpacity } from 'react-native';
 
 export default class PostNewComment extends Component {
     constructor(props) {
@@ -44,8 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   touchableButton: {
-    // backgroundColor: "#FBBA00",
-    // height: 30,
     backgroundColor: "#59358B",
     marginLeft: 10,
     color: "white",

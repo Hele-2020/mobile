@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 export default class DatePost extends Component {
   constructor(props) {
@@ -8,7 +8,6 @@ export default class DatePost extends Component {
       titleText: " 4 aout"
     };
   }
-
   render() {
     return (
       <View style={styles.view}>
@@ -19,16 +18,14 @@ export default class DatePost extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    position: "relative",
-    paddingLeft: 10,
+    paddingLeft: 5,
     backgroundColor: "lightblue",
     alignItems: "flex-start",
     justifyContent: "center",
-    height: "50%"
+    height: "20%"
   },
   text: {
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 14,
     color: "#59358B",
   }
 });

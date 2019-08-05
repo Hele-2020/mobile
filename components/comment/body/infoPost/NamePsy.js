@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 export default class NamePsy extends Component {
   constructor(props) {
@@ -8,7 +8,6 @@ export default class NamePsy extends Component {
       titleText: " Dr Jean Dupont"
     };
   }
-
   render() {
     return (
       <View style={styles.view}>
@@ -19,18 +18,15 @@ export default class NamePsy extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    position: "relative",
-    paddingLeft: 10,
+    paddingLeft: 5,
     backgroundColor: "green",
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "space-around",
-    height: "50%"
-
-    // width: "100%",
+    height: "30%"
   },
   text: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 'bold',
     color: "#59358B",
   }

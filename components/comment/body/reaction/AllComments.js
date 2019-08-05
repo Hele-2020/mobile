@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-// import ReturnPost from './ReturnPost.js';
-// import BlocInfoPost from '././infoPost/BlocInfoPost.js';
-// import BlocReaction from '././reaction/BlocReaction.js';
 
 export default class AllComments extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nbr: "",
+            nbr: "121",
             titleText: " commentaires"
         };
       }
-    
   render() {
     return (
       <View style={styles.view}>
         <TouchableOpacity style={styles.touchableReturnPost}>
-        <Text style={styles.text} >{this.state.nbrt}{this.state.titleText}</Text>
+          <Text style={styles.text} >{this.state.nbr}{this.state.titleText}</Text>
         </TouchableOpacity>
       </View>
     );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 export default class ReturnPost extends Component {
   constructor(props) {
@@ -8,7 +8,6 @@ export default class ReturnPost extends Component {
       titleText: " BlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlabla"
     };
   }
-
   render() {
     return (
       <View style={styles.view}>
@@ -20,15 +19,12 @@ export default class ReturnPost extends Component {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: "orange",
-    alignItems: "stretch",
-    justifyContent: "center",
-    // alignContent: "space-around",
-    flexDirection: "row" ,
-    // width: "100%",
+    flexWrap: "wrap",
+    width: "100%",
+    flexDirection: "row"
   },
   text: {
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: "#59358B",
   }
 });

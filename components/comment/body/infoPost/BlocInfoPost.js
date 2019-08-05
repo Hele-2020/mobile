@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ProfilPicturePost from  './ProfilPicturePost.js';
 import NamePsy from './NamePsy.js';
 import DatePost from './DatePost.js';
@@ -10,31 +10,31 @@ export default class BlocInfoPost extends Component {
     return (
       <View style={styles.view}>
         <View style={styles.viewInfoProfil}>  
-        <ProfilPicturePost />
-            <View style={styles.viewInfo}>
-                <NamePsy />
-                <DatePost />
-            </View>
+            <ProfilPicturePost />
+              <View style={styles.viewInfo}>
+                  <NamePsy />
+                  <DatePost />
+              </View>
+            <BlocPost />
         </View>
-        <BlocPost />
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   view: {
-    alignItems: "stretch",
-    // flexDirection: "column",
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexWrap: "wrap",
     backgroundColor: "red",
-    height: "auto",
-    
 },
 viewInfoProfil: {
     flexWrap: "wrap",
     flexDirection: "row",
-    // flexWrap: "nowrap"
+    width: "100%",
 },
 viewInfo: {
+  flexWrap: "wrap",
     flexDirection: "column",
     width: "90%",
     height: "40%"

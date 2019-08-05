@@ -8,12 +8,11 @@ export default class ReturnPost extends Component {
       titleText: " <  Retour aux posts"
     };
   }
-
   render() {
     return (
       <View style={styles.view}>
-      <TouchableOpacity style={styles.touchableReturnPost}>
-        <Text style={styles.text} >{this.state.titleText}</Text>
+        <TouchableOpacity style={styles.touchableReturnPost}>
+          <Text style={styles.text} >{this.state.titleText}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -21,6 +20,8 @@ export default class ReturnPost extends Component {
 }
 const styles = StyleSheet.create({
   view: {
+    paddingLeft: 10,
+    paddingRight: 10,
     backgroundColor: "white",
     alignItems: "flex-start",
     justifyContent: "center",

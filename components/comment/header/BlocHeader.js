@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import LogoHele from './LogoHele.js';
 
 export default class BlocHeader extends Component {
