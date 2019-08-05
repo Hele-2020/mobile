@@ -1,19 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+import {
+    createStackNavigator,
+    createSwitchNavigator,
+    createAppContainer,
+} from 'react-navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
+
+import LoginScreen from './screens/auth/LoginScreen';
+import RegisterScreen from './screens/auth/RegisterScreen';
+
+import HomeScreen from './screens/HomeScreen';
+// import ChatScreen from './screens/ChatScreen';
+// import MapScreen from './screens/MapScreen';
+
+const AppStack = createStackNavigator({
+    Home: HomeScreen,
+    // Chat: ChatScreen,
+    // Map: MapScreen,
 });
+
+const AuthStack = createSwitchNavigator({
+    Login: LoginScreen,
+    Register: RegisterScreen,
+});
+
+export default createAppContainer(createSwitchNavigator({
+    AuthLoading: AuthLoadingScreen,
+    App: AppStack,
+    Auth: AuthStack,
+}, {
+    initialRouteName: 'AuthLoading',
+}));
