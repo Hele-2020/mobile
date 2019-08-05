@@ -19,13 +19,14 @@ export default class DatePost extends Component {
 const styles = StyleSheet.create({
   view: {
     paddingLeft: 5,
-    backgroundColor: "lightblue",
+    // backgroundColor: "lightblue",
     alignItems: "flex-start",
     justifyContent: "center",
     height: "20%"
   },
   text: {
     fontSize: 14,
-    color: "#59358B",
+    color: "black",
+    // color: "#59358B",
   }
 });

@@ -19,7 +19,7 @@ export default class NamePsy extends Component {
 const styles = StyleSheet.create({
   view: {
     paddingLeft: 5,
-    backgroundColor: "green",
+    // backgroundColor: "green",
     alignItems: "flex-start",
     justifyContent: "center",
     alignContent: "space-around",
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: "#59358B",
+    color: "black",
+    // color: "#59358B",
   }
 });

@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignContent: "flex-start",
         height: "40%",
-        backgroundColor: "pink"
     },
+    // backgroundColor: "pink"
     stretchImg: {
         resizeMode:"contain",
         width: 35,

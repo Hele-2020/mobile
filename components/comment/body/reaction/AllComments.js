@@ -21,7 +21,7 @@ export default class AllComments extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: "white",
+    // backgroundColor: "white",
     alignSelf: "stretch",
     flexWrap: "wrap",
     justifyContent: "center",

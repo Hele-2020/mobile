@@ -19,12 +19,13 @@ export default class NamePsyComment extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: "white",
+    // backgroundColor: "white",
     alignItems: "flex-start",
   },
   text: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: "#59358B",
+    color: "black",
+    // color: "#59358B",
   }
 });

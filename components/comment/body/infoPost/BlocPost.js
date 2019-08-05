@@ -18,13 +18,14 @@ export default class ReturnPost extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: "orange",
+    // backgroundColor: "orange",
     flexWrap: "wrap",
     width: "100%",
     flexDirection: "row"
   },
   text: {
     fontSize: 15,
-    color: "#59358B",
+    color: "black",
+    // color: "#59358B",
   }
 });

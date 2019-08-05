@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     flexWrap: "wrap",
-    backgroundColor: "red",
+    // backgroundColor: "red",
 },
 viewInfoProfil: {
     flexWrap: "wrap",

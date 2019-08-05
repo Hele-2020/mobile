@@ -20,7 +20,7 @@ export default class BodyComplete extends Component {
 const styles = StyleSheet.create({
   view: {
     flex: 5,
-    backgroundColor: "blue",
+    // backgroundColor: "blue",
     width: "100%",
     flexDirection: 'column',
     justifyContent: 'flex-start',
