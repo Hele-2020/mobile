@@ -7,7 +7,7 @@ import ProfilPictureComments from './ProfilPictureComments.js';
 export default class BlocComments extends Component {
   render() {
     return (
-      <View style={styles.viewG}>
+      <View style={styles.view}>
             <ProfilPictureComments />
             <BackgroundComment />
       </View>
@@ -15,7 +15,7 @@ export default class BlocComments extends Component {
   }
 }
 const styles = StyleSheet.create({
-    viewG: {
+    view: {
       paddingLeft: 10,
       paddingRight: 10,
       flexDirection: "row",

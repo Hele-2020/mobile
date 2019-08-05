@@ -25,15 +25,13 @@ const styles = StyleSheet.create({
   view: {
     paddingLeft: 10,
     paddingRight: 10,
-    // flexWrap: "wrap",
-    height: "auto",
-    backgroundColor: "red",
+    flexWrap: "wrap",
+    // backgroundColor: "red",
 },
 viewInfoProfil: {
     flexWrap: "wrap",
     flexDirection: "row",
     width: "100%",
-    
 },
 viewInfo: {
   flexWrap: "wrap",

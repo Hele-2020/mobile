@@ -1,28 +1,35 @@
 import React, { Component } from 'react';
-import { View, TextInput, Button , StyleSheet, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView,TextInput, Button , StyleSheet, TouchableOpacity } from 'react-native';
+// import { KeyboardAvoidingView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class PostNewComment extends Component {
     constructor(props) {
         super(props);
-        this.state = { text: 'votre commentaire ... ' };
+        this.state = { text: '' };
       }
-      submit = () => {
-        console.log('coucou');
-      }
+      
   render() {
     return (
       <View style={styles.view} >
-        <TextInput style={styles.textInput}
-            onChangeText={(text) => this.setState({text})}
-            value={this.state.text}/>
-        <TouchableOpacity style={styles.touchableButton}>
-            <Button style={styles.button} onPress={ () => this.submit()} color="white" title="envoyer"/>
-        </TouchableOpacity>
+          <TextInput style={styles.textInput} placeholder="votre commentaire ... "
+              onChangeText={(text) => this.setState({text})}
+              value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
+          <TouchableOpacity style={styles.touchableButton}>
+              <Button style={styles.button} onPress={ () => this._submit()} color="white" title="envoyer"/>
+          </TouchableOpacity>
       </View>
     );
   }
+    _submit = () => {
+    console.log('coucou');
+    // alert(`Confirmation email has been sent to ${this.state.text}`);
+  };
 }
 const styles = StyleSheet.create({
+  form: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   view: {
     flex: 0.6,
     alignContent: "space-around",
@@ -35,6 +42,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#FBBA00"
   },
   textInput: {
+    marginBottom: 0,
     height: 37,
     borderRadius: 50,
     backgroundColor: "#F1F0EF",
@@ -51,3 +59,25 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   }
 });
+// export default class PostNewComment extends Component {
+//   constructor(props) {
+//       super(props);
+//       this.state = { text: '' };
+//     }
+    
+// render() {
+//   return (
+//     <View style={styles.view} >
+//     <KeyboardAvoidingView behavior="padding" style={styles.form}>
+//         <TextInput style={styles.textInput} placeholder="votre commentaire ... "
+//             onChangeText={(text) => this.setState({text})}
+//             value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
+//           <View>
+//             <TouchableOpacity style={styles.touchableButton}>
+//                 <Button style={styles.button} onPress={ () => this._submit()} color="white" title="envoyer"/>
+//             </TouchableOpacity>
+//           </View>
+//        </KeyboardAvoidingView>
+//     </View>
+//   );
+// }

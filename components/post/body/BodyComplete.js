@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import ReturnPost from './ReturnPost.js';
 import BlocInfoPost from '././infoPost/BlocInfoPost.js';
 import BlocReaction from '././reaction/BlocReaction.js';
-import BlocComments from '././comments/BlocComments.js';
 
 export default class BodyComplete extends Component {
   render() {
@@ -12,14 +11,13 @@ export default class BodyComplete extends Component {
         <ReturnPost /> 
         <BlocInfoPost /> 
         <BlocReaction />
-        <BlocComments />
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   view: {
-    // flex: 5,
+    flex: 5,
     // backgroundColor: "blue",
     width: "100%",
     flexDirection: 'column',

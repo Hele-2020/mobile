@@ -5,7 +5,7 @@ export default class NamePsyComment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titleText: " Dr Robin"
+      titleText: "Dr Robin"
     };
   }
 

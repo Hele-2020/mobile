@@ -18,7 +18,7 @@ export default class ReturnPost extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: "orange",
+    // backgroundColor: "orange",
     flexWrap: "wrap",
     width: "100%",
     flexDirection: "row"

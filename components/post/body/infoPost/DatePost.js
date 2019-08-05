@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default class ReturnPost extends Component {
+export default class DatePost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titleText: " BlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlablaBlaBlabla"
+      titleText: " 4 aout"
     };
   }
   render() {
@@ -18,13 +18,14 @@ export default class ReturnPost extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: "orange",
-    flexWrap: "wrap",
-    width: "100%",
-    flexDirection: "row"
+    paddingLeft: 5,
+    // backgroundColor: "lightblue",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    height: "20%"
   },
   text: {
-    fontSize: 15,
+    fontSize: 14,
     color: "black",
     // color: "#59358B",
   }
