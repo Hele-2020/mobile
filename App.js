@@ -28,16 +28,6 @@ export default class App extends React.Component
         }
     }
 
-    // componentDidMount(){
-    //     fetch('http://127.0.0.1:8000/users')
-    //     .then(function(res) {
-    //         this.setState({
-    //             isLoading:false,
-    //             data:res.data
-    //         })
-    //     })
-    // }
-
     render(){
         return <AppContainer />
     }

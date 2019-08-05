@@ -1,9 +1,10 @@
 import React from 'react';
 import MapView from 'react-native-map-clustering';
 import { Marker } from 'react-native-maps';
-import {View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text,Dimensions} from 'react-native';
 import { Icon, Header, Input} from 'native-base';
 
+const { width: winWidth } = Dimensions.get('window');
 
 class Title extends React.Component {
     render() {
@@ -25,29 +26,42 @@ class Title extends React.Component {
 
 export default class Map extends React.Component 
 {
+    constructor(){
+        super(); 
+        this.state = {
+            data: []
+        }
+    }
+
     static navigationOptions = ({navigation}) => ({
         headerStyle:{height: 120, borderBottomColor:'#FBBA00'},
         headerTitle: <Title />, 
-        // headerRight: (
-        //   <Icon
-        //     onPress={() => navigation.navigate('ListPoi')}
-        //     name="list"
-        //     style={styles.buttonList}
-        //   />
-        // ),
         headerLeft : (
-
             <View>
                 <Icon
                 onPress={() => navigation.navigate('ListPoi')}
                 name="arrow-back"
                 style={styles.buttonback} 
             />
-
+            
           </View>
         ),
         
     });
+
+
+    compomentDidMount(){
+        fetch('http://f7b45ce9.ngrok.io/poi',{
+            method: 'GET',
+        })
+        .then((response) => response.json())
+        .then((poi) => {
+            this.setState({ data: poi })
+            console.log(poi)
+        })
+        .done();
+
+    }
 
     render(){
         return(
@@ -58,7 +72,7 @@ export default class Map extends React.Component
                         longitude: 19.2,  
                         latitudeDelta: 8.5,  
                         longitudeDelta: 8.5  
-                    }}  style={{ width: 600, height: 800 }} 
+                    }}  style={{ width: winWidth, height: 800 }} 
                 >
                     <Marker coordinate={{ latitude: 52.0, longitude: 18.2 }} /> 
                     <Marker coordinate={{ latitude: 52.4, longitude: 18.7 }} />  
