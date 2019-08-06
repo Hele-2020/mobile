@@ -13,13 +13,13 @@ export default class ListPoi extends React.Component
     }
 
        componentDidMount(){
-        fetch('http://f7b45ce9.ngrok.io/poi',{
+        fetch('http://a052f087.ngrok.io/poi',{
             method: 'GET',
         })
         .then((response) => response.json())
         .then((poi) => {
             this.setState({ data: poi })
-            console.log(poi)
+            // console.log(poi)
         })
         .done();
    
