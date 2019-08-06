@@ -1,28 +1,12 @@
 import React from 'react';
 import MapView from 'react-native-map-clustering';
-import { Marker } from 'react-native-maps';
-import { View, StyleSheet, Text,Dimensions} from 'react-native';
+import { Marker, Callout } from 'react-native-maps';
+import { View, StyleSheet, Text,Dimensions, Picker } from 'react-native';
 import { Icon, Header, Input} from 'native-base';
+import HeaderNav from './HeaderNav.js'; 
+
 
 const { width: winWidth } = Dimensions.get('window');
-
-class Title extends React.Component {
-    render() {
-      return (
-        <View>
-            <Text style={styles.title}>Map</Text>
-            <View style={styles.search}>
-                <Input 
-                    style={styles.input}
-                    placeholder="Recherche..."
-                    placeholderTextColor="black"
-                /> 
-                <Icon onPress ={()=> alert('salut')} name="ios-search" style={{color:'black', fontSize: 24, fontWeight:'bold', margin: 6, padding: 3}}/>
-            </View> 
-        </View>
-      );
-    }
-  }
 
 export default class Map extends React.Component 
 {
@@ -35,7 +19,7 @@ export default class Map extends React.Component
 
     static navigationOptions = ({navigation}) => ({
         headerStyle:{height: 120, borderBottomColor:'#FBBA00'},
-        headerTitle: <Title />, 
+        headerTitle: <HeaderNav />, 
         headerLeft : (
             <View>
                 <Icon
@@ -49,15 +33,14 @@ export default class Map extends React.Component
         
     });
 
-
-    compomentDidMount(){
-        fetch('http://f7b45ce9.ngrok.io/poi',{
+    componentDidMount(){
+        fetch('http://c82bb6ba.ngrok.io/poi',{
             method: 'GET',
         })
         .then((response) => response.json())
         .then((poi) => {
             this.setState({ data: poi })
-            console.log(poi)
+            console.log(this.state.data)
         })
         .done();
 
@@ -68,20 +51,41 @@ export default class Map extends React.Component
             <View>
                 <MapView  
                     region={{  
-                        latitude: 52.5,  
-                        longitude: 19.2,  
-                        latitudeDelta: 8.5,  
-                        longitudeDelta: 8.5  
+                        latitude: 46.227638,  
+                        longitude: 2.213749,  
+                        latitudeDelta: 9.5,  
+                        longitudeDelta: 9.5  
                     }}  style={{ width: winWidth, height: 800 }} 
                 >
-                    <Marker coordinate={{ latitude: 52.0, longitude: 18.2 }} /> 
-                    <Marker coordinate={{ latitude: 52.4, longitude: 18.7 }} />  
-                    <Marker coordinate={{ latitude: 52.1, longitude: 18.4 }} />  
-                    <Marker coordinate={{ latitude: 52.6, longitude: 18.3 }} />  
-                    <Marker coordinate={{ latitude: 51.6, longitude: 18.0 }} />  
-                    <Marker coordinate={{ latitude: 53.1, longitude: 18.8 }} />  
-                    <Marker coordinate={{ latitude: 52.9, longitude: 19.4 }} />  
-                    <Marker coordinate={{ latitude: 52.2, longitude: 21 }} />
+                    {this.state.data.map((marker) => (
+                        <Marker coordinate={{ latitude: marker.latitude, longitude: marker.longitude}} 
+                        key={marker.id}
+                        >
+                             <Callout 
+                             tooltip={true}
+                            >
+                                <View  style={styles.description}>
+                                    <View style={styles.content}>
+                                        <Text style={styles.title}>{marker.name}</Text>
+
+                                        <View style={styles.info}>
+                                            <Text>Adresse : {marker.adress}</Text>
+
+                                            <Text>Code postal : {marker.code_postal}</Text>
+
+                                            <Text>Telephone : {marker.phone}</Text>
+                                            
+                                            <Text>Site internet : {marker.site}</Text>
+
+                                           
+                                        </View>
+
+                                    </View>
+                                </View>
+
+                            </Callout>
+                        </Marker>                      
+                    ))}
                     </MapView>
                 </View>
         )
@@ -96,37 +100,26 @@ const styles = StyleSheet.create({
         color: "#FBBA00",
         padding: 20,
         marginRight: 80,
-        marginBottom: 15
+        marginLeft: 5, 
+        marginBottom: 15,
+        paddingLeft : 2,
+        paddingRight : 8,
     },
-    title : {
-        justifyContent:"center",
-        color:"#59358B",
-        marginLeft: "40%",
-        fontSize: 27,
-        marginTop: 10,
-        marginBottom: 20
-        
-    }, 
-    search : {
-        borderColor:"black",
-        borderWidth: 1,
-        borderRadius: 30,
-        marginBottom: 10,
-        marginLeft: 2,
-        height: 3,
-        marginRight: 27,
-        alignSelf: 'stretch',
-        paddingLeft: 10,
-        flex: 4, 
-        width: 250,
-        flexDirection: 'row'
-    },
-    input:{
-        color: 'rgba(0,0,0,0.8)',        
-        paddingBottom:6,
-        alignSelf: 'stretch',        
-        flex: 1,  
-        padding: 3,
-        fontWeight:'bold'
+    description: {
+        backgroundColor: "white",
+        height: "auto",
+        width: "auto", 
+        flex : 1, 
+        borderColor: "#59358B",
+        borderWidth: 2
+    }, content : {
+        paddingLeft : 5,
+        paddingRight : 5,
+        margin: 3,
+    },title :{
+        fontWeight: 'bold',
+        margin : 4,
+    }, info :{
+        margin: 10
     }
 })
