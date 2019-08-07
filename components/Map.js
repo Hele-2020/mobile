@@ -34,7 +34,7 @@ export default class Map extends React.Component
     });
 
     componentDidMount(){
-        fetch('http://c82bb6ba.ngrok.io/poi',{
+        fetch('http://d91c24eb.ngrok.io/poi',{
             method: 'GET',
         })
         .then((response) => response.json())
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
         color: "#FBBA00",
         padding: 20,
         marginRight: 80,
-        marginLeft: 5, 
+        marginLeft: 50, 
+        marginTop: -64, 
         marginBottom: 15,
         paddingLeft : 2,
         paddingRight : 8,
