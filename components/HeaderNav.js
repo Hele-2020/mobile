@@ -1,36 +1,55 @@
 import React from 'react';
-import { View, StyleSheet, Text,Dimensions, Picker } from 'react-native';
-
+import { View, StyleSheet, Text, Dimensions, Picker, TextInput  } from 'react-native';
+import ModalSelector from 'react-native-modal-selector';
+import '../assets/select.js';
 
 export default class HeaderNav extends React.Component {
+    
     render() {
+        let index = 0;
+        const data = [
+            { key: index++, section: true, label: 'Regions' },
+            { key: index++, label: 'Auvergne-Rhône-Alpes' },
+            { key: index++, label: 'Bourgogne-Franche-Comté' },
+            { key: index++, label: 'Bretagne', accessibilityLabel: 'Tap here for cranberries' },
+            { key: index++, label: 'Centre-Val de Loire', customKey: 'Not a fruit' },
+            { key: index++, label: 'Corse' },
+            { key: index++, label: 'Grand Est' },
+            { key: index++, label: 'Guadeloupe' },
+            { key: index++, label: 'Guyane', accessibilityLabel: 'Tap here for cranberries' },
+            { key: index++, label: 'Hauts-de-France', customKey: 'Not a fruit' },
+            { key: index++, label: 'Île-de-France' },
+            { key: index++, label: 'Martinique' },
+            { key: index++, label: 'Normandie', accessibilityLabel: 'Tap here for cranberries' },
+            { key: index++, label: 'Nouvelle-Aquitaine', customKey: 'Not a fruit' },
+            { key: index++, label: 'Occitanie' },
+            { key: index++, label: 'Pays de la Loire', accessibilityLabel: 'Tap here for cranberries' },
+            { key: index++, label: 'Provence-Alpes-Côte', customKey: 'Not a fruit' },
+            { key: index++, label: 'Reunion' }
+            
+        ];
       return (
         <View>
             <Text style={styles.title}>Map</Text>
-            <View style={styles.search}>
-
-            <Picker
-                style={styles.input}>
-                <Picker.Item label="Java" value="java" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-                <Picker.Item label="JavaScript" value="js" />
-            </Picker>
-                {/* <Input 
-                    style={styles.input}
-                    placeholder="Recherche..."
-                    placeholderTextColor="black"
-                /> 
-                <Icon onPress ={()=> alert('salut')} name="ios-search" style={{color:'black', fontSize: 24, fontWeight:'bold', margin: 6, padding: 3}}/> */}
+            <View >
+            <ModalSelector
+                    data={data}
+                    initValue="Select something yummy!"
+                    //supportedOrientations={['landscape']}
+                    accessible={true}
+                    scrollViewAccessibilityLabel={'Scrollable options'}
+                    cancelButtonAccessibilityLabel={'Cancel Button'}
+                    onChange={(option)=>{ this.setState({textInputValue:option.label})}}>
+ 
+                    <TextInput
+                        style={{borderWidth:1, borderColor:'#59358B', padding:15, height:45, marginTop: 10,  borderRadius: 30,
+                        marginBottom: 20}}
+                        editable={false}
+                        placeholder="Select something yummy &#x1F50D;"
+                        //value={this.state.textInputValue} 
+                        />
+ 
+                </ModalSelector>
             </View> 
         </View>
       );
@@ -48,26 +67,4 @@ export default class HeaderNav extends React.Component {
         marginBottom: 20
         
     }, 
-    search : {
-        borderColor:"black",
-        borderWidth: 1,
-        borderRadius: 30,
-        marginBottom: 10,
-        marginLeft: 2,
-        height: 3,
-        marginRight: 27,
-        alignSelf: 'stretch',
-        paddingLeft: 10,
-        flex: 4, 
-        width: 250,
-        flexDirection: 'row'
-    },
-    input:{
-        color: 'rgba(0,0,0,0.8)',        
-        paddingBottom:6,
-        alignSelf: 'stretch',        
-        flex: 1,  
-        padding: 3,
-        fontWeight:'bold'
-    }
 })
