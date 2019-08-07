@@ -8,7 +8,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@adonisjs/websocket-client": "github:DylanEpitech/adonis-websocket-client",
     "expo": "^33.0.0",
+    "expo-cli": "^3.0.8",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
