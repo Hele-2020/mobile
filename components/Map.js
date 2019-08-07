@@ -23,7 +23,7 @@ export default class Map extends React.Component
         headerLeft : (
             <View>
                 <Icon
-                onPress={() => navigation.navigate('ListPoi')}
+                // onPress={() => navigation.navigate('ListPoi')}
                 name="arrow-back"
                 style={styles.buttonback} 
             />
