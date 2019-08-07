@@ -57,7 +57,7 @@ export default StyleSheet.create({
     padding:      PADDING * 2,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    backgroundColor: '#59358B'
+    backgroundColor: '#59358B',
     },
   sectionTextStyle: {
     textAlign: 'center',
