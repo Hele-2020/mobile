@@ -38,8 +38,8 @@ export default class LoginScreen extends Component {
         .then(async response => {
 
             await AsyncStorage.setItem('userToken', response.data.access_token.token);
-            await AsyncStorage.setItem('userId', response.data.user.id);
-            await AsyncStorage.setItem('userUsername', response.data.user.username);
+            await AsyncStorage.setItem('userId', response.data.user.id.toString());
+            await AsyncStorage.setItem('userUsername', response.data.user.username.toString());
 
             this.props.navigation.navigate('App');
         })
