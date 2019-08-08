@@ -5,16 +5,17 @@ import { View, KeyboardAvoidingView,TextInput, Button , StyleSheet, TouchableOpa
 export default class PostNewComment extends Component {
     constructor(props) {
         super(props);
-        this.state = { text: '' };
+        // this.state = { text: '' };
       }
       
   render() {
     return (
       <View style={styles.view} >
-          <TextInput style={styles.textInput} placeholder="votre commentaire ... "
+      //     <TextInput style={styles.textInput} placeholder="votre commentaire ... "
               onChangeText={(text) => this.setState({text})}
-              value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
+              value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/> */}
           <TouchableOpacity style={styles.touchableButton}>
+            <Text>Envoyer</Text>
               <Button style={styles.button} onPress={ () => this._submit()} color="white" title="envoyer"/>
           </TouchableOpacity>
       </View>

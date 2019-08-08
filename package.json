@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@adonisjs/websocket-client": "github:DylanEpitech/adonis-websocket-client",
     "bootstrap": "^4.3.1",
     "expo": "^33.0.0",
     "react": "16.8.3",
