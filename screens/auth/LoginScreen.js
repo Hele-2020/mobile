@@ -40,8 +40,8 @@ export default class LoginScreen extends Component {
             await AsyncStorage.setItem('userToken', response.data.access_token.token);
             await AsyncStorage.setItem('userId', response.data.user.id.toString());
             await AsyncStorage.setItem('userUsername', response.data.user.username.toString());
-
             this.props.navigation.navigate('App');
+            
         })
         .catch(error => {
             console.log(error);

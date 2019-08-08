@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View , TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView} from 'react-native';
 //import chat from '../SocketConnexion';
 import axios from 'axios';
+import Api from '../config/Api';
 
-function Chat(){
+function ChatScreen(){
 
     const [message, setMessage] = useState();
 
     useEffect(() => {
-
-        const url = 'http://35d69afa.ngrok.io'
         
-            axios.get( url + '/v1/chat/2')
+            axios.get( Api.url('chat/2'))
             .then(function (response) {
                 console.log(response.data);
             })
@@ -55,7 +54,7 @@ function Chat(){
     );
 }
 
-export default Chat;
+export default ChatScreen;
 
 const styles = StyleSheet.create({
     container: {
