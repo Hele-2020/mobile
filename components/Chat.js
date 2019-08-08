@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View , TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView} from 'react-native';
-import chat from '../SocketConnexion';
+//import chat from '../SocketConnexion';
+import axios from 'axios';
 
 function Chat(){
 
     const [message, setMessage] = useState();
+
+    useEffect(() => {
+
+        const url = 'http://35d69afa.ngrok.io'
+        
+            axios.get( url + '/v1/chat/2')
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
 
     onChangeText = (key, val) => {
         setMessage(val)
@@ -13,7 +27,7 @@ function Chat(){
     const sendMessage = () => {
         chat.emit('message',message)
         this.textInput.clear() 
-        chat.on('reponse', (data) => {
+        chat.on('message', (data) => {
             console.log(data)
           })
     }
