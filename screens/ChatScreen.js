@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View , TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView} from 'react-native';
-//import chat from '../SocketConnexion';
+import Connexion from '../SocketConnexion';
 import axios from 'axios';
 import Api from '../config/Api';
 
 function ChatScreen(){
 
     const [message, setMessage] = useState();
-
+    const [chat,setChat] = useState({});
+   
     useEffect(() => {
         
-            axios.get( Api.url('chat/2'))
-            .then(function (response) {
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    });
+        Connexion().then(chat => {
+            console.log("bonjour", chat);
+            setChat(chat);
+            
+        })
+
+    
+    // console.log('ZZZZZ' , chat)
+         
+    }, [])
+
+    // useEffect(() => {
+        
+    //         axios.get( Api.url('chat/6'))
+    //         .then(function (response) {
+    //             console.log(response.data);
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // });
 
     onChangeText = (key, val) => {
         setMessage(val)

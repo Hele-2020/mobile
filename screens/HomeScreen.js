@@ -11,6 +11,7 @@ export default class HomeScreen extends Component {
         return (
             <View>
             <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+            <Button title="Chat" onPress={this._chat} />
             </View>
         );
     }
@@ -18,5 +19,9 @@ export default class HomeScreen extends Component {
     _signOutAsync = async () => {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
+    };
+
+    _chat = async () => {
+        this.props.navigation.navigate('Chat');
     };
 }
