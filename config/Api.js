@@ -1,9 +1,9 @@
 const Api = {
-    BASE_URL: 'http://7636a014.ngrok.io/v1/',
+    VERSION: 'v1/', // doit finir par un '/'
+    BASE_URL: 'http://7636a014.ngrok.io/', // doit finir par un '/'
 
     url: function(route = '/') {
-        console.log('url => ' + this.BASE_URL + route.replace(new RegExp('^[/]+'), ''));
-        return this.BASE_URL + route.replace(new RegExp('^[/]+'), '');
+        return this.BASE_URL + this.version + route.replace(new RegExp('^[/]+'), '');
     }
 };
 
