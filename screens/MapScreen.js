@@ -1,14 +1,96 @@
 import React from 'react';
 import MapView from 'react-native-map-clustering';
 import { Marker, Callout } from 'react-native-maps';
-import { View, StyleSheet, Text, Dimensions, TouchableOpacity, TextInput,  AsyncStorage } from 'react-native';
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity, TextInput} from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import {Icon} from 'native-base';
 import axios from 'axios';
 import Api from '../config/Api';
 
-
 const { width: winWidth } = Dimensions.get('window');
+
+class HeaderNav extends React.Component {
+    constructor(){
+        super();
+        this.state ={
+            regions: [],
+            idRegion: null,
+            textInputValue:'',
+            poisRegion:[]
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount = async () => {
+        axios.get(Api.url('/region'))
+        .then(async regions => {
+            this.setState({ regions: regions.data})
+        })
+        .catch(error => {
+            console.log(error.response.data);
+        })
+
+    }
+
+    handleSubmit = () => {
+        if(this.state.textInputValue !== '' && this.state.idRegion !== null){
+            
+            axios.get(Api.url(`/region/poi/${this.state.idRegion}`))
+            .then(async pois => {
+                this.setState({ poisRegion: pois.data})
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            })
+
+            alert(this.state.poisRegion)
+        }
+        
+    }
+
+    render(){
+        return(
+            <View style={{flex: 1, flexDirection: 'column'}}>
+        <Text style={styles.title}>Map</Text>
+        <View style={styles.ContentSearch}>
+            <ModalSelector 
+                data={this.state.regions}
+                keyExtractor={ item => item.id}
+                labelExtractor= {item => item.name}
+                initValue="sélectionner une region "
+                accessible={true}
+                scrollViewAccessibilityLabel={'Scrollable options'}
+                cancelButtonAccessibilityLabel={'Cancel Button'}
+                onChange={(option)=>{this.setState({ textInputValue: option.name, idRegion: option.id})}}
+            >
+                    
+                <TextInput
+                    style={styles.textInput}
+                    editable={false}
+                    placeholder="Selectionner une region &#x1F50D;"
+                    value={this.state.textInputValue}
+                    
+                />
+            </ModalSelector>
+
+            <View style={{marginBottom: 4, marginTop: 10, marginLeft: 4}}>
+                <TouchableOpacity 
+                    style={styles.saveButton} 
+                    onPress={this.handleSubmit} 
+                >
+                    <Text style={styles.saveButtonText}>Rechercher</Text>
+                </TouchableOpacity>
+            </View>
+        </View> 
+    </View>
+            
+        );
+    }
+
+
+}
+
 
 export default class Map extends React.Component 
 {
@@ -16,15 +98,12 @@ export default class Map extends React.Component
         super(); 
         this.state = {
             data: [],
-            nameRegion: [],
-            idRegion: null,
-            textInputValue:'',
             test:[]
         };
     }
 
     componentDidMount =  async () => {
-        // const userToken = await AsyncStorage.getItem('userToken');
+
         axios.get(Api.url('/poi'))
         .then(async response => {
             console.log(response);
@@ -33,51 +112,15 @@ export default class Map extends React.Component
         .catch(error => {
             console.log(error.response.data);
         })
+    }
 
-
-        axios.get(Api.url('/region'))
-        .then(async regions => {
-            this.setState({ nameRegion: regions.data})
-        })
-        .catch(error => {
-            console.log(error.response.data);
-        })
-
+    arrayRegion = () => {
+        return this.state.regions; 
     }
 
     static navigationOptions = ({navigation}) => ({
         headerStyle:{height: 120, borderBottomColor:'#FBBA00'},
-        headerTitle: (<View style={{flex: 1, flexDirection: 'column'}}>
-        <Text style={styles.title}>Map</Text>
-        <View style={styles.ContentSearch}>
-            <ModalSelector 
-                // data={this.state.nameRegion}
-                keyExtractor={ item => item.id}
-                labelExtractor= {item => item.name}
-                initValue="sélectionner une region "
-                accessible={true}
-                scrollViewAccessibilityLabel={'Scrollable options'}
-                cancelButtonAccessibilityLabel={'Cancel Button'}
-                // onChange={(option)=>{this.setState({ idRegion: option.id})}}
-            >
-                    
-                <TextInput
-                    style={styles.textInput}
-                    editable={false}
-                    placeholder="Selectionner une region &#x1F50D;"
-                    
-                />
-            </ModalSelector>
-
-            <View style={{marginBottom: 4, marginTop: 10, marginLeft: 4}}>
-                <TouchableOpacity 
-                    style={styles.saveButton}  
-                >
-                    <Text style={styles.saveButtonText}>Rechercher</Text>
-                </TouchableOpacity>
-            </View>
-        </View> 
-    </View>), 
+        headerTitle: <HeaderNav />, 
         headerLeft : (
             <View>
                 <Icon
