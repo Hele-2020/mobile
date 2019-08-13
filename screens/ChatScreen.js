@@ -32,6 +32,7 @@ function ChatScreen(){
     onChangeText = (key, val) => {
         setMessage(val)
     }
+    
     const sendMessage = () => {
         chat.emit('message',message)
         this.textInput.clear() 
