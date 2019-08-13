@@ -27,6 +27,7 @@ function ChatScreen(){
             //     console.log(error);
             // });
 
+ 
     }, []);
 
     onChangeText = (key, val) => {
@@ -37,11 +38,15 @@ function ChatScreen(){
         chat.emit('message',message)
         this.textInput.clear() 
         chat.on('message', (data) => {
-            const tabinitial = newMessage; 
-            tabinitial.push(data.message)
-            setnewMessage(tabinitial)
-            console.log(newMessage)
-          })
+            // const tabinitial = newMessage; 
+            // tabinitial.push(data.message)
+            // setnewMessage(tabinitial)
+            setnewMessage([ ...newMessage, 
+                data.message
+            ])
+                    
+        })
+
     }
 
     return(
@@ -51,6 +56,10 @@ function ChatScreen(){
             {/* {dataMessage.map((item, index) => 
                 <Text key={index}>{item.content}</Text>
             )} */}
+
+            {newMessage.map((item, index) => 
+                <Text key={index}>{item}</Text>
+            )}
 
                 <KeyboardAvoidingView keyboardVerticalOffset = {Header.HEIGHT + 30} behavior='padding'>
 

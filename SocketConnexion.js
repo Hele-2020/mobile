@@ -2,7 +2,6 @@ import Ws from '@adonisjs/websocket-client'
 import {AsyncStorage} from 'react-native';
 
 
-
 export default async function Connexion(){
     const token = await AsyncStorage.getItem('userToken');
 
