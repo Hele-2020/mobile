@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import NamePsyComment from './NamePsyComment.js';
+// import NamePsyComment from './NamePsyComment.js';
 import BackgroundComment from './BackgroundComment.js';
 import ProfilPictureComments from './ProfilPictureComments.js';
 

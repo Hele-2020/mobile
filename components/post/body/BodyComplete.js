@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import ReturnPost from './ReturnPost.js';
-import BlocInfoPost from '././infoPost/BlocInfoPost.js';
+import BlocPost from '././infoPost/BlocPost.js';
 import BlocReaction from '././reaction/BlocReaction.js';
 
 export default class BodyComplete extends Component {
   render() {
     return (
-      <View style={styles.view}>
-        <ReturnPost /> 
-        <BlocInfoPost /> 
+      <View style={styles.view}> 
+        <BlocPost /> 
         <BlocReaction />
       </View>
     );

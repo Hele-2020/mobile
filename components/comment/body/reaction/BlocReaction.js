@@ -17,6 +17,7 @@ export default class BlocReaction extends Component {
 }
 const styles = StyleSheet.create({
   view: {
+    textAlign: "center",
     paddingLeft: 10,
     paddingRight: 10,
     borderTopColor: "#FBBA00",
@@ -26,8 +27,8 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignContent: "space-around",
-    // backgroundColor: "yellow",
+    // alignContent: "space-around",
+    backgroundColor: "yellow",
     height: "auto",
     marginTop: 10,
     marginBottom: 10,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import ReturnPost from './ReturnPost.js';
-import BlocInfoPost from '././infoPost/BlocInfoPost.js';
+
+import BlocPost from '././infoPost/BlocPost.js';
 import BlocReaction from '././reaction/BlocReaction.js';
 import BlocComments from '././comments/BlocComments.js';
 
@@ -9,8 +9,7 @@ export default class BodyComplete extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <ReturnPost /> 
-        <BlocInfoPost /> 
+        <BlocPost /> 
         <BlocReaction />
         <BlocComments />
       </View>
@@ -19,7 +18,7 @@ export default class BodyComplete extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    // flex: 5,
+    flex: 4.4,
     // backgroundColor: "blue",
     width: "100%",
     flexDirection: 'column',

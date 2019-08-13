@@ -13,7 +13,7 @@ export default class BlocHeader extends Component {
 }
 const styles = StyleSheet.create({
   view: {
-    flex: 0.8,
+    flex: 1.2,
     alignContent: "space-around",
     alignItems: "center",
     justifyContent: "flex-start",
