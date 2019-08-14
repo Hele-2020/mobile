@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default class PostNewComment extends Component {
+export default class PostNewPost extends Component {
     constructor(props) {
         super(props);
         this.state = { text: '' };
@@ -10,7 +10,7 @@ export default class PostNewComment extends Component {
     return (
       <KeyboardAvoidingView style={styles.keyboard} behavior="padding" enabled>
         <View style={styles.view} >
-            <TextInput multiline keyboardShouldPersistTaps={'handled'} style={styles.textInput} placeholder="votre commentaire ... "
+            <TextInput multiline style={styles.textInput} placeholder="votre commentaire ... "
                 onChangeText={(text) => this.setState({text})}
                 value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
             <TouchableOpacity style={styles.touchableButton}>
@@ -30,9 +30,6 @@ const styles = StyleSheet.create({
     flex: 1.6,
     width: "auto",
     justifyContent: "flex-end",
-    // padding:"2%",
-    // height: "50%",
-    // justifyContent: "space-between"
   },
   view: {
     flex: 0.6,
@@ -41,9 +38,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row" ,
     width: "100%",
-    borderStyle: "solid",
-    borderTopWidth: 1,
-    borderTopColor: "#FBBA00"
   },
   textInput: {
     marginBottom: 0,
