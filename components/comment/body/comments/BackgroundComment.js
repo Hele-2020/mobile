@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import CommentPsy from './CommentPsy.js';
 import NamePsyComment from './NamePsyComment.js';
 
@@ -24,5 +24,11 @@ const styles = StyleSheet.create({
     marginLeft : 15,
     padding :7,
     borderRadius: 20,
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: "black",
+    // color: "#59358B",
   }
 });

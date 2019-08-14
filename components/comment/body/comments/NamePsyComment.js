@@ -12,17 +12,17 @@ export default class NamePsyComment extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <Text style={styles.text} >{this.state.titleText}</Text>
+        <Text style={styles.text} >Dr Robin</Text>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  view: {
+  viewNamePsy: {
     // backgroundColor: "white",
     alignItems: "flex-start",
   },
-  text: {
+  textNamePsy: {
     fontSize: 15,
     fontWeight: 'bold',
     color: "black",

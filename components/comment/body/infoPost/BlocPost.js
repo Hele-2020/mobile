@@ -11,6 +11,7 @@ export default class ReturnPost extends Component {
   render() {
     return (
       <View style={styles.view}>
+        {/* Utilisation de la base de donnée pour recuperer le Post */}
         <Text style={styles.text} >{this.state.titleText}</Text>
       </View>
     );
@@ -25,7 +26,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    color: "black",
-    // color: "#59358B",
+    color: "#59358B",
   }
 });

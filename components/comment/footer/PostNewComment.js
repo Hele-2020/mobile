@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView,TextInput, Button , StyleSheet, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
 // import { KeyboardAvoidingView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class PostNewComment extends Component {
-    constructor(props) {
-        super(props);
-        // this.state = { text: '' };
+  state = {
+    text: ''
+  }
+
+
+    handleKeyUp = event => {
+      if (event.key === 'OK') {
+        event.preventDefault()
+          this.createMessage(this.state.text)
       }
-      
+  }
   render() {
     return (
       <View style={styles.view} >
-      //     <TextInput style={styles.textInput} placeholder="votre commentaire ... "
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/> */}
-          <TouchableOpacity style={styles.touchableButton}>
-            <Text>Envoyer</Text>
-              <Button style={styles.button} onPress={ () => this._submit()} color="white" title="envoyer"/>
-          </TouchableOpacity>
+        <TextInput style={styles.textInput} placeholder="votre commentaire ... "
+          onChangeText={(text) => this.setState({ text })}
+          value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit} />
+        <TouchableOpacity onPress={this._submit()} style={styles.touchableButton}>
+          <Text>Envoyer</Text>
+        </TouchableOpacity>
       </View>
     );
   }
-    _submit = () => {
-    console.log('coucou');
-    // alert(`Confirmation email has been sent to ${this.state.text}`);
-  };
 }
 const styles = StyleSheet.create({
   form: {
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row" ,
+    flexDirection: "row",
     width: "100%",
     borderStyle: "solid",
     borderTopWidth: 1,
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
 //       super(props);
 //       this.state = { text: '' };
 //     }
-    
+
 // render() {
 //   return (
 //     <View style={styles.view} >
