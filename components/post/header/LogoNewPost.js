@@ -6,7 +6,7 @@ export default class LogoNewPost extends Component {
     return (
         <View>
             <Image style={styles.stretchImg}
-            source={require('../../../assets/logonewpost.png')} />
+            source={require('../../../assets/nouveauPost.png')} />
         </View>
         );
     }

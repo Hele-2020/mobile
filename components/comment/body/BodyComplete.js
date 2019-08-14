@@ -3,7 +3,8 @@ import { View, StyleSheet } from 'react-native';
 
 import BlocPost from '././infoPost/BlocPost.js';
 import BlocReaction from '././reaction/BlocReaction.js';
-import BlocComments from '././comments/BlocComments.js';
+// import BlocComments from '././comments/BlocComments.js';
+import BackgroundComment from './comments/BackgroundComment.js';
 
 export default class BodyComplete extends Component {
   render() {
@@ -11,7 +12,7 @@ export default class BodyComplete extends Component {
       <View style={styles.view}>
         <BlocPost /> 
         <BlocReaction />
-        <BlocComments />
+        <BackgroundComment />
       </View>
     );
   }

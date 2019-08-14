@@ -17,8 +17,8 @@ export default class BlocPost extends Component {
         <Image style={styles.stretchImg}
             source={require('../../../../assets/logohele.png')} />
           <View style={styles.flexColumn}> 
-        <Text style={styles.text} >{this.state.Name}</Text>
-        <Text style={styles.text} >{this.state.Date}</Text>
+        <Text style={styles.textBold} >{this.state.Name}</Text>
+        <Text style={styles.textBold} >{this.state.Date}</Text>
         </View> 
         </View>
         <Text style={styles.text} >{this.state.Text}</Text>
@@ -38,8 +38,11 @@ const styles = StyleSheet.create({
     height: 35,
     marginRight: '2%',
     },
+    textBold: {
+      fontWeight : "bold",
+      color: "#59358B",
+    },
   flexRow: {
-    
     display: "flex",
     flexDirection: "row",
     alignItems: 'center',
