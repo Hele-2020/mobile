@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     marginBottom: 0,
-    height: 37,
+    height: "50%",
     borderRadius: 50,
     backgroundColor: "#F1F0EF",
     color: "grey",
@@ -53,9 +53,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     fontSize: 17,
   },
+  text: {
+    color: "white"
+  },
   touchableButton: {
     backgroundColor: "#59358B",
     marginLeft: 10,
+    padding: 10,
+    width: "auto",
     color: "white",
     textDecorationColor: "white",
     borderRadius: 50,
