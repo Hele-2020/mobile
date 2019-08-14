@@ -18,8 +18,6 @@ export default class App extends Component {
     console.log(chat)
     chat.on('send', (message) => {
       this.setState({ messages: [ ...this.state.messages, message] })
-      console.log(this.state.messages[0].message)
-      // console.log('le message du server adonis',message)
     })
   }
 
@@ -31,8 +29,8 @@ export default class App extends Component {
       console.log(message)
       chat.emit('message', message)
     }
-    const tchat = Object.keys(this.state.messages).map( key => (
-        <Tchat message={this.state.messages[key].message}/>)
+    const tchat = this.state.messages.map( (message, key) => (
+        <Tchat key={key} message={message.message}/>)
       )
       return (
         <View style={styles.container}>
