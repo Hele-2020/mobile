@@ -1,7 +1,7 @@
 import React from 'react';
 import MapView from 'react-native-map-clustering';
 import { Marker, Callout } from 'react-native-maps';
-import { View, Text, Dimensions, StyleSheet, Linking, Modal} from 'react-native';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 
 const { width: winWidth } = Dimensions.get('window');
 const { height: winHeight } = Dimensions.get('window');
@@ -10,14 +10,12 @@ export default class MapDisplay extends React.Component
 {
     constructor(props){
         super(props)
-        this.state = {
-            modalVisible: false,
-        }
     }
     
     render(){
         return(
             <View>
+
                 <MapView 
                 region={{  
                         latitude: 46.227638,  
@@ -27,26 +25,24 @@ export default class MapDisplay extends React.Component
                     }} style={{ width: winWidth, height: winHeight }}  >
                 
                     {this.props.pois.map((poi) => (
-                    
-                    <View>
 
                     <Marker coordinate={{ latitude: poi.lattitude, longitude: poi.longitude}} key={poi.id}>
 
                          <Callout 
                              tooltip={false}
+                             onPress={() => this.props.modal(true, poi.id)}
                             >
                                 <View  style={styles.description}>
                                     <View style={styles.content}>
                                         <Text style={styles.titleMap}>{poi.name}</Text>
 
                                         <View style={styles.info}>
-                                            <Text style={styles.textpoi}>Description : {poi.description}</Text>
                                             
-                                            <Text  style={styles.textpoi}>Adresse : {poi.adress}</Text>
+                                            <Text  style={styles.textpoi}>Adresse : {poi.address}</Text>
 
-                                            <Text  style={styles.textpoi}>Code postal : {poi.code_postal}</Text>
+                                            <Text  style={styles.textpoi}>Code postal : {poi.zipcode}</Text>
 
-                                            <Text  style={styles.textpoi}>Horaires : {poi.hour}</Text>
+                                            <Text  style={styles.textpoi}>Ville : {poi.city}</Text>
 
                                             <Text  style={styles.textpoi}>Telephone : {poi.phone}</Text>
                                             
@@ -59,12 +55,11 @@ export default class MapDisplay extends React.Component
 
                             </Callout>
                     </Marker>
-                    </View>
                     
                     ))}
                 </MapView>
 
-
+               
             </View>
           
         )
@@ -77,8 +72,6 @@ const styles = StyleSheet.create({
         height: "auto",
         width: "auto", 
         flex : 1, 
-        // borderColor: "#59358B",
-        // borderWidth: 2
     }, content : {
         paddingLeft : 5,
         paddingRight : 5,

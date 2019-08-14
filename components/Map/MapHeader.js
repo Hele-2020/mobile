@@ -3,7 +3,6 @@ import {Text, View, TextInput, StyleSheet} from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import Api from '../../config/Api';
 import axios from 'axios';
-import {Icon} from 'native-base';
 
 export default class MapHeader extends React.Component 
 {
@@ -20,7 +19,6 @@ export default class MapHeader extends React.Component
         axios.get(Api.url('/region'))
         .then(async regions => {
             this.setState({ regions: regions.data})
-            // console.log(regions)
         })
         .catch(error => {
             console.log(error.response.data);
@@ -31,7 +29,7 @@ export default class MapHeader extends React.Component
     render(){
        
         return (
-            <View style={{margin: 15}}>
+            <View style={{margin: 5}}>
 
                 <ModalSelector
                 

@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import MapHeader from '../components/Map/MapHeader';
 import MapDisplay from '../components/Map/MapDisplay';
+import MapModal from '../components/Map/MapModal';
 
 export default class MapScreen extends React.Component 
 {
@@ -16,19 +17,42 @@ export default class MapScreen extends React.Component
         super(); 
         this.state = {
             region: '',
-            pois: []
+            pois: [],
+            modalVisible: false,
+            idPoi: []
         };
         
         this.handleChange = this.handleChange.bind(this)
+        this.handleChangeModal = this.handleChangeModal.bind(this)
+    }
+
+    handleChangeModal(value, id) {
+        if(id !== ''){
+            axios.get(Api.url(`/poi/edit/${id}`))
+            .then(async poi => {
+                this.setState({
+                    idPoi: poi.data,
+                    modalVisible: value
+                })
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            })
+
+
+        } else {
+            this.setState({
+                idPoi: '',
+                modalVisible: value
+            })
+        }
     }
 
     handleChange = (region) => {
         this.setState({region: region})
-        console.log(this.state.region)
         
         axios.get(Api.url(`/region/poi/${region}`))
             .then(async response => {
-                console.log(response.data);
                 this.setState({ pois: response.data })
             })
             .catch(error => {
@@ -41,8 +65,18 @@ export default class MapScreen extends React.Component
     render(){
         return(
             <View>
-                <MapHeader navigation = {this.props.navigation.navigate} change={this.handleChange}/>
-                <MapDisplay pois={this.state.pois} />
+                <MapModal 
+                    modalVisible={this.state.modalVisible}  
+                    modal={this.handleChangeModal} 
+                    poi={this.state.idPoi}
+                />
+                <MapHeader 
+                    change={this.handleChange}
+                />
+                <MapDisplay 
+                    pois={this.state.pois} 
+                    modal={this.handleChangeModal} 
+                />
             </View>
         )
     }
