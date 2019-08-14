@@ -16,9 +16,10 @@ const styles = StyleSheet.create({
     flex: 0.8,
     alignContent: "space-around",
     alignItems: "center",
-    justifyContent: "flex-start",
-    marginLeft: 40,
+    justifyContent: "flex-end",
+    paddingRight: "3%",
     marginTop: 20,
+    marginBottom: 20,
     flexDirection: "row",
     width: "100%",
     backgroundColor: "white"

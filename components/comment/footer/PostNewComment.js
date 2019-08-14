@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView,TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
-// import { KeyboardAvoidingView } from 'react-native-keyboard-aware-scroll-view';
+import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 
 export default class PostNewComment extends Component {
     constructor(props) {
         super(props);
         this.state = { text: '' };
       }
-      
   render() {
     return (
-      <View style={styles.view} >
-          <TextInput style={styles.textInput} placeholder="votre commentaire ... "
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
-          <TouchableOpacity style={styles.touchableButton}>
-            <Text style={styles.text}>envoyer</Text>
-          </TouchableOpacity>
-      </View>
+      <KeyboardAvoidingView style={styles.keyboard} behavior="padding" enabled>
+        <View style={styles.view} >
+            <AutoGrowingTextInput keyboardShouldPersistTaps={'handled'} style={styles.textInput} placeholder="votre commentaire ... "
+                onChangeText={(text) => this.setState({text})}
+                value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
+            <TouchableOpacity style={styles.touchableButton}>
+              <Text style={styles.text}>envoyer</Text>
+            </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
     _submit = () => {
@@ -26,6 +27,14 @@ export default class PostNewComment extends Component {
   };
 }
 const styles = StyleSheet.create({
+  keyboard: {
+    flex: 1.6,
+    width: "auto",
+    justifyContent: "flex-end",
+    // padding:"2%",
+    // height: "50%",
+    // justifyContent: "space-between"
+  },
   view: {
     flex: 0.6,
     alignContent: "space-around",

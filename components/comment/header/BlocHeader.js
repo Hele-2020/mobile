@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import LogoHele from './LogoHele.js';
+// import LogoHele from './LogoHele.js';
 
 export default class BlocHeader extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <LogoHele />
+       
       </View>
     );
   }
@@ -24,3 +24,4 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   }
 });
+ // <LogoHele />
