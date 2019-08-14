@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default class PostNewComment extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { text: '' };
+  state = {
+    text: ''
+  }
+
+
+    handleKeyUp = event => {
+      if (event.key === 'OK') {
+        event.preventDefault()
+          this.createMessage(this.state.text)
       }
   render() {
     return (
@@ -20,10 +26,6 @@ export default class PostNewComment extends Component {
       </KeyboardAvoidingView>
     );
   }
-    _submit = () => {
-    console.log('coucou');
-    // alert(`Confirmation email has been sent to ${this.state.text}`);
-  };
 }
 const styles = StyleSheet.create({
   keyboard: {
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row" ,
+    flexDirection: "row",
     width: "100%",
     borderStyle: "solid",
     borderTopWidth: 1,
