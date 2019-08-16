@@ -6,12 +6,6 @@ export default class PostNewComment extends Component {
     text: ''
   }
 
-
-    handleKeyUp = event => {
-      if (event.key === 'OK') {
-        event.preventDefault()
-          this.createMessage(this.state.text)
-      }
   render() {
     return (
       <KeyboardAvoidingView style={styles.keyboard} behavior="padding" enabled>

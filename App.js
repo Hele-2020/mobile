@@ -51,10 +51,23 @@ render() {
   }
 
 export default class App extends Component {
-
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
     this.state = {
+      status:false
+    };
+    this.newPost = this.newPost.bind(this);
+  }
+    newPost() {
+      if(this.state.status == true) {
+        this.setState({status: false})
+          }
+      else {
+        this.setState({status: true})
+      }
+    }
+
+    state = {
       text: '',
       messages: []
     }
@@ -64,8 +77,8 @@ export default class App extends Component {
     })
   }
 
-  render(){
-    onPress = () => {
+    render() {
+      onPress = () => {
       const message = {
         message: this.state.text
       }
@@ -75,6 +88,20 @@ export default class App extends Component {
     const tchat = this.state.messages.map( (message, key) => (
         <Tchat key={key} message={message.message}/>)
       )
+      return (
+        <View style={styles.container}>
+          <View style={styles.view}>
+            <TouchableOpacity style={styles.touchableComment} onPress={this.newPost} >
+                <Image style={styles.stretchImg}
+                source={require('./assets/nouveauPost.png')} />
+            </TouchableOpacity>
+          </View>
+          <BodyComplete />
+          {this.state.status ? <PostNewPost /> : null}
+        </View>
+      );
+      }
+    
       return (
         <View style={styles.container}>
         <BlocHeader />
