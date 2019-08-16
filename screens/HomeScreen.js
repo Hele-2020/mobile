@@ -9,8 +9,8 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View>
-            <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-            <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
+                <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+                <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
             </View>
         );
     }
