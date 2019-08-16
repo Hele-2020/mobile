@@ -4,7 +4,7 @@ import Ws from '@adonisjs/websocket-client'
 
 
 // const token = await AsyncStorage.getItem('userToken');
-const ws = Ws('ws://0.tcp.ngrok.io:11699')
+const ws = Ws('ws://0.tcp.ngrok.io:15971')
 // ws.withJwtToken(token).connect()
 ws.connect()
 // const id_user = await AsyncStorage.getItem('userId');

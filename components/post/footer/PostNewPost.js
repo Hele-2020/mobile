@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import chat from '../../SocketConn.js';
 
 export default class PostNewPost extends Component {
     constructor(props) {
@@ -7,23 +8,28 @@ export default class PostNewPost extends Component {
         this.state = { text: '' };
       }
   render() {
+    onPress = () => {
+      const message = {
+        message: this.state.text,
+        date: Date.now(),
+        name: 'Dr Robin'
+      }
+      chat.emit('message', message)
+      this.setState({ text: '' })
+    }
     return (
       <KeyboardAvoidingView style={styles.keyboard} behavior="padding" enabled>
         <View style={styles.view} >
             <TextInput multiline style={styles.textInput} placeholder="votre commentaire ... "
                 onChangeText={(text) => this.setState({text})}
                 value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
-            <TouchableOpacity style={styles.touchableButton}>
+            <TouchableOpacity onPress={()=> onPress()} style={styles.touchableButton}>
               <Text style={styles.text}>envoyer</Text>
             </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     );
   }
-    _submit = () => {
-    console.log('coucou');
-    // alert(`Confirmation email has been sent to ${this.state.text}`);
-  };
 }
 const styles = StyleSheet.create({
   keyboard: {

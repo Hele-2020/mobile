@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
+import BlocReaction from '../reaction/BlocReaction.js';
 export default class BlocPost extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Name:"Docteur La Peluche",
-      Date:"3 aout",
-      Text: "Bonjour j'ai un problème... je suis amoureuse de mon chien HELP!!!!",
-      
-    };
-  }
+  
   render() {
+    const { message, date, name } = this.props
     return (
       <View style={styles.view}>
       <View style={styles.flexRow}>
         <Image style={styles.stretchImg}
             source={require('../../../../assets/logohele.png')} />
           <View style={styles.flexColumn}> 
-        <Text style={styles.textBold} >{this.state.Name}</Text>
-        <Text style={styles.textBold} >{this.state.Date}</Text>
+        <Text style={styles.textBold} >{ name }</Text>
+        <Text style={styles.textBold} >{ date }</Text>
         </View> 
         </View>
-        <Text style={styles.text} >{this.state.Text}</Text>
+        <Text style={styles.text} >{ message }</Text>
+        <BlocReaction />
       </View>
     );
   }
