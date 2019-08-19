@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { AsyncStorage, StyleSheet, View, Text,TouchableOpacity,Button} from 'react-native';
 import TimePicker from 'react-native-simple-time-picker';
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
+import axios from 'axios';
 
 export default class SlotformScreen extends Component {
     static navigationOptions = {
@@ -15,7 +16,9 @@ export default class SlotformScreen extends Component {
       }
 
     Register = event => {
-        alert('Vous venez de crée un créneau pour ' + this.state.selectedHours + ":" + this.state.selectedMinutes + 'Le :' + this.state.date)
+        // axios.post('/make/slot')
+        // axios.post(burl + '/inscription',send,{headers: headers})
+        alert('Vous venez de crée un créneau pour le '+ this.state.date + ' à ' +this.state.selectedHours + ' H '+  this.state.selectedMinutes)
     }
      
       render() {
@@ -65,8 +68,6 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 8,
         borderRadius: 14,
-        fontSize: 18,
-        fontWeight: '500',
     },
     button : {
         margin:20,
