@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-// import LogoHele from './LogoHele.js';
+import ReturnPost from './ReturnPost';
 
 export default class BlocHeader extends Component {
   render() {
     return (
       <View style={styles.view}>
-       
+        <ReturnPost />
       </View>
     );
   }
@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     alignItems: "center",
     justifyContent: "flex-start",
-    marginLeft: 40,
-    marginTop: 20,
+    marginLeft: "3%",
+    marginTop: "3%",
     flexDirection: "row",
     width: "100%",
     backgroundColor: "white"
   }
 });
- // <LogoHele />
+ 

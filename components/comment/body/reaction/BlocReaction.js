@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Instructif from './Instructif.js';
-// import ActionComments from './ActionComments.js';
+import ActionComments from './ActionComments.js';
 import AllComments from './AllComments.js';
 
 export default class BlocReaction extends Component {
@@ -9,7 +9,7 @@ export default class BlocReaction extends Component {
     return (
       <View style={styles.view}>
         <Instructif />
-        {/* <ActionComments /> */}
+        <ActionComments /> 
         <AllComments />
       </View>
     );
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     // alignContent: "space-around",
-    backgroundColor: "yellow",
+    // backgroundColor: "yellow",
     height: "auto",
     marginTop: 10,
     marginBottom: 10,

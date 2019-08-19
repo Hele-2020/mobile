@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 export default class PostNewComment extends Component {
   state = {
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flex: 1.6,
     width: "auto",
     justifyContent: "flex-end",
+    backgroundColor: "white"
     // padding:"2%",
     // height: "50%",
     // justifyContent: "space-between"

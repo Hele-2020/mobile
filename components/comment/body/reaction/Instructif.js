@@ -4,20 +4,15 @@ import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 export default class Instructif extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-          
-        };
+        
       }
   render() {
     return (
       <View style={styles.view}>
-        <TouchableOpacity  style={styles.touchableReturnPost}>
-          <Text style={styles.text}>{this.state.count} Instructif</Text>
-        <TouchableOpacity style={styles.touchableInstructif}>
+        <TouchableOpacity  style={styles.touchableInstructif}>
           <Text style={styles.text} >
             <Image style={styles.stretchImg}
-            source={require('../../../../assets/logoInstructif.png')} />instructif
-          </Text>
+            source={require('../../../../assets/logoInstructif.png')} />instructif</Text>
         </TouchableOpacity>
       </View>
     );
@@ -39,12 +34,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     color: "#59358B",
-  }
-    },
+  },
   stretchImg: {
-    backgroundColor: "red",
+    // backgroundColor: "red",
       resizeMode:"contain",
       width: 15,
       height: 15,
   }
 });
+// <TouchableOpacity style={styles.touchableInstructif}>

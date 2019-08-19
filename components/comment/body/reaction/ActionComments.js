@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     color: "#59358B",
     },
     stretchImg: {
-      backgroundColor: "red",
+      // backgroundColor: "red",
       resizeMode:"contain",
       width: 15,
       height: 14,
