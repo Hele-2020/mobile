@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import BlocHeader from './header/BlocHeader';
-import BodyComplete from './body/BodyComplete.js';
-import PostNewComment from './footer/PostNewComment.js';
+import BlocHeader from '../../components/comment/header/BlocHeader';
+import BodyComplete from '../../components/comment/body/BodyComplete.js';
+import PostNewComment from '../../components/comment/footer/PostNewComment.js';
 import { View, StyleSheet} from 'react-native';
 
-export default class PostComments extends Component {
+export default class PostCommentsScreen extends Component {
+  static navigationOptions = {
+    title : 'PostComments',
+  };
   constructor(props) {
     super(props);
   }
   render() {
+    
     return (
       <View style={styles.view}>
         <BlocHeader />

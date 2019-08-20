@@ -3,14 +3,14 @@ import { View, StyleSheet } from 'react-native';
 
 import BlocPost from '././infoPost/BlocPost.js';
 import BackgroundComment from './comments/BackgroundComment.js';
-import chat from '../../SocketConn.js';
+import post from '../../SocketConn.js';
 export default class BodyComplete extends Component {
   constructor(props){
     super(props);
       this.state = {
         messages: []
       }
-    chat.on('send', (messageSock) => {
+    post.on('send', (messageSock) => {
       this.setState({ messages: [...this.state.messages, messageSock] })
     })
   }

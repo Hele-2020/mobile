@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import BodyComplete from './components/post/body/BodyComplete.js';
-import PostNewPost from './components/post/footer/PostNewPost.js';
-// import { createStackNavigator,createAppContainer } from 'react-navigation';
+import BodyComplete from '../../components/post/body/BodyComplete.js';
+import PostNewPost from '../../components/post/footer/PostNewPost.js';
 import { View, Image, StyleSheet, TouchableOpacity} from 'react-native';
-// const AppStackNavigator = createStackNavigator({
-//   // Login : { screen : ConnexionPage },
-//   // Register : { screen : InscriptionPage }
-// });
-// const AppContainer = createAppContainer(AppStackNavigator);
 
-export default class PostsPro extends Component {
+export default class PostsScreen extends Component {
+  static navigationOptions = {
+    title : 'PostPro',
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +28,7 @@ export default class PostsPro extends Component {
         <View style={styles.view}>
           <TouchableOpacity style={styles.touchableComment} onPress={this.newPost} >
             <Image style={styles.stretchImg}
-              source={require('./assets/nouveauPost.png')} />
+              source={require('../../assets/nouveauPost.png')} />
           </TouchableOpacity>
         </View>
         <BodyComplete />
@@ -52,7 +49,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     paddingRight: "3%",
-    marginTop: "7%",
     flexDirection: "row",
     width: "100%",
     backgroundColor: "white"
@@ -64,37 +60,5 @@ const styles = StyleSheet.create({
   touchableComment: {
     paddingBottom: 10,
     paddingTop: 10
-  },
-  form: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  viewPost: {
-    flex: 0.6,
-    alignContent: "space-around",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    width: "100%",
-    borderStyle: "solid",
-    borderTopWidth: 1,
-    borderTopColor: "#FBBA00"
-  },
-  textInput: {
-    marginBottom: 0,
-    height: 37,
-    borderRadius: 50,
-    backgroundColor: "#F1F0EF",
-    color: "grey",
-    width: "60%",
-    paddingLeft: 10,
-    fontSize: 17,
-  },
-  touchableButton: {
-    backgroundColor: "#59358B",
-    marginLeft: 10,
-    color: "white",
-    textDecorationColor: "white",
-    borderRadius: 50,
   }
 });

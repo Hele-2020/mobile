@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 export default class ActionComments extends Component {
+  static navigationOptions = {
+    title: 'PostComments',
+  };  
     constructor(props) {
         super(props);
         this.state = {
@@ -9,9 +12,10 @@ export default class ActionComments extends Component {
         };
       }
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <View style={styles.view}>
-        <TouchableOpacity style={styles.touchableCommenter}>
+        <TouchableOpacity style={styles.touchableCommenter} onPress={() => navigate('PostComments', {})}>
           <Text style={styles.text} >
             <Image style={styles.stretchImg}
             source={require('../../../../assets/logoCommenter.png')} />commenter</Text>
@@ -33,10 +37,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#59358B",
     },
-    stretchImg: {
-      // backgroundColor: "red",
-      resizeMode:"contain",
-      width: 15,
-      height: 14,
+  stretchImg: {
+    // backgroundColor: "red",
+    resizeMode:"contain",
+    width: 15,
+    height: 15,
   }
 });

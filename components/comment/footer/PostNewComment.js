@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import comment from '../../SocketConn.js';
 
 export default class PostNewComment extends Component {
-  state = {
-    text: ''
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
   }
-
   render() {
+    onPress = () => {
+      const message = {
+        message: this.state.text,
+        date: Date.now(),
+        name: 'Dr Robin'
+      }
+      comment.emit('message', message)
+      this.setState({ text: '' })
+    }
     return (
-      <KeyboardAvoidingView style={styles.keyboard} behavior="padding" enabled>
+      <KeyboardAvoidingView keyboardVerticalOffset= {Platform.select({ios: 80, android: 83})} style={styles.keyboard} behavior="padding" enabled>
         <View style={styles.view} >
-            <TextInput multiline keyboardShouldPersistTaps={'handled'} style={styles.textInput} placeholder="votre commentaire ... "
+            <TextInput multiline style={styles.textInput} placeholder="votre commentaire ... "
                 onChangeText={(text) => this.setState({text})}
                 value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
-            <TouchableOpacity style={styles.touchableButton}>
+            <TouchableOpacity onPress={()=> onPress()} style={styles.touchableButton}>
               <Text style={styles.text}>envoyer</Text>
             </TouchableOpacity>
         </View>

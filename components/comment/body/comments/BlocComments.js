@@ -1,28 +1,3 @@
-// import React, { Component } from 'react';
-// import { View, StyleSheet } from 'react-native';
-// // import NamePsyComment from './NamePsyComment.js';
-// import BackgroundComment from './BackgroundComment.js';
-// import ProfilPictureComments from './ProfilPictureComments.js';
-
-// export default class BlocComments extends Component {
-//   render() {
-//     return (
-//       <View style={styles.view}>
-//             <ProfilPictureComments />
-//             <BackgroundComment />
-//       </View>
-//     );
-//   }
-// }
-// const styles = StyleSheet.create({
-//     view: {
-//       paddingLeft: 10,
-//       paddingRight: 10,
-//       flexDirection: "row",
-//       height: "20%",
-//       // backgroundColor: "orange",
-//     }
-// });
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 export default class BlocComments extends Component {
@@ -60,7 +35,7 @@ const styles = StyleSheet.create({
     height: 35,
     marginRight: '2%',
     },
-    textBold: {
+  textBold: {
     fontWeight : "bold",
     color: "#59358B",
     

@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     stretchImg: {
         resizeMode:"contain",
         width: 55,
-    //   height: 70
     }
   });
 

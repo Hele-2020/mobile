@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-// import CommentPsy from './CommentPsy.js';
-// import NamePsyComment from './NamePsyComment.js';
 import BlocComments from './BlocComments.js';
 
 export default class BackgroundComment extends Component {
