@@ -3,6 +3,7 @@ import { AsyncStorage, StyleSheet, View, Text,TouchableOpacity,Button} from 'rea
 import TimePicker from 'react-native-simple-time-picker';
 import DatePicker from 'react-native-datepicker';
 import axios from 'axios';
+import Api from '../config/Api';
 
 export default class SlotformScreen extends Component {
     static navigationOptions = {
@@ -16,9 +17,19 @@ export default class SlotformScreen extends Component {
       }
 
     Register = event => {
-        // axios.post('/make/slot')
-        // axios.post(burl + '/inscription',send,{headers: headers})
-        alert('Vous venez de crée un créneau pour le '+ this.state.date + ' à ' +this.state.selectedHours + ' H '+  this.state.selectedMinutes)
+        const date = this.state.date;
+        const hours = this.state.selectedHours + ":" +this.state.selectedMinutes;
+        const send = [date, hours]
+        console.log(Api.url())
+        axios.post(Api.url('/make/slot'),send)
+            .then(function (response) {
+                console.log(response)
+                alert('Vous venez de crée un créneau pour le '+ date + ' à ' + hours)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
      
       render() {
