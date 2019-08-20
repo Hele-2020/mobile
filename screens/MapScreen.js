@@ -20,7 +20,9 @@ export default class MapScreen extends React.Component
             region: '',
             pois: [],
             modalVisible: false,
-            idPoi: []
+            idPoi: [],
+            coorRegion :null
+
         };
 
         // TODO: get user details here and passthem to the MapHeader in props
@@ -53,7 +55,19 @@ export default class MapScreen extends React.Component
 
         axios.get(Api.url(`/region/${region}`))
         .then(async response => {
-            this.setState({ pois: response.data })
+            this.setState({ 
+                pois: response.data
+            })
+
+        })
+        .catch(error => {
+            console.log(error.response.data);
+        })
+
+
+        axios.get(Api.url(`/region/show/${region}`))
+        .then(async region => {
+            this.setState({ coorRegion: region})
         })
         .catch(error => {
             console.log(error.response.data);
@@ -71,7 +85,9 @@ export default class MapScreen extends React.Component
                     change={this.handleChange} />
                 <MapDisplay
                     pois={this.state.pois}
-                    modal={this.handleChangeModal} />
+                    modal={this.handleChangeModal}
+                    coordregion={this.state.coorRegion}
+                />
             </View>
         )
     }

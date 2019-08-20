@@ -2,6 +2,8 @@ import React from 'react';
 import MapView from 'react-native-map-clustering';
 import { Marker, Callout } from 'react-native-maps';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import axios from 'axios';
+import Api from '../../config/Api';
 
 const { width: winWidth } = Dimensions.get('window');
 const { height: winHeight } = Dimensions.get('window');
@@ -10,6 +12,24 @@ export default class MapDisplay extends React.Component
 {
     constructor(props) {
         super(props)
+        this.state ={
+            lattitude: 45.1474456787,
+            longitude: 4.2578635216,
+            lattitudeDelta: 0.3231590092,
+            longitudeDelta: 2.4890310764
+        }
+
+    }
+
+    componentDidMount(){
+        if(this.props.coordregion !== null) {
+            this.setState({
+                latitude: this.props.coordregion.lattitude,
+                longitude: this.props.coordregion.longitude,
+                latitudeDelta: this.props.coordregion.lattitudeDelta,
+                longitudeDelta: this.props.coordregion.longitudeDelta
+            })
+        }
     }
 
     render() {
@@ -17,10 +37,10 @@ export default class MapDisplay extends React.Component
             <View>
                 <MapView
                     region={{
-                        latitude: 46.227638,
-                        longitude: 2.213749,
-                        latitudeDelta: 9.5,
-                        longitudeDelta: 9.5
+                        latitude: this.state.lattitude,
+                        longitude: this.state.longitude,
+                        latitudeDelta: this.state.lattitudeDelta,
+                        longitudeDelta: this.state.longitudeDelta
                     }} style={{ width: winWidth, height: winHeight }} >
 
                     {this.props.pois.map(poi =>
