@@ -11,6 +11,7 @@ export default class HomeScreen extends Component {
             <View>
                 <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
                 <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
+                <Button title="Map" onPress={this._MapAsync} />
             </View>
         );
     }
@@ -22,5 +23,9 @@ export default class HomeScreen extends Component {
     
     _SlotAsync = async () => {
         this.props.navigation.navigate('Slotform');
+    }
+    
+    _MapAsync = async () => {
+        this.props.navigation.navigate('Map');
     };
 }

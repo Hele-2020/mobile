@@ -48,7 +48,6 @@ export default class RegisterScreen extends Component {
     _registerAsync = () => {
         axios.post(Api.url('/auth/register'), this.state)
         .then(async response => {
-            console.log(response);
             if (response.data.password) {
                 await Clipboard.setString(response.data.password)
                 alert(

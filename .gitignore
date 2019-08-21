@@ -1,3 +1,5 @@
+config/Api.js
+
 node_modules/**/*
 package-lock.json
 .expo/*
