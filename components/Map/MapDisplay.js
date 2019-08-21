@@ -1,7 +1,7 @@
 import React from 'react';
 import MapView from 'react-native-map-clustering';
 import { Marker, Callout } from 'react-native-maps';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Button} from 'react-native';
 import axios from 'axios';
 import Api from '../../config/Api';
 
@@ -12,60 +12,47 @@ export default class MapDisplay extends React.Component
 {
     constructor(props) {
         super(props)
-        this.state ={
-            lattitude: 45.1474456787,
-            longitude: 4.2578635216,
-            lattitudeDelta: 0.3231590092,
-            longitudeDelta: 2.4890310764
+        this.state = {
+            region: {
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            },
         }
-
     }
 
-    componentDidMount(){
-        if(this.props.coordregion !== null) {
-            this.setState({
+    onRegionChange() {
+        this.setState({ 
+            region : {
                 latitude: this.props.coordregion.lattitude,
                 longitude: this.props.coordregion.longitude,
-                latitudeDelta: this.props.coordregion.lattitudeDelta,
-                longitudeDelta: this.props.coordregion.longitudeDelta
-            })
-        }
+                latitudeDelta: 10.0*this.props.coordregion.lattitudeDelta,
+                longitudeDelta: 10.0*this.props.coordregion.longitudeDelta
+        } });
+      }
+
+    componentDidUpdate() {
+        console.log(this.props.coordregion.lattitude)
+        mapView.root.animateToRegion({
+            latitude: this.props.coordregion.lattitude,
+            longitude: this.props.coordregion.longitude,
+            latitudeDelta: 10.0*this.props.coordregion.lattitudeDelta,
+            longitudeDelta: 10.0*this.props.coordregion.longitudeDelta
+        });
     }
 
     render() {
         return(
-            <View>
-                <MapView
-                    region={{
-                        latitude: this.state.lattitude,
-                        longitude: this.state.longitude,
-                        latitudeDelta: this.state.lattitudeDelta,
-                        longitudeDelta: this.state.longitudeDelta
-                    }} style={{ width: winWidth, height: winHeight }} >
+            <MapView
+                initialRegion={this.state.region}
+                ref={ref => mapView = ref}
+                style={{ width: winWidth, height: winHeight }} >
 
-                    {this.props.pois.map(poi =>
-                        <Marker coordinate={{ latitude: poi.lattitude, longitude: poi.longitude}} key={poi.id}>
-                            <Callout
-                                tooltip={false}
-                                onPress={() => this.props.modal(true, poi.id)} >
-                                <View style={styles.description}>
-                                    <View style={styles.content}>
-                                        <Text style={styles.titleMap}>{poi.name}</Text>
-
-                                        <View style={styles.info}>
-                                            <Text style={styles.textpoi}>Adresse: {poi.address}</Text>
-                                            <Text style={styles.textpoi}>Code postal: {poi.zipcode}</Text>
-                                            <Text style={styles.textpoi}>Ville: {poi.city}</Text>
-                                            <Text style={styles.textpoi}>Telephone: {poi.phone}</Text>
-                                            <Text style={styles.textpoi}>Site internet: {poi.site}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </Callout>
-                        </Marker>
-                    )}
-                </MapView>
-            </View>
+                {this.props.pois.map(poi =>
+                    <Marker coordinate={{ latitude: poi.lattitude, longitude: poi.longitude}} key={poi.id} />
+                )}
+            </MapView>
         )
     }
 }

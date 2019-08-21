@@ -21,7 +21,13 @@ export default class MapScreen extends React.Component
             pois: [],
             modalVisible: false,
             idPoi: [],
-            coorRegion :null
+            coorRegion: {
+                lattitude: 45.1474456787,
+                longitude: 4.2578635216,
+                lattitudeDelta: 3.231590092,
+                longitudeDelta: 24.890310764     
+            },
+            info : null
 
         };
 
@@ -53,21 +59,12 @@ export default class MapScreen extends React.Component
     handleChange = (region) => {
         this.setState({region: region})
 
-        axios.get(Api.url(`/region/${region}`))
-        .then(async response => {
-            this.setState({ 
-                pois: response.data
-            })
-
-        })
-        .catch(error => {
-            console.log(error.response.data);
-        })
-
-
         axios.get(Api.url(`/region/show/${region}`))
-        .then(async region => {
-            this.setState({ coorRegion: region})
+        .then(async response => {
+            this.setState({
+                coorRegion: response.data,
+                pois: response.data.pois
+            })
         })
         .catch(error => {
             console.log(error.response.data);
