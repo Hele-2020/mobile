@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
     height: 35,
     marginRight: '2%',
     },
-    textBold: {
-      fontWeight : "bold",
-      color: "#59358B",
+  textBold: {
+    fontWeight : "bold",
+    color: "#59358B",
     },
   flexRow: {
     display: "flex",

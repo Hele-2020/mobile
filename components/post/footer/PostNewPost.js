@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import post from '../../SocketConn.js';
-=======
+
 import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import chat from '../../SocketConn.js';
->>>>>>> chat-pro-view
 
 export default class PostNewPost extends Component {
     constructor(props) {
@@ -19,7 +15,7 @@ export default class PostNewPost extends Component {
         date: Date.now(),
         name: 'Dr Robin'
       }
-      post.emit('message', message)
+      chat.emit('message', message)
       this.setState({ text: '' })
     }
     return (

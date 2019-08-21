@@ -5,11 +5,14 @@ import ActionComments from './ActionComments.js';
 import AllComments from './AllComments.js';
 
 export default class BlocReaction extends Component {
+  constructor(props){
+    super(props);
+  }
   render() {
     return (
       <View style={styles.view}>
         <Instructif />
-        <ActionComments /> 
+        <ActionComments {...this.props}/> 
         <AllComments />
       </View>
     );

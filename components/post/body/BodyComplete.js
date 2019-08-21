@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import BlocPost from '././infoPost/BlocPost';
-import post from '../../SocketConn.js';
+import chat from '../../SocketConn.js';
 
 export default class BodyComplete extends Component {
   constructor(props){
@@ -9,7 +9,7 @@ export default class BodyComplete extends Component {
       this.state = {
         messages: []
       }
-    post.on('send', (messageSock) => {
+    chat.on('send', (messageSock) => {
       this.setState({ messages: [...this.state.messages, messageSock] })
     })
   }
@@ -17,8 +17,6 @@ export default class BodyComplete extends Component {
     const NewPost = this.state.messages.map((message, key) => (
       <BlocPost key={key} message={message.message} date={message.date} name={message.name} />)
     )
-
-
     return (
       <View style={styles.view}>
         {NewPost}
