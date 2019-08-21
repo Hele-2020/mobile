@@ -14,25 +14,33 @@ export default class SlotformScreen extends Component {
         selectedHours: 0,
         selectedMinutes: 0,
         date: '',
-      }
+        currentDate : new Date().getDate(),
+        currentMonth : new Date().getMonth() + 1,
+        currentYear : new Date().getFullYear(),
+    }
 
-    Register = event => {
+    Register = async () => {
         const date = this.state.date;
         const hours = this.state.selectedHours + ":" +this.state.selectedMinutes;
-        const send = [date, hours]
-        console.log(Api.url())
-        axios.post(Api.url('/make/slot'),send)
-            .then(function (response) {
-                console.log(response)
-                alert('Vous venez de crée un créneau pour le '+ date + ' à ' + hours)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        const send = date + ' ' + hours
+        const token = await AsyncStorage.getItem('userToken');
+
+        const headers = {
+            'Authorization': 'bearer ' + token,
+        }
+
+        axios.post(Api.url('/make/slot'),send,{headers: headers})
+        .then(function (response) {
+            console.log(response)
+            alert('Vous venez de crée un créneau pour le '+ date + ' à ' + hours)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
     }
      
-      render() {
+    render() {
         const { selectedHours, selectedMinutes } = this.state;
         return (
           <View style={styles.container}>
@@ -42,6 +50,7 @@ export default class SlotformScreen extends Component {
                     date={this.state.date}
                     mode="date"
                     format="DD-MM-YYYY"
+                    minDate={this.state.currentDate+'-'+this.state.currentMonth+'-'+this.state.currentYear}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel" 
                     onDateChange={(date) => this.setState({date: date})}
@@ -59,7 +68,7 @@ export default class SlotformScreen extends Component {
                 </View>
           </View>
         );
-      }
+    }
     
 }
 
