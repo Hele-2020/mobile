@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
 import comment from '../../SocketConn.js';
 
 export default class PostNewComment extends Component {

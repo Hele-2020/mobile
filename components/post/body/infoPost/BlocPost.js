@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import BlocReaction from '../reaction/BlocReaction.js';
 export default class BlocPost extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    };
+  }
   render() {
     const { message, date, name } = this.props
     return (
@@ -16,7 +21,7 @@ export default class BlocPost extends Component {
         </View> 
         </View>
         <Text style={styles.text} >{ message }</Text>
-        <BlocReaction />
+        <BlocReaction {...this.props}/>
       </View>
     );
   }
