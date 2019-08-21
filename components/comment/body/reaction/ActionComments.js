@@ -15,7 +15,7 @@ export default class ActionComments extends Component {
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.view}>
-        <TouchableOpacity style={styles.touchableCommenter} onPress={() => navigate('PostComments', {})}>
+        <TouchableOpacity style={styles.touchableCommenter} onPress={() => navigate('PostCommentsPsy', {})}>
           <Text style={styles.text} >
             <Image style={styles.stretchImg}
             source={require('../../../../assets/logoCommenter.png')} />commenter</Text>
