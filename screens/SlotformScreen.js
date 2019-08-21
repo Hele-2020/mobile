@@ -14,25 +14,36 @@ export default class SlotformScreen extends Component {
         selectedHours: 0,
         selectedMinutes: 0,
         date: '',
+        slot:'',
         currentDate : new Date().getDate(),
         currentMonth : new Date().getMonth() + 1,
         currentYear : new Date().getFullYear(),
     }
 
     Register = async () => {
+
         const date = this.state.date;
+
+        if(this.state.selectedHours === 24){
+            this.setState({selectedHours : 0})
+        }
+        if(this.state.selectedMinutes === 60){
+            this.setState({selectedMinutes : 0})
+        }
         const hours = this.state.selectedHours + ":" +this.state.selectedMinutes;
-        const send = date + ' ' + hours
+        this.setState({slot : date + ' ' + hours})
         const token = await AsyncStorage.getItem('userToken');
 
+        console.log(this.state.slot)
         const headers = {
             'Authorization': 'bearer ' + token,
         }
 
-        axios.post(Api.url('/make/slot'),send,{headers: headers})
+        axios.post(Api.url('/make/slot'),{start_time : this.state.slot},{headers: headers})
         .then(function (response) {
             console.log(response)
             alert('Vous venez de crée un créneau pour le '+ date + ' à ' + hours)
+            //faire une redirection vers la liste des créneaux
         })
         .catch(function (error) {
             console.log(error);
