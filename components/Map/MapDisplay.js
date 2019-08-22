@@ -16,6 +16,8 @@ export default class MapDisplay extends React.Component
     }
 
     render() {
+        const { children, renderMarker, markers } = this.props;
+
         return(
             <MapView
                 initialRegion={this.props.region}

@@ -67,7 +67,7 @@ export default class MapScreen extends Component {
             console.log(error.response.data);
         })
     }
-
+  
     render() {
         return (
             <View style={styles.container}>
