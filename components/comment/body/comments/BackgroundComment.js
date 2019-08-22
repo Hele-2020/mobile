@@ -3,14 +3,16 @@ import { View, StyleSheet, Image } from 'react-native';
 import BlocComments from './BlocComments.js';
 
 export default class BackgroundComment extends Component {
-    
+  constructor(props){
+    super(props);
+  }
   render() {
     return (
       <View style={styles.flexRow} >
       <Image style={styles.stretchImg}
           source={require('../../../../assets/logoHeleOrange.png')} />
         <View style={styles.view}>
-          <BlocComments />
+          <BlocComments {...this.props}/>
         </View>
       </View>
     );

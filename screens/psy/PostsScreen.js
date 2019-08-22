@@ -32,7 +32,7 @@ export default class PostsScreen extends Component {
             <Logo width={120} height={40}/>
           </TouchableOpacity> 
         </View>
-        <BodyComplete />
+        <BodyComplete {...this.props}/>
         {this.state.status ? <PostNewPost /> : null}
       </View>
     );

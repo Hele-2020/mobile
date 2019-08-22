@@ -3,14 +3,14 @@ import { View, StyleSheet } from 'react-native';
 
 import BlocPost from '././infoPost/BlocPost.js';
 import BackgroundComment from './comments/BackgroundComment.js';
-import post from '../../SocketConn.js';
+import comment from '../../SocketConn.js';
 export default class BodyComplete extends Component {
   constructor(props){
     super(props);
       this.state = {
         messages: []
       }
-    post.on('send', (messageSock) => {
+    comment.on('send', (messageSock) => {
       this.setState({ messages: [...this.state.messages, messageSock] })
     })
   }
@@ -21,7 +21,7 @@ export default class BodyComplete extends Component {
     return (
       
       <View style={styles.view}>
-        <BlocPost /*{}*/ />
+        <BlocPost {...this.props} />
         {NewComment}
       </View>
     );

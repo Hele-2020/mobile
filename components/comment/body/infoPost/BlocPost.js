@@ -19,7 +19,7 @@ export default class BlocPost extends Component {
           </View> 
         </View>
         <Text style={styles.text} >{ message }</Text>
-        <BlocReaction />
+        <BlocReaction {...this.props}/>
       </View>
     );
   }

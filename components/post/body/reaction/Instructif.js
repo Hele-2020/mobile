@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 export default class Instructif extends Component {
+  constructor(props){
+    super(props);
+  }
   state = {
     oneShoot: true,
     count: 0

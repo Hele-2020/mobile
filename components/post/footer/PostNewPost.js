@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+
+import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import chat from '../../SocketConn.js';
 
 export default class PostNewPost extends Component {
@@ -18,7 +19,7 @@ export default class PostNewPost extends Component {
       this.setState({ text: '' })
     }
     return (
-      <KeyboardAvoidingView style={styles.keyboard} behavior="padding" enabled>
+      <KeyboardAvoidingView keyboardVerticalOffset= {Platform.select({ios: 80, android: 83})} style={styles.keyboard} behavior="padding" enabled>
         <View style={styles.view} >
             <TextInput multiline style={styles.textInput} placeholder="votre commentaire ... "
                 onChangeText={(text) => this.setState({text})}

@@ -15,10 +15,8 @@ export default class BodyComplete extends Component {
   }
   render() {
     const NewPost = this.state.messages.map((message, key) => (
-      <BlocPost key={key} message={message.message} date={message.date} name={message.name} />)
+      <BlocPost {...this.props} key={key} message={message.message} date={message.date} name={message.name} />)
     )
-
-
     return (
       <View style={styles.view}>
         {NewPost}
