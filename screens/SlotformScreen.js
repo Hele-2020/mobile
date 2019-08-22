@@ -47,6 +47,7 @@ export default class SlotformScreen extends Component {
         })
         .catch(function (error) {
             console.log(error);
+            alert("votre créneaux n'a pas pu etre enregistré");
         });
 
     }

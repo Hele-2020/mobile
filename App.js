@@ -10,7 +10,7 @@ import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
 
 import LoginScreen from './screens/auth/LoginScreen';
 import RegisterScreen from './screens/auth/RegisterScreen';
-
+import SelectSlotScreen from './screens/SelectSlotScreen';
 import HomeScreen from './screens/HomeScreen';
 import SlotformScreen from './screens/SlotformScreen';
 // import ChatScreen from './screens/ChatScreen';
@@ -21,6 +21,7 @@ const AppStack = createStackNavigator({
     Slotform : SlotformScreen,
     // Chat: ChatScreen,
     Map: MapScreen,
+    SelectSlot: SelectSlotScreen
 });
   
 
