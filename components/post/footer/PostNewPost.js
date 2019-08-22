@@ -12,7 +12,7 @@ export default class PostNewPost extends Component {
     onPress = () => {
       const message = {
         message: this.state.text,
-        date: Date.now(),
+        date: "12/12/12",
         name: 'Dr Robin'
       }
       chat.emit('message', message)

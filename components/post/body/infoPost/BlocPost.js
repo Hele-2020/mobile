@@ -8,26 +8,27 @@ export default class BlocPost extends Component {
       messages: []
     };
   }
+
   render() {
-    const name = this.state.messages.map((message, key) => (
-      <Text key={key} name={message.name} style={styles.textBold} >{ name }</Text>))
+/*    const name = this.state.messages.map((message, key) => (
+      <Text {...this.props} key={key} name={message.name} style={styles.textBold} >{ name }</Text>))
     const message = this.state.messages.map((message, key) => (
-      <Text  key={key} message={message.message} />))
+      <Text {...this.props} key={key} message={message.message} />))
     const date = this.state.messages.map((message, key) => (
-        <Text  key={key} message={message.date} />))
+        <Text {...this.props} key={key} message={message.date} />))*/
     
-    // const { key, message, date, name } = this.props
+    const { message, date, name } = this.props
     return (
       <View style={styles.view}>
       <View style={styles.flexRow}>
         <Image style={styles.stretchImg}
             source={require('../../../../assets/logohele.png')} />
           <View style={styles.flexColumn}> 
-          { name }
-          { date}
+          <Text style={styles.textBold}>{ name }</Text>
+          <Text style={styles.textBold}>{ date }</Text>
         </View> 
         </View>
-        { message }
+        <Text>{ message }</Text>
         <BlocReaction {...this.props}/>
       </View>
     );
