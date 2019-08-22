@@ -3,6 +3,7 @@ import MapView from 'react-native-map-clustering';
 import { Marker, Callout } from 'react-native-maps';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 
+
 const { width: winWidth } = Dimensions.get('window');
 const { height: winHeight } = Dimensions.get('window');
 
@@ -13,9 +14,13 @@ export default class MapDisplay extends React.Component
     }
 
     render() {
+        const { children, renderMarker, markers } = this.props;
+
         return(
             <View>
                 <MapView
+                 showsUserLocation ref={ map => { this.map = map }}
+                 data={markers}
                     region={{
                         latitude: 46.227638,
                         longitude: 2.213749,
@@ -24,7 +29,9 @@ export default class MapDisplay extends React.Component
                     }} style={{ width: winWidth, height: winHeight }} >
 
                     {this.props.pois.map(poi =>
-                        <Marker coordinate={{ latitude: poi.lattitude, longitude: poi.longitude}} key={poi.id}>
+                        <Marker coordinate={{ latitude: poi.latitude, longitude: poi.longitude}} key={poi.id}
+                        //image={require('../assets/icon.png')}
+                        >
                             <Callout
                                 tooltip={false}
                                 onPress={() => this.props.modal(true, poi.id)} >

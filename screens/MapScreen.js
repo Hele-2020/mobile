@@ -54,12 +54,13 @@ export default class MapScreen extends React.Component
         axios.get(Api.url(`/region/${region}`))
         .then(async response => {
             this.setState({ pois: response.data })
+       
         })
         .catch(error => {
             console.log(error.response.data);
         })
     }
-
+  
     render() {
         return (
             <View>

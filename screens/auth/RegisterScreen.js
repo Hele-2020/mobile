@@ -25,7 +25,7 @@ export default class RegisterScreen extends Component {
             phone: '',
             username: '',
             age: '',
-            region: ''
+            region_id: ''
         };
     }
 
@@ -36,7 +36,7 @@ export default class RegisterScreen extends Component {
                 <TextInput value={this.state.phone} onChangeText={text => this.setState({phone: text})} textContentType='telephoneNumber' placeholder="Phone" />
                 <TextInput value={this.state.username} onChangeText={text => this.setState({username: text})} textContentType='username' placeholder="Username" />
                 <TextInput value={this.state.age} onChangeText={text => this.setState({age: text})} placeholder="Age" />
-                <TextInput value={this.state.region} onChangeText={text => this.setState({region: text})} textContentType='addressState' placeholder="Region" />
+                <TextInput value={this.state.region_id} onChangeText={text => this.setState({region_id: text})} textContentType='addressState' placeholder="Region" />
 
                 <Button title="Register !" onPress={this._registerAsync} />
                 <Button title="Login" onPress={this._redirectLogin} />
