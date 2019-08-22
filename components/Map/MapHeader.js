@@ -40,8 +40,8 @@ export default class MapHeader extends React.Component
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({selectedRegion:option.name}), this.props.change(option.id)}}>
-
+                    onChange={(option)=>{ this.setState({selectedRegion:option.name}), this.props.handleChange(option.id)}}>
+                        
                     <TextInput
                         style={styles.textInput}
                         editable={false}
@@ -64,5 +64,4 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         fontSize: 15
     }
-
 })

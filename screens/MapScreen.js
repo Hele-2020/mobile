@@ -1,12 +1,10 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import Api from '../config/Api';
 import { View, Text, StyleSheet} from 'react-native';
 import axios from 'axios';
-
 import MapHeader from '../components/Map/MapHeader';
 import MapDisplay from '../components/Map/MapDisplay';
 import MapModal from '../components/Map/MapModal';
-
 
 export default class MapScreen extends Component {
     static navigationOptions = {
@@ -17,11 +15,10 @@ export default class MapScreen extends Component {
         super(props);
 
         this.state = {
-            region: '',
             modalVisible: false,
             pois: [],
             idPoi: [],
-            regions: {
+            region: {
                 latitude: 48.858372,
                 longitude: 2.294481,
                 latitudeDelta: 7.0,
@@ -31,20 +28,6 @@ export default class MapScreen extends Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeModal = this.handleChangeModal.bind(this)
-    }
-
-    randomCoordinate(region) {
-        return {
-            latitude: region.latitude + (Math.random() - 0.5) * (region.latitudeDelta / 2),
-            longitude: region.longitude + (Math.random() - 0.5) * (region.longitudeDelta / 2),
-        };
-    }
-
-    randomRegion() {
-        return {
-            ...this.state.region,
-            ...this.randomCoordinate(this.state.region),
-        };
     }
 
     handleChangeModal(value, id) {
@@ -68,16 +51,14 @@ export default class MapScreen extends Component {
     }
 
     handleChange(region) {
-        this.setState({region: region})
-
         axios.get(Api.url(`/region/${region}`))
         .then(async response => {
             this.setState({
-                regions: {
-                    latitude: response.data.lattitude,
+                region: {
+                    latitude: response.data.latitude,
                     longitude: response.data.longitude,
-                    latitudeDelta: 10* response.data.lattitudeDelta,
-                    longitudeDelta: 10*response.data.longitudeDelta,
+                    latitudeDelta: 10 * response.data.latitudeDelta,
+                    longitudeDelta: 10 *response.data.longitudeDelta,
                 },
                 pois: response.data.pois
             })
@@ -87,8 +68,6 @@ export default class MapScreen extends Component {
         })
     }
 
-    
-
     render() {
         return (
             <View style={styles.container}>
@@ -97,13 +76,12 @@ export default class MapScreen extends Component {
                     modal={this.handleChangeModal}
                     poi={this.state.idPoi} />
                 <MapHeader
-                    change={this.handleChange} />
+                    handleChange={this.handleChange} />
                 <MapDisplay
                     pois={this.state.pois}
                     modal={this.handleChangeModal}
-                    regions={this.state.regions}
-                   
-                    />
+                    region={this.state.region}
+                />
             </View>
         )
     }
