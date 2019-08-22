@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-
-import { AsyncStorage, StyleSheet, Button, View } from 'react-native';
+import { AsyncStorage, Button, View } from 'react-native';
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
@@ -11,6 +10,7 @@ export default class HomeScreen extends Component {
         return (
             <View>
                 <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+                <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
                 <Button title="Map" onPress={this._MapAsync} />
             </View>
         );
@@ -20,7 +20,11 @@ export default class HomeScreen extends Component {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
     };
-
+    
+    _SlotAsync = async () => {
+        this.props.navigation.navigate('Slotform');
+    }
+    
     _MapAsync = async () => {
         this.props.navigation.navigate('Map');
     };
