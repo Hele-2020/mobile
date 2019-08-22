@@ -40,12 +40,12 @@ export default class MapHeader extends React.Component
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({selectedRegion:option.name}), this.props.handleChange(option.id)}}>
-                        
+                    onChange={(option)=>{ this.setState({selectedRegion:option.name}), this.props.handleChange(option.id)}}>   
                     <TextInput
                         style={styles.textInput}
                         editable={false}
-                        placeholder="Selectionner une region &#x1F50D;"
+                        placeholderTextColor = "#808080"
+                        placeholder="&#x1F50D; Rechercher..."
                         value={this.state.selectedRegion} />
                 </ModalSelector>
             </View>
@@ -55,13 +55,16 @@ export default class MapHeader extends React.Component
 
 const styles = StyleSheet.create({
     textInput: {
+        backgroundColor: '#DCDCDC',
         borderWidth: 1,
-        borderColor: '#59358B',
-        padding: 15,
-        height: 45,
+        borderColor: '#DCDCDC',
+        padding: 10,
+        height: 37,
         marginTop: 10,
         borderRadius: 30,
-        marginBottom: 20,
+        marginBottom: 15,
+        marginRight: 30,
+        marginLeft: 80,
         fontSize: 15
     }
 })
