@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#DCDCDC',
         borderWidth: 1,
         borderColor: '#DCDCDC',
-        padding: 10,
-        height: 37,
-        marginTop: 10,
+        padding: 7,
+        height: 35,
+        marginTop: 5,
         borderRadius: 30,
-        marginBottom: 15,
-        marginRight: 30,
-        marginLeft: 80,
+        marginBottom: 18,
+        marginRight: 40,
+        marginLeft: 40,
         fontSize: 15
     }
 })
