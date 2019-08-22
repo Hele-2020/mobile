@@ -1,6 +1,6 @@
 import React from 'react';
-import MapView from 'react-native-map-clustering';
-import { Marker, Callout } from 'react-native-maps';
+// import MapView from 'react-native-map-clustering';
+import MapView, { Marker } from 'react-native-maps';
 import { View, Text, Dimensions, StyleSheet, Button} from 'react-native';
 import axios from 'axios';
 import Api from '../../config/Api';
@@ -8,50 +8,31 @@ import Api from '../../config/Api';
 const { width: winWidth } = Dimensions.get('window');
 const { height: winHeight } = Dimensions.get('window');
 
+
 export default class MapDisplay extends React.Component
 {
     constructor(props) {
         super(props)
-        this.state = {
-            region: {
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            },
-        }
     }
-
-    onRegionChange() {
-        this.setState({ 
-            region : {
-                latitude: this.props.coordregion.lattitude,
-                longitude: this.props.coordregion.longitude,
-                latitudeDelta: 10.0*this.props.coordregion.lattitudeDelta,
-                longitudeDelta: 10.0*this.props.coordregion.longitudeDelta
-        } });
-      }
 
     componentDidUpdate() {
-        console.log(this.props.coordregion.lattitude)
-        mapView.root.animateToRegion({
-            latitude: this.props.coordregion.lattitude,
-            longitude: this.props.coordregion.longitude,
-            latitudeDelta: 10.0*this.props.coordregion.lattitudeDelta,
-            longitudeDelta: 10.0*this.props.coordregion.longitudeDelta
-        });
+        //console.log(this.props.coordregion.lattitude)
+        this.map.animateToRegion(this.props.regions);
     }
 
+    
     render() {
+    
         return(
             <MapView
-                initialRegion={this.state.region}
-                ref={ref => mapView = ref}
+                initialRegion={this.props.regions}
+                ref={ref => this.map = ref}
                 style={{ width: winWidth, height: winHeight }} >
 
-                {this.props.pois.map(poi =>
-                    <Marker coordinate={{ latitude: poi.lattitude, longitude: poi.longitude}} key={poi.id} />
-                )}
+                {this.props.pois.map((poi, i) => 
+                    (
+                    <Marker coordinate={{ latitude: poi.lattitude, longitude: poi.longitude}} key={i} />
+                ))}
             </MapView>
         )
     }

@@ -1,39 +1,50 @@
-import React from 'react';
+import React,{Component} from 'react';
 import Api from '../config/Api';
-import { View, Text} from 'react-native';
+import { View, Text, StyleSheet} from 'react-native';
 import axios from 'axios';
 
 import MapHeader from '../components/Map/MapHeader';
 import MapDisplay from '../components/Map/MapDisplay';
 import MapModal from '../components/Map/MapModal';
 
-export default class MapScreen extends React.Component
-{
+
+export default class MapScreen extends Component {
     static navigationOptions = {
         title: 'Carte',
     };
 
-    constructor() {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
             region: '',
-            pois: [],
             modalVisible: false,
+            pois: [],
             idPoi: [],
-            coorRegion: {
-                lattitude: 45.1474456787,
-                longitude: 4.2578635216,
-                lattitudeDelta: 3.231590092,
-                longitudeDelta: 24.890310764     
-            },
-            info : null
+            regions: {
+                latitude: 48.858372,
+                longitude: 2.294481,
+                latitudeDelta: 7.0,
+                longitudeDelta: 4.0,
+            }
+        }
 
-        };
-
-        // TODO: get user details here and passthem to the MapHeader in props
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeModal = this.handleChangeModal.bind(this)
+    }
+
+    randomCoordinate(region) {
+        return {
+            latitude: region.latitude + (Math.random() - 0.5) * (region.latitudeDelta / 2),
+            longitude: region.longitude + (Math.random() - 0.5) * (region.longitudeDelta / 2),
+        };
+    }
+
+    randomRegion() {
+        return {
+            ...this.state.region,
+            ...this.randomCoordinate(this.state.region),
+        };
     }
 
     handleChangeModal(value, id) {
@@ -56,13 +67,18 @@ export default class MapScreen extends React.Component
         }
     }
 
-    handleChange = (region) => {
+    handleChange(region) {
         this.setState({region: region})
 
-        axios.get(Api.url(`/region/show/${region}`))
+        axios.get(Api.url(`/region/${region}`))
         .then(async response => {
             this.setState({
-                coorRegion: response.data,
+                regions: {
+                    latitude: response.data.lattitude,
+                    longitude: response.data.longitude,
+                    latitudeDelta: 10* response.data.lattitudeDelta,
+                    longitudeDelta: 10*response.data.longitudeDelta,
+                },
                 pois: response.data.pois
             })
         })
@@ -71,9 +87,11 @@ export default class MapScreen extends React.Component
         })
     }
 
+    
+
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <MapModal
                     modalVisible={this.state.modalVisible}
                     modal={this.handleChangeModal}
@@ -83,9 +101,20 @@ export default class MapScreen extends React.Component
                 <MapDisplay
                     pois={this.state.pois}
                     modal={this.handleChangeModal}
-                    coordregion={this.state.coorRegion}
-                />
+                    regions={this.state.regions}
+                   
+                    />
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
+        backgroundColor: '#fff',
+    },
+});
