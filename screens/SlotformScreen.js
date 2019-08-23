@@ -74,9 +74,12 @@ export default class SlotformScreen extends Component {
                     selectedMinutes={selectedMinutes}
                     onChange={(hours, minutes) => this.setState({ selectedHours: hours, selectedMinutes: minutes })}
                 />
-
                 <View>
-                    <TouchableOpacity onPress={this.Register} ><Text style={styles.button}>REGISTER</Text></TouchableOpacity>
+                <Button
+                    onPress={this.Register}
+                    title="Register"
+                    color="blue"
+                    />
                 </View>
           </View>
         );
