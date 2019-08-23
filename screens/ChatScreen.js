@@ -1,67 +1,136 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View , TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView} from 'react-native';
-import Connexion from '../SocketConnexion';
+import { StyleSheet, Text, View , TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, ActivityIndicator, Platform} from 'react-native';
+///import Connexion from '../SocketConnexion';
 import axios from 'axios';
 import Api from '../config/Api';
 import { Header } from 'react-navigation';
+import {AsyncStorage} from 'react-native';
 
-function ChatScreen(){
+
+function ChatScreen(props){
+    
 
     const [message, setMessage] = useState();
     const [chat,setChat] = useState({});
-    const [dataMessage, setdataMessage] = useState([]);
-    const [newMessage, setnewMessage] = useState([]);
-
-
+    const [dataMessage, setDataMessage] = useState([]);
+    const [newMessage, setNewMessage] = useState([]);
+    const { navigation } = props;
+    const id = navigation.getParam('Id', 'NO-ID');
+    const username = navigation.getParam('users', 'NO-USERNAME');
+    const [authId,setauthId] = useState(0);
+    const [page,setPage] = useState(1);
+    const [lastPage,setLastPage] = useState();
+    
+    
+    
     useEffect(() => {
+        /* Connexion().then(chat => {
+            setChat(chat);            
+        }) */
+        tokenUser();
+    }, [page]);
 
-            Connexion().then(chat => {
-                setChat(chat);            
-            })
-       
-            // axios.get( Api.url('chat/6'))
-            // .then(function (response) {
-            //     setdataMessage(response.data.messages)
-            // })
-            // .catch(function (error) {
-            //     console.log(error);
-            // });
+    // useEffect(() => {
+    //     console.log({authId});
+    // }, authId);
 
- 
-    }, []);
+    async function tokenUser(){
+        const token = await AsyncStorage.getItem("userToken");
+        const user = await AsyncStorage.getItem("userId");
+        setauthId(user);
+        
+        const headers = {
+            'Authorization': "bearer " + token
+        };
+        axios({
+            method: 'GET',
+            url: (Api.url('chat/' + id + "/" + page)),
+            headers: headers,
+        }).then(async (response) => {
+            setLastPage(response.data.lastPage)
+            setDataMessage([...dataMessage,...response.data.data])
+            await console.log(dataMessage)
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     onChangeText = (key, val) => {
         setMessage(val)
     }
+
+    handleScroll = () => {
+        setPage(page+1)
+    }
+
+    _keyExtractor= (item,index) => {
+        return item.id.toString();
+    }
+
+    _renderItem = (item) => {
+        return(
+            <View>
+                {item.item.user.id == authId  ? 
+                    <Text style={styles.auth}>
+                        <Text>{item.item.content + "\n"}</Text>
+                        <Text style={styles.pseudo}>{item.item.created_at}</Text>  
+                    </Text> : 
+                    <Text style={styles.other}>
+                        <Text style={styles.pseudo}>{(item.item.user.username + "\n")}</Text>
+                        <Text style={styles.pseudo}>{item.item.content + "\n"}</Text>
+                        <Text style={styles.pseudo}>{item.item.created_at}</Text>  
+                    </Text>
+                }
+            </View>
+        )
+    }
+
+    _renderFooter = () => {
+        if (page <= lastPage){
+            return (
+                <View>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        }
+        else {
+            return null;
+        }
+    }
     
     const sendMessage = () => {
-        chat.emit('message',message)
+        /* chat.emit('message',message)
         this.textInput.clear() 
         chat.on('message', (data) => {
-            // const tabinitial = newMessage; 
-            // tabinitial.push(data.message)
-            // setnewMessage(tabinitial)
-            setnewMessage([ ...newMessage, 
-                data.message
+            console.log(data);
+            setNewMessage([ ...newMessage, 
+                data
             ])
                     
-        })
+        }) */
 
     }
 
+
     return(
         <View style={styles.container }>
-            <FlatList/>
+            <FlatList inverted 
+            contentContainerStyle={{
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'stretch',
+            }}
+            data={dataMessage}
+            keyExtractor={_keyExtractor}
+            renderItem={_renderItem}
+            onEndReached={handleScroll}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={_renderFooter}
+            >
+            </FlatList>
+            
 
-            {/* {dataMessage.map((item, index) => 
-                <Text key={index}>{item.content}</Text>
-            )} */}
-
-            {newMessage.map((item, index) => 
-                <Text key={index}>{item}</Text>
-            )}
-
-                <KeyboardAvoidingView keyboardVerticalOffset = {Header.HEIGHT + 30} behavior='padding'>
+                <KeyboardAvoidingView keyboardVerticalOffset={Platform.select({ios: 0, android: 83})} behavior='padding'>
 
                     <View style={styles.inputBar}>
                         <TextInput
@@ -79,7 +148,9 @@ function ChatScreen(){
         </View>
     );
 }
-
+ChatScreen.navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam('users', 'NO-USERNAME')
+})
 export default ChatScreen;
 
 const styles = StyleSheet.create({
@@ -112,6 +183,34 @@ const styles = StyleSheet.create({
         marginLeft:5,
         color : 'black',
         backgroundColor:'#C805BF'
-    }
+    },
+    auth : {
+        //flexDirection: 'row-reverse',
+        //justifyContent:'center',
+        //alignItems:'flex-end',
+        textAlign: 'right',
+        alignSelf: 'flex-end',
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop: 20,
+        paddingBottom: 20,
+        borderRadius:5,
+        margin: 10,
+        color : 'black',
+        backgroundColor:'#4287f5'
+    },
+    other : {
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf: 'flex-start',
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop: 20,
+        paddingBottom: 20,
+        borderRadius:5,
+        margin:10,
+        color : 'black',
+        backgroundColor:'#c9c9c9'
+    },
 
   });
