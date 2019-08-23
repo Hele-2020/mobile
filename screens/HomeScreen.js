@@ -58,6 +58,8 @@ export default class HomeScreen extends Component {
                     username.username).join(", "))}</Text>
                 </TouchableOpacity>
             )}
+                <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
+                <Button title="Map" onPress={this._MapAsync} />
             </View>
         );
     }
@@ -76,5 +78,13 @@ export default class HomeScreen extends Component {
             Id: cle,
             users: username
         });
+    }
+    
+    _SlotAsync = async () => {
+        this.props.navigation.navigate('Slotform');
+    }
+    
+    _MapAsync = async () => {
+        this.props.navigation.navigate('Map');
     };
 }
