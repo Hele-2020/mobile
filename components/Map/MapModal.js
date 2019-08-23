@@ -5,9 +5,9 @@ import {
     StyleSheet,
     Linking,
     Modal,
-    TouchableHighlight,
     ScrollView,
-    Platform
+    Platform,
+    TouchableOpacity 
 } from 'react-native';
 
 import {Icon} from 'native-base';
@@ -31,28 +31,26 @@ export default class MapModal extends React.Component
     render() {
         const poi = this.props.poi
         return (
-            <View style={{marginTop: 22}}>
                 <Modal
                     animationType="slide"
                     transparent={false}
                     visible={this.props.modalVisible}>
-                    <View style={{marginTop: 22}}>
+                    
                         <ScrollView>
-
-                            <TouchableHighlight
-                                style={{alignItems:'center'}}
+                            <TouchableOpacity
+                                style={{alignItems:'center', marginTop: 20, marginBottom: 5}}
                                 onPress={() => this.props.modal(false, '')}>
                                 <Icon
-                                    style={{color: "#59358B"}}
-                                    name="arrow-dropdown-circle" />
-                            </TouchableHighlight>
+                                    style={{color: "#59358B", fontSize: 50}}
+                                    name="arrow-dropdown-circle"  
+                                />
+                                    
+                            </TouchableOpacity>
 
-                            <View style={{margin: 10, marginTop: 15}}>
-
+                            <View style={{margin: 10}}>
 
                                 <Text style={styles.title}>{poi.name}</Text>
-
-                                <View style={{borderColor: "#59358B", borderWidth: 2}}>
+                                <View style={{borderColor: "#59358B", borderWidth: 2, padding: 10}}>
 
                                     <View style={styles.blocInfo}>
                                         <Text style={styles.info}>Description : </Text>
@@ -85,7 +83,6 @@ export default class MapModal extends React.Component
                                         <Text style={{textDecorationLine: "underline", color:"#59358B"}} selectable={true} onPress={()=> {this.dialCall(poi.phone)} }>{poi.phone}</Text>
                                     </View>
 
-
                                     <View style={styles.blocInfo}>
                                         <Text style={styles.info}>Site internet:</Text>
                                         <Text onPress={()=>{ Linking.openURL('http://'+ poi.site )}} style={{textDecorationLine: "underline", color:"#59358B"}} selectable={true} >{poi.site}</Text>
@@ -93,9 +90,8 @@ export default class MapModal extends React.Component
                                 </View>
                             </View>
                         </ScrollView>
-                    </View>
+                   
                 </Modal>
-            </View>
         )
     }
 }

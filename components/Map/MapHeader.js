@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         borderColor: '#DCDCDC',
         padding: 7,
         height: 35,
-        marginTop: 5,
+        marginTop: 18,
         borderRadius: 30,
         marginBottom: 18,
         marginRight: 40,
