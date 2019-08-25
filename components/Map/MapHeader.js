@@ -21,7 +21,6 @@ export default class MapHeader extends React.Component
         axios.get(Api.url('/region'))
         .then(async regions => {
             this.setState({ regions: regions.data})
-
         })
         .catch(error => {
             console.log(error.response.data);
@@ -33,6 +32,7 @@ export default class MapHeader extends React.Component
             <View style={{margin: 5}}>
 
                 <ModalSelector
+                 style={[styles.overlayStyle, styles.optionContainer, styles.cancelContainer, styles.selectStyle, styles.selectTextStyle, styles.optionStyle, styles.cancelStyle, styles.sectionStyle, styles.sectionTextStyle, styles.initValueTextStyle]}
                     data={this.state.regions}
                     selectedKey={this.state.userRegionId}
                     keyExtractor={item => item.id}
@@ -66,5 +66,81 @@ const styles = StyleSheet.create({
         marginRight: 40,
         marginLeft: 40,
         fontSize: 15
+    },
+    overlayStyle: {
+        flex:            1,
+        padding:         '5%',
+        justifyContent:  'center',
+        backgroundColor: 'rgba(0,0,0,0.7)',
+    },
+
+    optionContainer: {
+        borderRadius:    BORDER_RADIUS,
+        flexShrink:      1,
+        marginBottom:    8,
+        padding:         PADDING,
+        backgroundColor: 'rgba(255,255,255,0.8)',
+    },
+
+    cancelContainer: {
+        alignSelf: 'stretch',
+    },
+
+    selectStyle: {
+        borderColor:  '#ccc',
+        borderWidth:  1,
+        padding:      PADDING,
+        borderRadius: BORDER_RADIUS,
+    },
+
+    selectTextStyle: {
+        textAlign: 'center',
+        color:     '#333',
+        fontSize:  FONT_SIZE,
+    },
+
+    cancelStyle: {
+        borderRadius:    BORDER_RADIUS,
+        backgroundColor: '#FBBA00',
+        padding:         PADDING,
+    },
+
+    cancelTextStyle: {
+        textAlign: 'center',
+        color:     '#333',
+        fontSize:  FONT_SIZE,
+    },
+
+    optionStyle: {
+        padding:           PADDING,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+
+    optionTextStyle: {
+        textAlign: 'center',
+        fontSize:  FONT_SIZE,
+        color:     '#59358B',
+    },
+
+    sectionStyle: {
+        padding:           PADDING * 2,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        backgroundColor: '#59358B',
+        },
+
+    sectionTextStyle: {
+        textAlign: 'center',
+        fontSize:  FONT_SIZE,
+        color:     'white',
+        //fontStyle: 'italic'
+    },
+
+    initValueTextStyle: {
+        textAlign: 'center',
+        fontSize:  FONT_SIZE,
+        color:     '#d3d3d3',
+
     }
 })
