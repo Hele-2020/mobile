@@ -9,6 +9,15 @@ import MapModal from '../components/Map/MapModal';
 export default class MapScreen extends Component {
     static navigationOptions = {
         title: 'Carte',
+        headerStyle:{
+            shadowColor:"transparent", 
+            elevation: 0
+        },
+        headerTintColor: "#FBBA00", 
+        headerTitleStyle :{
+            color: "#59358B",
+            fontSize: 20,
+        },
     };
 
     constructor (props) {

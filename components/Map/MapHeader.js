@@ -30,10 +30,11 @@ export default class MapHeader extends React.Component
 
     render() {
         return (
-            <View style={{margin: 5}}>
+            <View style={{ borderBottomColor: "#FBBA00", borderBottomWidth : 1}}>
 
                 <ModalSelector
                     data={this.state.regions}
+                    cancelText={'Annuler'}
                     selectedKey={this.state.userRegionId}
                     keyExtractor={item => item.id}
                     labelExtractor={item => item.name}
@@ -55,16 +56,18 @@ export default class MapHeader extends React.Component
 
 const styles = StyleSheet.create({
     textInput: {
-        backgroundColor: '#DCDCDC',
+        backgroundColor: 'rgba(0,0,0, .04)',
         borderWidth: 1,
         borderColor: '#DCDCDC',
         padding: 7,
         height: 35,
-        marginTop: 18,
+        marginTop: 9,
         borderRadius: 30,
         marginBottom: 18,
         marginRight: 40,
         marginLeft: 40,
-        fontSize: 15
+        fontSize: 15,
+        
+
     }
 })
