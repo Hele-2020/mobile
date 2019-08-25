@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import BodyComplete from '../../components/post/body/BodyComplete.js';
 import PostNewPost from '../../components/post/footer/PostNewPost.js';
 import { View, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import Logo from '../../assets/nouveauPost.svg';
+
 
 export default class PostsScreen extends Component {
   static navigationOptions = {
@@ -26,10 +28,9 @@ export default class PostsScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.view}>
-          <TouchableOpacity style={styles.touchableComment} onPress={this.newPost} >
-            <Image style={styles.stretchImg}
-              source={require('../../assets/nouveauPost.png')} />
-          </TouchableOpacity>
+           <TouchableOpacity style={styles.touchableComment} onPress={this.newPost} >
+            <Logo width={120} height={40}/>
+          </TouchableOpacity> 
         </View>
         <BodyComplete {...this.props}/>
         {this.state.status ? <PostNewPost /> : null}
@@ -53,12 +54,11 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "white"
   },
-  stretchImg: {
-    resizeMode: "contain",
-    width: 55,
-  },
   touchableComment: {
     paddingBottom: 10,
-    paddingTop: 10
+    paddingTop: 10,
+    position: 'absolute',
+    top: 10
+
   }
 });
