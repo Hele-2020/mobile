@@ -3,14 +3,21 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 import BlocReaction from '../reaction/BlocReaction.js';
 
 export default class BlocPost extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {
+<<<<<<< Updated upstream
       messages: []
     };
+=======
+      DataPost: []
+    }
+  }
+  componentDidMount(){
+    fetch()
+>>>>>>> Stashed changes
   }
   render() {
-    const { message, date, name } = this.props
     return (
       <View style={styles.view}>
         <View style={styles.flexRow}>
