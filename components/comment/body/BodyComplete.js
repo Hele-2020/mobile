@@ -3,17 +3,18 @@ import { View, StyleSheet } from 'react-native';
 
 import BlocPost from '././infoPost/BlocPost.js';
 import BackgroundComment from './comments/BackgroundComment.js';
-import comment from '../../SocketConn.js';
+// import comment from '../../SocketConn.js';
 export default class BodyComplete extends Component {
   constructor(props){
     super(props);
       this.state = {
         messages: []
-      }
-    comment.on('send', (messageSock) => {
-      this.setState({ messages: [...this.state.messages, messageSock] })
-    })
-  }
+      };
+    }
+  //   comment.on('send', (messageSock) => {
+  //     this.setState({ messages: [...this.state.messages, messageSock] })
+  //   })
+  // }
   render() {
     const NewComment = this.state.messages.map((message, key) => (
       <BackgroundComment key={key} message={message.message} date={message.date} name={message.name} />)
