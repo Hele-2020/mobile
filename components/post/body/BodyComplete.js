@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import BlocPost from '././infoPost/BlocPost';
 //import post from '../../SocketConn.js';
+// import Api from '../../../config/Api.js'
 
 export default class BodyComplete extends Component {
   constructor(props){
@@ -16,7 +17,7 @@ export default class BodyComplete extends Component {
     })*/
 
     componentDidMount(){
-      return fetch('http://68213064.ngrok.io/v1/posts')
+      return fetch('http://d990dc07.ngrok.io/v1/posts')
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -33,7 +34,6 @@ export default class BodyComplete extends Component {
     }
 
   render() {
-    console.log(this.state.dataSource)
     const HttpPost = this.state.dataSource.map((message, key) => (
       <BlocPost {...this.props} key={key} message={message.content} date={message.created_at} name={message.user.username} />)
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
-import chat from '../../SocketConn.js';
+// import chat from '../../SocketConn.js';
 
 export default class PostNewComment extends Component {
   constructor(props) {
