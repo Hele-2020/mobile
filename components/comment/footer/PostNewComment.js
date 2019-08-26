@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
-<<<<<<< Updated upstream
 // import chat from '../../SocketConn.js';
-=======
-import reponse from '../../SocketConn.js';
->>>>>>> Stashed changes
-
 export default class PostNewComment extends Component {
   constructor(props) {
     super(props);
@@ -13,11 +8,13 @@ export default class PostNewComment extends Component {
   }
   render() {
     onPress = () => {
-      // const message = {
-      //   message: this.state.text,
-      // }
-      // reponse.emit('message', message)
-      this.setState({ text: '' })
+      const message = {
+        message: this.state.text,
+        date: Date.now(),
+        name: 'Dr Robin'
+      }
+      /*chat.emit('message', message)
+      this.setState({ text: '' })*/
     }
     return (
       <KeyboardAvoidingView keyboardVerticalOffset= {Platform.select({ios: 80, android: 83})} style={styles.keyboard} behavior="padding" enabled>

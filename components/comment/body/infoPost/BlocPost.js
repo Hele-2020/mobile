@@ -6,16 +6,8 @@ export default class BlocPost extends Component {
   constructor(props){
     super(props);
     this.state = {
-<<<<<<< Updated upstream
       messages: []
     };
-=======
-      DataPost: []
-    }
-  }
-  componentDidMount(){
-    fetch()
->>>>>>> Stashed changes
   }
   render() {
     return (

@@ -17,17 +17,16 @@ export default class BodyComplete extends Component {
     })*/
 
     componentDidMount(){
-<<<<<<< Updated upstream
-      return fetch('http://d990dc07.ngrok.io/v1/posts')
-=======
-      fetch('https://422476ac.ngrok.io/v1/posts')
->>>>>>> Stashed changes
+      return fetch('http://87abcbf4.ngrok.io/v1/posts')
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          dataSource: responseJson
+          dataSource: responseJson,
+        }, function(){
+
+        });
       })
-    }).catch((error) =>{
+    .catch((error) =>{
         console.error(error);
       });
     }
