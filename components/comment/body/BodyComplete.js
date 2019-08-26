@@ -18,7 +18,7 @@ export default class BodyComplete extends Component {
   //   })
   // }
   componentDidMount(){
-    return fetch('http://d990dc07.ngrok.io/v1/replies')
+    return fetch('http://d990dc07.ngrok.io/v1/post/:id')
     .then((response) => response.json())
     .then((responseJson) => {
 

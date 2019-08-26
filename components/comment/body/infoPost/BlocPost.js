@@ -15,14 +15,14 @@ export default class BlocPost extends Component {
       <View style={styles.view}>
         <View style={styles.flexRow}>
           <Image style={styles.stretchImg}
-              source={require('../../../../assets/logohele.png')} />
+          source={require('../../../../assets/logohele.png')} />
             <View style={styles.flexColumn}> 
-          <Text style={styles.textBold} >{ name }</Text>
-          <Text style={styles.textBold} >{ date }</Text>
-          </View> 
-        </View>
-        <Text style={styles.text} >{ message }</Text>
-        <BlocReaction {...this.props}/>
+              <Text style={styles.textBold} >{ name }</Text>
+              <Text style={styles.textBold} >{ date }</Text>
+            </View> 
+          </View>
+          <Text style={styles.text} >{ message }</Text>
+          <BlocReaction {...this.props}/>
       </View>
     );
   }
