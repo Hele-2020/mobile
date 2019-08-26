@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 export default class BlocComments extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   Name:"Docteur Peter",
-    //   Date:"4 aout",
-    //   Text: "okokokokokokokokkookokokokokokokokkookokokokokokokokkookokokokokokokokkookokokokokokokokko!!!!",
-      
-    // };
-  }
   render() {
     const { message, date, name } = this.props
     return (

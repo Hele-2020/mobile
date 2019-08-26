@@ -3,9 +3,6 @@ import { View, StyleSheet, Image } from 'react-native';
 import BlocComments from './BlocComments.js';
 
 export default class BackgroundComment extends Component {
-  constructor(props){
-    super(props);
-  }
   render() {
     return (
       <View style={styles.flexRow} >
