@@ -16,8 +16,6 @@ export default class MapDisplay extends React.Component
     }
 
     render() {
-        const { children, renderMarker, markers } = this.props;
-
         return(
             <MapView
                 initialRegion={this.props.region}
@@ -38,7 +36,6 @@ export default class MapDisplay extends React.Component
                                                 <Text style={styles.textpoi}>{poi.address}, {poi.zipcode}</Text>
                                                 <Text style={styles.textpoi}>{poi.city}</Text>
                                                 <Text style={styles.plusIfo }> En savoir plus... </Text>
-
                                             </View>
                                         </View>
                                     </View>
