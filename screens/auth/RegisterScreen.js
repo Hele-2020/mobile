@@ -37,7 +37,6 @@ export default class RegisterScreen extends Component {
                 <TextInput value={this.state.username} onChangeText={text => this.setState({username: text})} textContentType='username' placeholder="Username" />
                 <TextInput value={this.state.age} onChangeText={text => this.setState({age: text})} placeholder="Age" />
                 <TextInput value={this.state.region_id} onChangeText={text => this.setState({region_id: text})} textContentType='addressState' placeholder="Region" />
-
                 <Button title="Register !" onPress={this._registerAsync} />
                 <Button title="Login" onPress={this._redirectLogin} />
 
