@@ -27,37 +27,19 @@ export default class MapScreen extends Component {
             modalVisible: false,
             pois: [],
             idPoi: [],
+            nameRegion : '', 
             region: {
                 latitude: 48.858372,
                 longitude: 2.294481,
                 latitudeDelta: 7.0,
                 longitudeDelta: 4.0,
-            },
-            user: {}
+            }
         }
 
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeModal = this.handleChangeModal.bind(this)
     }
 
-    // componentDidMount = async () => {
-    //     const token = await AsyncStorage.getItem('userToken')
-    //     console.log(token)
-    //     const headers = {
-    //         'Authorization': 'bearer ' + token,
-    //     }
-
-    //     axios.get(Api.url('/user/region'), {headers : headers })
-    //     .then(async response => {
-    //         console.log(response.data)
-    //         this.setState({userRegionId: response.data.region_id})
-    //         console.log(this.state.userRegionId)
-
-    //     })
-    //     .catch(error => {
-    //         console.log(error.response.data);
-    //     })
-    // }
     
     handleChangeModal(value, id) {
         if (id !== '') {
@@ -89,7 +71,8 @@ export default class MapScreen extends Component {
                     latitudeDelta: 10 * response.data.latitudeDelta,
                     longitudeDelta: 10 *response.data.longitudeDelta,
                 },
-                pois: response.data.pois
+                pois: response.data.pois,
+                nameRegion: response.data.name
             })
         })
         .catch(error => {
@@ -105,7 +88,7 @@ export default class MapScreen extends Component {
                     modal={this.handleChangeModal}
                     poi={this.state.idPoi} />
                 <MapHeader
-                    handleChange={this.handleChange} user={this.state.user}/>
+                    handleChange={this.handleChange} nameRegion={this.state.nameRegion} />
                 <MapDisplay
                     pois={this.state.pois}
                     modal={this.handleChangeModal}

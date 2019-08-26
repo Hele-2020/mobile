@@ -11,34 +11,30 @@ export default class MapHeader extends React.Component
 
         this.state = {
             regions: [],
-            selectedRegion: '',
-            userRegionId: null
-        }
-        console.log(this.props.user)
+            loading: true
+        }      
     }
 
     componentDidMount = async () => {
+       
         axios.get(Api.url('/region'))
         .then(async regions => {
             this.setState({ regions: regions.data})
-
         })
         .catch(error => {
             console.log(error.response.data);
         })
         
             const token = await AsyncStorage.getItem('userToken')
-            console.log(token)
             const headers = {
                 'Authorization': 'bearer ' + token,
             }
     
             axios.get(Api.url('/auth/me'), {headers : headers })
             .then(async response => {
-                console.log(response.data.user)
-                this.setState({userRegionId: response.data.user.region_id})
-                console.log(this.state.userRegionId)
-    
+                this.props.handleChange(response.data.user.region_id)
+                this.setState({ loading: false})
+                
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -47,18 +43,15 @@ export default class MapHeader extends React.Component
     }
 
     render() {
-        if(this.state.userRegionId !== null) {
-             this.props.handleChange(this.state.userRegionId)
-            
-        } else {
+        if(this.state.loading !== false) {
             return (
                 <View>
-                  <ActivityIndicator size="large" color="#0000ff" />
+                  <ActivityIndicator size="large" color="#59358B" style={{margin: 15}} />
                 </View>
             )
-        }
-        return (
-            <View style={{ borderBottomColor: "#FBBA00", borderBottomWidth : 1}}>
+        } else {
+            return (
+            <View style={{ borderBottomColor: "#FBBA00", borderBottomWidth : 1 }}>
 
                 <ModalSelector
                     optionTextStyle={styles.optionTextStyle}
@@ -80,16 +73,18 @@ export default class MapHeader extends React.Component
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({selectedRegion:option.name}), this.props.handleChange(option.id)}}>   
+                    onChange={(option)=>{this.props.handleChange(option.id)}}>   
                     <TextInput
                         style={styles.textInput}
                         editable={false}
                         placeholderTextColor = "#808080"
                         placeholder="&#x1F50D; Rechercher..."
-                        value={this.state.selectedRegion} />
+                        value={this.props.nameRegion} />
                 </ModalSelector>
             </View>
         )
+        }
+        
     }
 }
 
@@ -100,7 +95,7 @@ const styles = StyleSheet.create({
         borderColor: '#DCDCDC',
         padding: 7,
         height: 35,
-        marginTop: 9,
+        marginTop: 18,
         borderRadius: 30,
         marginBottom: 18,
         marginRight: 40,
@@ -113,10 +108,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.7)',
     },
     optionContainer: {
-       // borderRadius:    BORDER_RADIUS,
         flexShrink:      1,
         marginBottom:    8,
-       // padding:         PADDING,
         backgroundColor: 'rgba(255,255,255,0.8)',
     },
     cancelContainer: {
@@ -125,49 +118,37 @@ const styles = StyleSheet.create({
     selectStyle: {
         borderColor:  '#ccc',
         borderWidth:  1,
-       // padding:      PADDING,
-       // borderRadius: BORDER_RADIUS,
     },
     selectTextStyle: {
         textAlign: 'center',
         color:     '#333',
-        //fontSize:  FONT_SIZE,
     },
     cancelStyle: {
-       // borderRadius:    BORDER_RADIUS,
         backgroundColor: '#FBBA00',
-       // padding:         PADDING,
     },
     cancelTextStyle: {
         textAlign: 'center',
         color:     '#333',
-       // fontSize:  FONT_SIZE,
     },
     optionStyle: {
-       // padding:           PADDING,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
     },
     optionTextStyle: {
         textAlign: 'center',
-        //fontSize:  FONT_SIZE,
         color:     '#59358B',
     },
     sectionStyle: {
-       // padding:           PADDING * 2,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         backgroundColor: '#59358B',
     },
     sectionTextStyle: {
         textAlign: 'center',
-       // fontSize:  FONT_SIZE,
         color:     'white',
-        //fontStyle: 'italic'
     },
     initValueTextStyle: {
         textAlign: 'center',
-       // fontSize:  FONT_SIZE,
         color:     '#d3d3d3'
     }
 })
