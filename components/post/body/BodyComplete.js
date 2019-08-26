@@ -35,7 +35,7 @@ export default class BodyComplete extends Component {
 
   render() {
     const HttpPost = this.state.dataSource.map((message, key) => (
-      <BlocPost {...this.props} key={key} message={message.content} date={message.created_at} name={message.username} />)
+      <BlocPost {...this.props} key={key} message={message.content} date={message.created_at} name={message.user.username} />)
     )
     const NewPost = this.state.messages.map((message, key) => (
       <BlocPost {...this.props} key={key} message={message.message} date={message.date} name={message.name} />)

@@ -34,6 +34,10 @@ export default class BodyComplete extends Component {
     });
   }
   render() {
+    console.log(this.state.dataSource)
+    const HttpReply = this.state.dataSource.map((message, key) => (
+      <BackgroundComment key={key} message={message.content} date={message.created_at} name={message.user.username} />)
+    )
     const NewComment = this.state.messages.map((message, key) => (
       <BackgroundComment key={key} message={message.message} date={message.date} name={message.name} />)
     )
@@ -41,7 +45,7 @@ export default class BodyComplete extends Component {
       
       <View style={styles.view}>
         <BlocPost {...this.props} />
-        {NewComment}
+        {HttpReply}
       </View>
     );
   }
