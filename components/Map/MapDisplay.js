@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         margin: 4,
         color: "#59358B",
-        fontSize: 20
+        fontSize: 15
     }, info: {
         margin: 10
     }, title: {
