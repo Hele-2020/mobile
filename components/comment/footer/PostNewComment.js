@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
-// import chat from '../../SocketConn.js';
+import comment from '../../SocketConn.js';
+
 export default class PostNewComment extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { 
+      text: ''
+    };
   }
   render() {
+    const { id } = this.props
     onPress = () => {
       const message = {
+        id: id,
         message: this.state.text,
-        date: Date.now(),
-        name: 'Dr Robin'
+        date: '',
       }
-      /*chat.emit('message', message)
-      this.setState({ text: '' })*/
+      comment.emit('message', message)
+      this.setState({ text: '' })
     }
     return (
       <KeyboardAvoidingView keyboardVerticalOffset= {Platform.select({ios: 80, android: 83})} style={styles.keyboard} behavior="padding" enabled>

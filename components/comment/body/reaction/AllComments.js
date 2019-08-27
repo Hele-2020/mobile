@@ -5,8 +5,7 @@ export default class AllComments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nbr: "121",
-      titleText: " commentaires"
+      dataSource: [],
     };
   }
   render() {
@@ -14,7 +13,7 @@ export default class AllComments extends Component {
       <View style={styles.view}>
         <TouchableOpacity style={styles.touchableReturnPost}>
           {/* Utilisation de la base de donnée pour recuperer les message */}
-          <Text style={styles.text} >{this.state.nbr}{this.state.titleText}</Text>
+          <Text style={styles.text} >{this.state.dataSource}commentaires</Text>
         </TouchableOpacity>
       </View>
     );
