@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 export default class BlocComments extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   Name:"Docteur Peter",
-    //   Date:"4 aout",
-    //   Text: "okokokokokokokokkookokokokokokokokkookokokokokokokokkookokokokokokokokkookokokokokokokokko!!!!",
-      
-    // };
-  }
   render() {
-    const { comment, date, name } = this.props
+    const { message, date, name } = this.props
     return (
       <View style={styles.view}>
         <View style={styles.flexColumn}> 
           <Text style={styles.textBold} >{ name }</Text>
           <Text style={styles.textBold} >{ date }</Text>
         </View>
-        <Text style={styles.text} >{ comment }</Text>
+        <Text style={styles.text} >{ message }</Text>
       </View>
     );
   }

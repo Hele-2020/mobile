@@ -10,26 +10,19 @@ export default class BlocPost extends Component {
   }
 
   render() {
-/*    const name = this.state.messages.map((message, key) => (
-      <Text {...this.props} key={key} name={message.name} style={styles.textBold} >{ name }</Text>))
-    const message = this.state.messages.map((message, key) => (
-      <Text {...this.props} key={key} message={message.message} />))
-    const date = this.state.messages.map((message, key) => (
-        <Text {...this.props} key={key} message={message.date} />))*/
-    
     const { message, date, name } = this.props
     return (
       <View style={styles.view}>
-      <View style={styles.flexRow}>
-        <Image style={styles.stretchImg}
+        <View style={styles.flexRow}>
+          <Image style={styles.stretchImg}
             source={require('../../../../assets/logohele.png')} />
-          <View style={styles.flexColumn}> 
-          <Text style={styles.textBold}>{ name }</Text>
-          <Text style={styles.textBold}>{ date }</Text>
-        </View> 
+          <View style={styles.flexColumn}>
+            <Text style={styles.textBold}>{name}</Text>
+            <Text style={styles.textBold}>{date}</Text>
+          </View>
         </View>
-        <Text>{ message }</Text>
-        <BlocReaction {...this.props}/>
+        <Text>{message}</Text>
+        <BlocReaction {...this.props} />
       </View>
     );
   }
@@ -38,18 +31,18 @@ const styles = StyleSheet.create({
   view: {
     marginLeft: "3%",
     marginRight: "3%",
-    backgroundColor:"white",
+    backgroundColor: "white",
   },
   stretchImg: {
-    resizeMode:"contain",
+    resizeMode: "contain",
     width: 35,
     height: 35,
     marginRight: '2%',
-    },
+  },
   textBold: {
-    fontWeight : "bold",
+    fontWeight: "bold",
     color: "#59358B",
-    },
+  },
   flexRow: {
     display: "flex",
     flexDirection: "row",
@@ -58,23 +51,6 @@ const styles = StyleSheet.create({
   },
   flexColumn: {
     display: "flex",
-    flexDirection:"column",
+    flexDirection: "column",
   }
 });
-// return (
-//   <View style={styles.view}>
-//   <View style={styles.flexRow}>
-//     <Image style={styles.stretchImg}
-//         source={require('../../../../assets/logohele.png')} />
-//       <View style={styles.flexColumn}> 
-//       { name }
-//       { date}
-//     <Text style={styles.textBold} >{ name }</Text>
-//     <Text style={styles.textBold} >{ date }</Text>
-//     </View> 
-//     </View>
-//     { message }
-//     <Text style={styles.text} >{ message }</Text>
-//     <BlocReaction {...this.props}/>
-//   </View>
-// );

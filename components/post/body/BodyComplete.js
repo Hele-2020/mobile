@@ -20,15 +20,13 @@ export default class BodyComplete extends Component {
       return fetch('http://e6ad13e6.ngrok.io/v1/posts')
       .then((response) => response.json())
       .then((responseJson) => {
-
         this.setState({
           dataSource: responseJson,
         }, function(){
 
         });
-
       })
-      .catch((error) =>{
+    .catch((error) =>{
         console.error(error);
       });
     }
@@ -37,9 +35,9 @@ export default class BodyComplete extends Component {
     const HttpPost = this.state.dataSource.map((message, key) => (
       <BlocPost {...this.props} key={key} message={message.content} date={message.created_at} name={message.user.username} />)
     )
-    const NewPost = this.state.messages.map((message, key) => (
-      <BlocPost {...this.props} key={key} message={message.message} date={message.date} name={message.name} />)
-    ) 
+    // const NewPost = this.state.messages.map((message, key) => (
+    //   <BlocPost {...this.props} key={key} message={message.message} date={message.date} name={message.name} />)
+    // ) 
     return (
       <View style={styles.view}>
       {HttpPost}
