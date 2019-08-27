@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import BlocPost from '././infoPost/BlocPost';
 //import post from '../../SocketConn.js';
 // import Api from '../../../config/Api.js'
