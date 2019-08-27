@@ -40,7 +40,11 @@ export default class BodyComplete extends Component {
     // ) 
     return (
       <View style={styles.view}>
-      {HttpPost}
+        <FlatList 
+        data={[{key: 'key', HttpPost}]}
+        renderItem={({item}) => 
+        <View style={styles.view} key={item.key} >{item.HttpPost}</View>}
+        />
       </View>
       );
     }
