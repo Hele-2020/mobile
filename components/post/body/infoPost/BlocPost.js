@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   view: {
     marginLeft: "3%",
     marginRight: "3%",
-    backgroundColor: "white",
+   // backgroundColor: "white",
   },
   stretchImg: {
     resizeMode: "contain",

@@ -29,7 +29,7 @@ export default class PostsScreen extends Component {
       <View style={styles.container}>
         <View style={styles.view}>
            <TouchableOpacity style={styles.touchableComment} onPress={this.newPost} >
-            <Logo width={120} height={40}/>
+            <Logo width={60} height={40}/>
           </TouchableOpacity> 
         </View>
         <BodyComplete {...this.props}/>
@@ -41,24 +41,17 @@ export default class PostsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   view: {
-    flex: 1,
-    alignContent: "space-around",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    flexDirection: "row",
+    display:"flex",
+    flexDirection: "row-reverse",
     width: "100%",
-    backgroundColor: "white"
+  
+
   },
   touchableComment: {
-    paddingBottom: 10,
-    paddingTop: 12,
-    position: 'absolute',
-    top : 1,
-    left: '74%'
+    marginTop:"3%",
+    marginBottom: "5%",
   },
   
 });
