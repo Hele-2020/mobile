@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import LogoInstructif from '../../../../assets/logoInstructif.svg';
 
 export default class Instructif extends Component {
   constructor(props){
@@ -26,8 +27,10 @@ export default class Instructif extends Component {
     return (
       <View style={styles.view}>
         <TouchableOpacity style={styles.touchableReturnPost} onPress={this.HandleClick}> 
-        <Text style={styles.text} ><Image style={styles.stretchImg}
-        source={require('../../../../assets/logoInstructif.png')} /> {this.state.count} instructif</Text>
+        <View style={styles.viewRow}><LogoInstructif width={20} height={17}/>
+        <Text style={styles.text}>{this.state.count} instructif</Text>
+        </View>
+
         </TouchableOpacity>
       </View>
     );
@@ -37,18 +40,19 @@ const styles = StyleSheet.create({
   view: {
     backgroundColor: "white",
     },
+    viewRow: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems:'center'
+
+      },
   touchableReturnPost: {
     paddingBottom: 10,
     paddingTop: 10
     },
   text: {
+    paddingLeft:'1%',
     fontSize: 12,
     color: "#59358B",
     },
-    stretchImg: {
-      // backgroundColor: "red",
-        resizeMode:"contain",
-        width: 15,
-        height: 15,
-    }
 });
