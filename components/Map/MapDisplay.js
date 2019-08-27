@@ -1,7 +1,7 @@
 import React from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { View, Text, Dimensions, StyleSheet} from 'react-native';
-import Logo from '../../assets/marker-hele.png'
+import Logo from '../../assets/logo-hele.png'
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
