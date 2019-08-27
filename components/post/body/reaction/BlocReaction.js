@@ -5,12 +5,6 @@ import ActionComments from './ActionComments.js';
 import AllComments from './AllComments.js';
 
 export default class BlocReaction extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      
-    };
-  }
   render() {
     return (
       <View style={styles.view}>

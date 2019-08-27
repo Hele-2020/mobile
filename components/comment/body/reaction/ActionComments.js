@@ -6,17 +6,10 @@ export default class ActionComments extends Component {
   static navigationOptions = {
     title: 'PostComments',
   };
-    constructor(props) {
-        super(props);
-        this.state = {
-          
-        };
-      }
   render() {
-    const {navigate} = this.props.navigation;
     return (
       <View style={styles.view}>
-        <TouchableOpacity style={styles.touchableComment} onPress={() => navigate('PostCommentsPsy', {})}>
+        <TouchableOpacity style={styles.touchableComment} >
         <View style={styles.viewRow}><Commenter width={20} height={12}/>
         <Text style={styles.text}>commenter</Text>
         </View>
