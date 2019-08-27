@@ -1,11 +1,9 @@
 import React from 'react';
-import MapView from 'react-native-map-clustering';
-import { Marker, Callout } from 'react-native-maps';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import MapView, { Marker, Callout } from 'react-native-maps';
+import { View, Text, Dimensions, StyleSheet} from 'react-native';
+import Logo from '../../assets/logo-hele.png'
 
-
-const { width: winWidth } = Dimensions.get('window');
-const { height: winHeight } = Dimensions.get('window');
+const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
 export default class MapDisplay extends React.Component
 {
@@ -13,46 +11,41 @@ export default class MapDisplay extends React.Component
         super(props)
     }
 
+    componentDidUpdate() {
+        this.map.animateToRegion(this.props.region);
+    }
+
     render() {
         const { children, renderMarker, markers } = this.props;
 
         return(
-            <View>
-                <MapView
-                 showsUserLocation ref={ map => { this.map = map }}
-                 data={markers}
-                    region={{
-                        latitude: 46.227638,
-                        longitude: 2.213749,
-                        latitudeDelta: 9.5,
-                        longitudeDelta: 9.5
-                    }} style={{ width: winWidth, height: winHeight }} >
+            <MapView
+                initialRegion={this.props.region}
+                ref={ref => this.map = ref}
+                style={{ width: winWidth, height: winHeight }} >
 
-                    {this.props.pois.map(poi =>
-                        <Marker coordinate={{ latitude: poi.latitude, longitude: poi.longitude}} key={poi.id}
-                        //image={require('../assets/icon.png')}
-                        >
-                            <Callout
-                                tooltip={false}
-                                onPress={() => this.props.modal(true, poi.id)} >
-                                <View style={styles.description}>
-                                    <View style={styles.content}>
-                                        <Text style={styles.titleMap}>{poi.name}</Text>
+                {this.props.pois.map((poi, i) => 
+                        (
+                            <Marker image={Logo} coordinate={{ latitude: poi.latitude, longitude: poi.longitude}} key={i}>
+                                <Callout
+                                    tooltip={false}
+                                    onPress={() => this.props.modal(true, poi.id)} >
+                                    <View style={styles.description}>
+                                        <View style={styles.content}>
+                                            <Text style={styles.titleMap}>{poi.name}</Text>
 
-                                        <View style={styles.info}>
-                                            <Text style={styles.textpoi}>Adresse: {poi.address}</Text>
-                                            <Text style={styles.textpoi}>Code postal: {poi.zipcode}</Text>
-                                            <Text style={styles.textpoi}>Ville: {poi.city}</Text>
-                                            <Text style={styles.textpoi}>Telephone: {poi.phone}</Text>
-                                            <Text style={styles.textpoi}>Site internet: {poi.site}</Text>
+                                            <View style={styles.info}>
+                                                <Text style={styles.textpoi}>{poi.address}, {poi.zipcode}</Text>
+                                                <Text style={styles.textpoi}>{poi.city}</Text>
+                                                <Text style={styles.plusIfo }> En savoir plus... </Text>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            </Callout>
-                        </Marker>
+                                </Callout>
+                            </Marker> 
+                        )
                     )}
-                </MapView>
-            </View>
+            </MapView>
         )
     }
 }
@@ -70,14 +63,15 @@ const styles = StyleSheet.create({
     },titleMap: {
         fontWeight: 'bold',
         margin: 4,
-        color: "#59358B"
+        color: "#59358B",
+        fontSize: 20
     }, info: {
         margin: 10
     }, title: {
         justifyContent: "center",
         color: "#59358B",
         marginLeft: "33%",
-        fontSize: 27,
+        fontSize: 15,
         marginTop: 10,
         marginBottom: 5
     }, ContentSearch: {
@@ -98,5 +92,13 @@ const styles = StyleSheet.create({
         fontSize: 15
     }, textpoi: {
         fontSize: 15,
+    }, plusIfo : {
+        marginTop: 10,
+        fontWeight: 'bold',
+        textDecorationLine: "underline"
+
+    }, stretchImg: {
+          width: 15,
+          height: 15,
     }
 })
