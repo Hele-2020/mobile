@@ -49,16 +49,16 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingRight: "3%",
     flexDirection: "row",
     width: "100%",
     backgroundColor: "white"
   },
   touchableComment: {
     paddingBottom: 10,
-    paddingTop: 10,
+    paddingTop: 12,
     position: 'absolute',
-    top: 10
-
-  }
+    top : 1,
+    left: '74%'
+  },
+  
 });

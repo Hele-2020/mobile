@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   view: {
     paddingLeft: 10,
     paddingRight: 10,
-    borderTopColor: "#FBBA00",
-    borderBottomColor: "#FBBA00",
+    borderTopColor: "#F6C000",
+    borderBottomColor: "#F6C000",
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderStyle: "solid",
