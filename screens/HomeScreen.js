@@ -19,9 +19,15 @@ export default class HomeScreen extends Component {
         console.log(this.state.Roles)
     }
 
-    displayButton() {
+    displayButtonPro() {
         if (this.state.Roles === 'PROFESSIONAL') {
-            return  <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
+            return  <Button title='Crée un Créneau' onPress={this._SlotAsync} />
+        }
+    }
+
+    displayButtonYoung() {
+        if (this.state.Roles === 'YOUNG') {
+            return <Button title="Voir les créneaux" onPress={this._SlotSelectorAsync} />
         }
     }
 
@@ -29,9 +35,8 @@ export default class HomeScreen extends Component {
         return (
             <View>
                 <Button title="Actually, sign me out :)" onPress={this._signOutAsync} /> 
-                {this.displayButton()}
+                {this.displayButtonPro()}
                 <Button title="Map" onPress={this._MapAsync} />
-                <Button title="Voir les créneaux" onPress={this._SlotuserUserRolesuserUserRolesuserUserRolesuserUserRolesuserUserRolesuserUserRolesuserUserRolesuserUserRolesSelectorAsync} />
             </View>
         );
     }
