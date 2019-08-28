@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import {Text, View, StyleSheet,TouchableOpacity, Alert } from 'react-native';
+import {AsyncStorage,Text, View, StyleSheet,TouchableOpacity, Alert } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import axios from 'axios';
+import Api from '../config/Api'
 
 export default class SelectSlotScreen extends Component {
     static navigationOptions = {
@@ -13,19 +14,37 @@ export default class SelectSlotScreen extends Component {
         this.state = {
           tableHead: ['Créneaux', 'Selectionné'],
           tableData: [],
+          token: '',
         }
     }
+
+
     
-      componentDidMount(){
-        // axios.get()
+    async componentDidMount() {
+
+      const token = await AsyncStorage.getItem('userToken');
+      console.log(token)
+
+        const headers = {
+          'Authorization': 'bearer ' + token,
       }
 
+            axios.get( Api.url('/get/slot'),{headers: headers})
+            .then(function (response) {
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+      }
 
       _SelectIndex(index) {
         Alert.alert(`This is row ${index + 1}`);
       }
      
       render() {
+
         const state = this.state;
         const element = (data, index) => (
           <TouchableOpacity onPress={() => this._SelectIndex(index)}>
