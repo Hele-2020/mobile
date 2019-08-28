@@ -33,6 +33,7 @@ export default class HomeScreen extends Component {
             url: (Api.url('/chat')),
             headers: headers,
         }).then((response) => {
+            //console.log(response)
             this.setState({
                 chats: response.data
             });

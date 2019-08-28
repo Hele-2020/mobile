@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View , TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, ActivityIndicator, Platform} from 'react-native';
-///import Connexion from '../SocketConnexion';
+import { StyleSheet, Text, View , TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, ActivityIndicator, Platform, ScrollView} from 'react-native';
+import Connexion from '../SocketConnexion';
 import axios from 'axios';
 import Api from '../config/Api';
 import { Header } from 'react-navigation';
@@ -16,25 +16,52 @@ function ChatScreen(props){
     const [newMessage, setNewMessage] = useState([]);
     const { navigation } = props;
     const id = navigation.getParam('Id', 'NO-ID');
-    const username = navigation.getParam('users', 'NO-USERNAME');
     const [authId,setauthId] = useState(0);
     const [page,setPage] = useState(1);
     const [lastPage,setLastPage] = useState();
+    const [date,setDate] = useState();
     
     
     
     useEffect(() => {
-        /* Connexion().then(chat => {
-            setChat(chat);            
-        }) */
         tokenUser();
     }, [page]);
 
-    // useEffect(() => {
-    //     console.log({authId});
-    // }, authId);
+    useEffect(() => {
+        initSocket();
+    }, []);
 
-    async function tokenUser(){
+    initSocket = async () => {
+        Connexion(id).then(chat => {
+            chat.on('message', (data) => {
+                updateMessages(data, false);
+            })
+            setChat(chat);
+        })
+    }
+
+    updateMessages = (data, append) => {
+        let array;
+        if (append === true) {
+            array = [
+                ...dataMessage,
+                ...data, 
+            ]
+        } else {
+            array = [
+                data, 
+                ...dataMessage,
+            ]
+        }
+        
+        array = array.filter((value, index, self) => index === self.findIndex(v => v.id === value.id))
+        // console.log(array)
+        setDataMessage(array)
+    }
+
+
+    tokenUser = async () => {
+        console.log("toto")
         const token = await AsyncStorage.getItem("userToken");
         const user = await AsyncStorage.getItem("userId");
         setauthId(user);
@@ -48,8 +75,7 @@ function ChatScreen(props){
             headers: headers,
         }).then(async (response) => {
             setLastPage(response.data.lastPage)
-            setDataMessage([...dataMessage,...response.data.data])
-            await console.log(dataMessage)
+            updateMessages(response.data.data, true)
         }).catch((error) => {
             console.log(error);
         });
@@ -72,6 +98,7 @@ function ChatScreen(props){
             <View>
                 {item.item.user.id == authId  ? 
                     <Text style={styles.auth}>
+                        <Text style={styles.pseudo}>{("Moi" + "\n")}</Text>
                         <Text>{item.item.content + "\n"}</Text>
                         <Text style={styles.pseudo}>{item.item.created_at}</Text>  
                     </Text> : 
@@ -99,16 +126,8 @@ function ChatScreen(props){
     }
     
     const sendMessage = () => {
-        /* chat.emit('message',message)
+        chat.emit('message',message)
         this.textInput.clear() 
-        chat.on('message', (data) => {
-            console.log(data);
-            setNewMessage([ ...newMessage, 
-                data
-            ])
-                    
-        }) */
-
     }
 
 
@@ -126,9 +145,8 @@ function ChatScreen(props){
             onEndReached={handleScroll}
             onEndReachedThreshold={0.1}
             ListFooterComponent={_renderFooter}
-            >
+            >               
             </FlatList>
-            
 
                 <KeyboardAvoidingView keyboardVerticalOffset={Platform.select({ios: 0, android: 83})} behavior='padding'>
 
@@ -214,3 +232,17 @@ const styles = StyleSheet.create({
     },
 
   });
+
+  /* let objs = {
+      default: {
+          flex: '1',
+          justifyContent: 'center'
+      },
+      red: {
+          backgroundColor: 'red',
+            ...objs.default
+      },
+      yellow: {
+
+      }
+  } */

@@ -1,22 +1,21 @@
 import Ws from '@adonisjs/websocket-client';
 import {AsyncStorage} from 'react-native';
-​
-​
-export default async function Connexion(){
-    const token = await AsyncStorage.getItem('userToken');
-​
-    const ws = Ws('ws://0.tcp.ngrok.io:16651')    
+
+export default async function Connexion(id){
+    const token = await AsyncStorage.getItem('userToken')
+
+    const ws = Ws('ws://api.hélé.fr')    
     ws.withJwtToken(token).connect()
-    
-    const id_user = await AsyncStorage.getItem('userId');
+
+    const id_user = await AsyncStorage.getItem('userId')
     console.log("token: " + token)
     console.log("id: " + id_user)
-    
-    const chat = ws.subscribe('chat:6')
-    
+
+    const chat = await ws.subscribe('chat:' + id)
+
     chat.on('error', (e) => {
-        console.log('error is', e);
+        console.log('error is', e)
     })
-​
+
     return chat
 }
