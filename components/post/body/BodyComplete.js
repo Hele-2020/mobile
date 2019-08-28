@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import BlocPost from '././infoPost/BlocPost';
-// import Api from '../../../config/Api.js'
+import post from '../../SocketConn';
+import Api from '../../../config/Api.js'
+console.log(post)
 
 export default class BodyComplete extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       messages: [],
       dataSource: []
     }
+    post.on('send', (messageSock) => {
+      this.setState({ messages: [...this.state.messages, messageSock] })
+    })
   }
     componentDidMount(){
       fetch('https://api.hélé.fr/v1/posts')
@@ -17,11 +22,11 @@ export default class BodyComplete extends Component {
       .then((responseJson) => {
         this.setState({
           dataSource: responseJson,
-        }, function(){
+        }, function () {
 
         });
       })
-    .catch((error) =>{
+      .catch((error) => {
         console.error(error);
       });
     }
@@ -36,10 +41,10 @@ export default class BodyComplete extends Component {
     ) 
     return (
       <View style={styles.view}>
-        <FlatList 
-        data={[{key: 'key', HttpPost}]}
-        renderItem={({item}) => 
-        <View style={styles.view} key={item.key} >{item.HttpPost}</View>}
+        <FlatList
+          data={[{ key: 'key', HttpPost }]}
+          renderItem={({ item }) =>
+            <View style={styles.view} key={item.key} >{item.HttpPost}</View>}
         />
       </View>,
       <View style={styles.view}>
@@ -49,17 +54,17 @@ export default class BodyComplete extends Component {
         <View style={styles.view} key={item.key} >{item.NewPost}</View>}
         />
       </View>
-      );
-    }
+    );
   }
-  const styles = StyleSheet.create({
-    view: {
-      flex: 5,
-      // backgroundColor: "blue",
-      width: "100%",
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'stretch',
-      alignContent: "flex-start",
-    }
-  });
+}
+const styles = StyleSheet.create({
+  view: {
+    flex: 5,
+    // backgroundColor: "blue",
+    width: "100%",
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    alignContent: "flex-start",
+  }
+});

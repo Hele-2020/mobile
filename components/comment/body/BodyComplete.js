@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-
 import BlocPost from './infoPost/BlocPost.js';
 import BackgroundComment from './comments/BackgroundComment.js';
-
-// import Api from '../../../config/Api.js'
+import comment from '../../SocketConn.js';
+import Api from '../../../config/Api.js'
 
 export default class BodyComplete extends Component {
   constructor(props) {
@@ -13,6 +12,9 @@ export default class BodyComplete extends Component {
       messages: [],
       dataSource: []
     };
+    comment.on('send', (messageSock) => {
+      this.setState({ messages: [...this.state.messages, messageSock] })
+    })
   }
   
   componentDidMount() {
@@ -52,6 +54,7 @@ export default class BodyComplete extends Component {
           post_name={post_name}
           post_date={post_date}
           post_message={post_message} />
+        {NewComment}
         {HttpReply}
       </View>,
       <View style={styles.view}>

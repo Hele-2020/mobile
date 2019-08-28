@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
 import comment from '../../SocketConn.js';
+
 export default class PostNewComment extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { 
+      text: ''
+    };
   }
   render() {
+    const { id } = this.props
     onPress = () => {
       const message = {
+        id: id,
         message: this.state.text,
+        date: '',
       }
       comment.emit('message', message)
       this.setState({ text: '' })

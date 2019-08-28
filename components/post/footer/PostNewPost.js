@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Connexion from '../../SocketConn.js';
 

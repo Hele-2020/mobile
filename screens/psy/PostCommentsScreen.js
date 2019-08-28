@@ -25,11 +25,13 @@ export default class PostCommentsScreen extends Component {
   })
 }
   render() {
-    
+    const { navigation } = this.props
+    const post_id = navigation.getParam('post_id');
+
     return (
       <View style={styles.view}>
         <BodyComplete {...this.props}/>
-        <PostNewComment />
+        <PostNewComment id={post_id} />
       </View>
     );
   }
