@@ -17,7 +17,7 @@ export default class SelectSlotScreen extends Component {
     }
     
       componentDidMount(){
-        axios.get()
+        // axios.get()
       }
 
 
