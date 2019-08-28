@@ -12,9 +12,9 @@ export default class BodyComplete extends Component {
       messages: [],
       dataSource: []
     }
-    post.on('send', (messageSock) => {
-      this.setState({ messages: [...this.state.messages, messageSock] })
-    })
+    // post.on('send', (messageSock) => {
+    //   this.setState({ messages: [...this.state.messages, messageSock] })
+    // })
   }
     componentDidMount(){
       fetch('https://api.hélé.fr/v1/posts')

@@ -5,17 +5,22 @@ import Connexion from '../../SocketConn.js';
 export default class PostNewPost extends Component {
     constructor(props) {
         super(props);
-        this.state = { text: '' };
+        this.state = { 
+          post: null,
+          text: ''
+         };
       }
   render() {
     onPress = () => {
-      const message = {
-        message: this.state.text,
-        
-      }
-      post.emit('message', message)
-      this.setState({ text: '' })
+      console.log(Connexion)
+      Connexion().then(({post}) => {
+      const message = { message: this.state.text }
+      post.emit('message', message) 
+      this.setState({post}) 
     }
+    )
+    this.setState({ text: '' })
+}
     return (
       <KeyboardAvoidingView keyboardVerticalOffset= {Platform.select({ios: 80, android: 83})} style={styles.keyboard} behavior="padding" enabled>
         <View style={styles.view} >

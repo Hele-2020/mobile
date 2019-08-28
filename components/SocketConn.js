@@ -7,7 +7,7 @@ export default async function Connexion(){
     const ws = Ws('ws://api.hélé.fr')
     ws.withJwtToken(token).connect()
     const post = ws.subscribe('post')
-    const comment = ws.subscribe('reply')
+    const comment = ws.subscribe('replies')
     post.on('error', (e)=>{
         console.log('error is', e)
     })

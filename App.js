@@ -11,29 +11,29 @@ import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
 import LoginScreen from './screens/auth/LoginScreen';
 import RegisterScreen from './screens/auth/RegisterScreen';
 
-// import HomeScreen from './screens/HomeScreen';
+import HomeScreen from './screens/HomeScreen';
 // import ChatScreen from './screens/ChatScreen';
-// import MapScreen from './screens/MapScreen';
+import MapScreen from './screens/MapScreen';
 import PostsScreen from './screens/psy/PostsScreen';
 import PostCommentsScreen from './screens/psy/PostCommentsScreen.js';
 
 const AppStack = createStackNavigator({
-    // Home: HomeScreen,
+    Home: HomeScreen,
     // Chat: ChatScreen,
-    // Map: MapScreen,
+    Map: MapScreen,
     PostPro: PostsScreen,
     PostCommentsPsy: PostCommentsScreen
   });
   
-// const AuthStack = createSwitchNavigator({
-//     Login: LoginScreen,
-//     Register: RegisterScreen,
-// });
+const AuthStack = createSwitchNavigator({
+    Login: LoginScreen,
+    Register: RegisterScreen,
+});
 
 export default createAppContainer(createSwitchNavigator({
-    // AuthLoading: AuthLoadingScreen,
+    AuthLoading: AuthLoadingScreen,
     App: AppStack,
-    // Auth: AuthStack,
+    Auth: AuthStack,
 }, {
-    // initialRouteName: 'AuthLoading',
+    initialRouteName: 'AuthLoading',
 }));
