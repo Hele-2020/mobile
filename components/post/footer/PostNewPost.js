@@ -14,8 +14,8 @@ export default class PostNewPost extends Component {
     onPress = () => {
       console.log(Connexion)
       Connexion().then(({post}) => {
-      const message = { message: this.state.text }
-      post.emit('message', message) 
+      const message = { text: this.state.text }
+      post.emit('text', message) 
       this.setState({post}) 
     }
     )

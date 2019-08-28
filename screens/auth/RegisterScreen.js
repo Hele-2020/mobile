@@ -57,7 +57,7 @@ export default class RegisterScreen extends Component {
             this.props.navigation.navigate('Login');
         })
         .catch(error => {
-            console.log(error.response.data);
+            console.log(error);
         })
     };
 

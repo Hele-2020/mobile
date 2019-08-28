@@ -23,7 +23,7 @@ export default class PostsScreen extends Component {
   componentDidMount(){
       Connexion().then(({post}) => {
         post.on('send', (messageSock) => {
-          this.setState({ messages: [...this.state.messages, messageSock] })
+          this.setState({ post: [...this.state.post, messageSock] })
         })
         this.setState({post})            
     })

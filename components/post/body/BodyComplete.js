@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import BlocPost from '././infoPost/BlocPost';
-import post from '../../SocketConn';
 import Api from '../../../config/Api.js'
-console.log(post)
 
 export default class BodyComplete extends Component {
   constructor(props) {
@@ -12,9 +10,6 @@ export default class BodyComplete extends Component {
       messages: [],
       dataSource: []
     }
-    // post.on('send', (messageSock) => {
-    //   this.setState({ messages: [...this.state.messages, messageSock] })
-    // })
   }
     componentDidMount(){
       fetch('https://api.hélé.fr/v1/posts')
@@ -30,8 +25,6 @@ export default class BodyComplete extends Component {
         console.error(error);
       });
     }
-    
-
   render() {
     const HttpPost = this.state.dataSource.map((message, key) => (
       <BlocPost {...this.props} key={key} id={message.id} message={message.content} date={message.created_at} name={message.user.username} />)
