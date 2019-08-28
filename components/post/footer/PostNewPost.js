@@ -12,15 +12,16 @@ export default class PostNewPost extends Component {
       }
   render() {
     onPress = () => {
-      console.log(Connexion)
       Connexion().then(({post}) => {
-      const message = { text: this.state.text }
-      post.emit('text', message) 
-      this.setState({post}) 
+        const message = { text: this.state.text }
+        post.emit('text', message) 
+        /*console.log("C'EST LA")
+        console.log(message)
+        console.log("C'ETAIT LA ^")*/
+        this.setState({post}) 
+      })
+      
     }
-    )
-    this.setState({ text: '' })
-}
     return (
       <KeyboardAvoidingView keyboardVerticalOffset= {Platform.select({ios: 80, android: 83})} style={styles.keyboard} behavior="padding" enabled>
         <View style={styles.view} >
@@ -33,6 +34,7 @@ export default class PostNewPost extends Component {
         </View>
       </KeyboardAvoidingView>
     );
+    this.setState({ text: '' })
   }
 }
 const styles = StyleSheet.create({
