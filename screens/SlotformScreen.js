@@ -43,7 +43,6 @@ export default class SlotformScreen extends Component {
         .then(function (response) {
             console.log(response)
             alert('Vous venez de crée un créneau pour le '+ date + ' à ' + hours)
-            //faire une redirection vers la liste des créneaux
         })
         .catch(function (error) {
             console.log(error);
