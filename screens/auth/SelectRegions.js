@@ -97,5 +97,67 @@ const styles = StyleSheet.create({
         // top: '50%',
         borderBottomColor: '#FBBA00',
         borderBottomWidth: 1,
+    },
+    textInput: {
+        backgroundColor: 'rgba(0,0,0,.04)',
+        borderWidth: 1,
+        borderColor: '#DCDCDC',
+        padding: 7,
+        height: 35,
+        marginTop: 18,
+        borderRadius: 30,
+        marginBottom: 18,
+        marginRight: 40,
+        marginLeft: 40,
+        fontSize: 15,
+    }, overlayStyle: {
+        flex:            1,
+        padding:         '5%',
+        justifyContent:  'center',
+        backgroundColor: 'rgba(0,0,0,0.7)',
+    },
+    optionContainer: {
+        flexShrink:      1,
+        marginBottom:    8,
+        backgroundColor: 'rgba(255,255,255,0.8)',
+    },
+    cancelContainer: {
+        alignSelf: 'stretch',
+    },
+    selectStyle: {
+        borderColor:  '#ccc',
+        borderWidth:  1,
+    },
+    selectTextStyle: {
+        textAlign: 'center',
+        color:     '#333',
+    },
+    cancelStyle: {
+        backgroundColor: '#FBBA00',
+    },
+    cancelTextStyle: {
+        textAlign: 'center',
+        color:     '#333',
+    },
+    optionStyle: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    optionTextStyle: {
+        textAlign: 'center',
+        color:     '#59358B',
+    },
+    sectionStyle: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        backgroundColor: '#59358B',
+    },
+    sectionTextStyle: {
+        textAlign: 'center',
+        color:     'white',
+    },
+    initValueTextStyle: {
+        textAlign: 'center',
+        color:     '#d3d3d3'
     }
 })
