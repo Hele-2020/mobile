@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {AsyncStorage,Text, View, StyleSheet,TouchableOpacity, Alert } from 'react-native';
+import {AsyncStorage,Text, View, StyleSheet,TouchableOpacity, Alert, Button } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import axios from 'axios';
 import Api from '../config/Api'
@@ -12,75 +12,72 @@ export default class SelectSlotScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          tableHead: ['Créneaux', 'Selectionné'],
           tableData: [],
           token: '',
         }
     }
 
-
+    _SelectIndex(index) {
+      alert(`This is row ${index}`);
+    }
     
     async componentDidMount() {
 
-      const token = await AsyncStorage.getItem('userToken');
-      console.log(token)
-
+        const token = await AsyncStorage.getItem('userToken');
         const headers = {
-          'Authorization': 'bearer ' + token,
-      }
+            'Authorization': 'bearer ' + token,
+        }
 
-            axios.get( Api.url('/get/slot'),{headers: headers})
-            .then(function (response) {
-                console.log(response.data)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+          axios.get( Api.url('/get/slot'),{headers: headers})
+          .then((response) => {
+            const tab =  response.data.result
+            this.setState({tableData: tab})
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
 
-      }
+    }
 
-      _SelectIndex(index) {
-        Alert.alert(`This is row ${index + 1}`);
-      }
-     
       render() {
-
         const state = this.state;
-        const element = (data, index) => (
-          <TouchableOpacity onPress={() => this._SelectIndex(index)}>
-            <View style={styles.btn}>
-              <Text style={styles.btnText}>button</Text>
-            </View>
-          </TouchableOpacity>
-        );
-     
         return (
           <View style={styles.container}>
-            <Table borderStyle={{borderColor: 'transparent'}}>
-              <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
               {
-                state.tableData.map((rowData, index) => (
-                  <TableWrapper key={index} style={styles.row}>
-                    {
-                      rowData.map((cellData, cellIndex) => (
-                        <Cell key={cellIndex} data={cellIndex === 1 ? element(cellData, index) : cellData} textStyle={styles.text}/>
-                      ))
-                    }
-                  </TableWrapper>
+                state.tableData.map(index => 
+                (
+                  <TouchableOpacity  key={index.id} onPress={() => this._SelectIndex(index.id)}>
+                      <View style={styles.button}>
+                        <Text style={styles.buttonText}>
+                          {index.start_time}
+                        </Text>
+                      </View>
+                  </TouchableOpacity>                   
                 ))
               }
-            </Table>
           </View>
         )
       }
     }
      
     const styles = StyleSheet.create({
-      container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-      head: { height: 40, backgroundColor: '#808B97' },
-      text: { margin: 6 },
-      row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
-      btn: { width: 58, height: 18, backgroundColor: '#78B7BB',  borderRadius: 2 },
-      btnText: { textAlign: 'center', color: '#fff' }
+      container: {
+        flex: 1,
+        marginLeft:50,
+        marginRight:50,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+      button: {
+        marginBottom: 30,
+        width: 260,
+        alignItems: 'center',
+        backgroundColor: '#2196F3'
+      },
+      buttonText: {
+        textAlign: 'center',
+        padding: 20,
+        color: 'white'
+      }
     });
 
