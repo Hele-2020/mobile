@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { AsyncStorage, StyleSheet, Button, View } from 'react-native';
+import { AsyncStorage, StyleSheet, Button, View, TouchableOpacity, KeyboardAvoidingView, Text } from 'react-native';
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
@@ -9,10 +9,36 @@ export default class HomeScreen extends Component {
 
     render() {
         return (
-            <View>
-                <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-                <Button title="Map" onPress={this._MapAsync} />
-            </View>
+            <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', alignItems: 'stretch', margin: 20}} behavior='padding'>
+             
+              <TouchableOpacity
+             style= {styles.Button}
+             onPress={this._MapAsync} >
+                  <Text  style = {styles.titre}> Map </Text>
+            </TouchableOpacity>
+              <TouchableOpacity
+              style= {styles.Button}>
+                   <Text  style={styles.titre}> Chat Pro</Text>
+             </TouchableOpacity>
+             <TouchableOpacity
+              style= {styles.Button}>
+                   <Text  style={styles.titre}> Chat Privée</Text>
+             </TouchableOpacity>
+             <TouchableOpacity
+              style= {styles.Button}>
+                   <Text  style={styles.titre}>Mon calendrier</Text>
+             </TouchableOpacity>
+             <TouchableOpacity
+              style= {styles.Button}>
+                   <Text  style={styles.titre}>Mes Rdv</Text>
+             </TouchableOpacity>
+             <TouchableOpacity
+             style= {styles.Button}
+             onPress={this._signOutAsync}   >
+                  <Text  style = {styles.titre}> Deconnexion </Text>
+            </TouchableOpacity>
+              
+             </KeyboardAvoidingView>
         );
     }
 
@@ -25,3 +51,24 @@ export default class HomeScreen extends Component {
         this.props.navigation.navigate('Map');
     };
 }
+const styles = StyleSheet.create({
+    ButtonActually:{
+        top: '30%',
+        padding: 7,
+        borderBottomColor: '#FBBA00',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderTopColor: '#FBBA00',
+    },
+    Button:{
+        borderBottomColor: '#FBBA00',
+        borderBottomWidth: 1,
+       
+    },
+    titre:{
+       color: '#59358B',
+       fontSize: 23,
+       textAlign: 'center',
+       padding: '3%'
+    }
+})

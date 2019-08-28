@@ -8,6 +8,7 @@ import {
 
 import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
 
+// import Welcome from './screens/auth/welcome';
 import LoginScreen from './screens/auth/LoginScreen';
 import RegisterScreen from './screens/auth/RegisterScreen';
 
@@ -23,8 +24,10 @@ const AppStack = createStackNavigator({
   
 
 const AuthStack = createSwitchNavigator({
+    // welcome: Welcome,
     Login: LoginScreen,
     Register: RegisterScreen,
+   
 });
 
 export default createAppContainer(createSwitchNavigator({
@@ -32,5 +35,6 @@ export default createAppContainer(createSwitchNavigator({
     App: AppStack,
     Auth: AuthStack,
 }, {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'AuthLoading', 
 }));
+
