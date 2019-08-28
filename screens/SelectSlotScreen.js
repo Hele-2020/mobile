@@ -6,7 +6,7 @@ import Api from '../config/Api'
 
 export default class SelectSlotScreen extends Component {
     static navigationOptions = {
-        title: 'Vos créneaux',
+        title: 'Les créneaux disponibles',
     };
 
     constructor(props) {
@@ -15,10 +15,6 @@ export default class SelectSlotScreen extends Component {
           tableData: [],
           token: '',
         }
-    }
-
-    _SelectIndex(index) {
-      alert(`This is row ${index}`);
     }
     
     async componentDidMount() {
@@ -37,6 +33,19 @@ export default class SelectSlotScreen extends Component {
               console.log(error);
           });
 
+    }
+
+
+    _SelectIndex(index) {
+      
+      // axios.get( Api.url('/get/slot'),{headers: headers})
+      // .then((response) => {
+      //   const tab =  response.data.result
+      //   this.setState({tableData: tab})
+      // })
+      // .catch(function (error) {
+      //     console.log(error);
+      // });
     }
 
       render() {

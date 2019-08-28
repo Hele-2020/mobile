@@ -9,6 +9,7 @@ export default class HomeScreen extends Component {
             Roles:'',
         }
     }
+    
     static navigationOptions = {
         title: 'Home',
     };
@@ -27,7 +28,7 @@ export default class HomeScreen extends Component {
 
     displayButtonYoung() {
         if (this.state.Roles === 'YOUNG') {
-            return <Button title="Voir les créneaux" onPress={this._SlotSelectorAsync} />
+            return <Button title="Voir les créneaux disponibles" onPress={this._SlotSelectorAsync} />
         }
     }
 
@@ -37,6 +38,7 @@ export default class HomeScreen extends Component {
                 <Button title="Actually, sign me out :)" onPress={this._signOutAsync} /> 
                 {this.displayButtonPro()}
                 <Button title="Map" onPress={this._MapAsync} />
+                {this.displayButtonYoung()}
             </View>
         );
     }
