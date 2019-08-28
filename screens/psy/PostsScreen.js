@@ -3,18 +3,30 @@ import BodyComplete from '../../components/post/body/BodyComplete.js';
 import PostNewPost from '../../components/post/footer/PostNewPost.js';
 import { View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Logo from '../../assets/nouveauPost.svg';
-
+import Connexion from '../../components/SocketConn';
 
 export default class PostsScreen extends Component {
   static navigationOptions = {
     title : 'PostPro',
   };
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {
+      post: null,
+      messages: [],
+      dataSource: [],
       status: false
-    };
+    }
+  
     this.newPost = this.newPost.bind(this);
+  }
+  componentDidMount(){
+      Connexion().then(({post}) => {
+        post.on('send', (messageSock) => {
+          this.setState({ messages: [...this.state.messages, messageSock] })
+        })
+        this.setState({post})            
+    })
   }
   newPost() {
     if (this.state.status == true) {

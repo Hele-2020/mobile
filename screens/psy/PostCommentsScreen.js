@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BodyComplete from '../../components/comment/body/BodyComplete.js';
 import PostNewComment from '../../components/comment/footer/PostNewComment.js';
 import { View, StyleSheet} from 'react-native';
+import Connexion from '../../components/SocketConn';
 
 export default class PostCommentsScreen extends Component {
   static navigationOptions = {
@@ -9,7 +10,20 @@ export default class PostCommentsScreen extends Component {
   };
   constructor(props) {
     super(props);
+    this.state = {
+      comment: null,
+      messages: [],
+      dataSource: []
+    }
   }
+  componentDidMount(){
+    Connexion().then(({comment}) => {
+      comment.on('send', (messageSock) => {
+        this.setState({ messages: [...this.state.messages, messageSock] })
+      })
+      this.setState({comment})            
+  })
+}
   render() {
     
     return (

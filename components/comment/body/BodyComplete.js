@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 
 import BlocPost from './infoPost/BlocPost.js';
 import BackgroundComment from './comments/BackgroundComment.js';
-// import comment from '../../SocketConn.js';
+
 // import Api from '../../../config/Api.js'
 
 export default class BodyComplete extends Component {
@@ -14,15 +14,15 @@ export default class BodyComplete extends Component {
       dataSource: []
     };
   }
-  //   comment.on('send', (messageSock) => {
-  //     this.setState({ messages: [...this.state.messages, messageSock] })
-  //   })
-  // }
+  
   componentDidMount() {
+    comment.on('send', (messageSock) => {
+      this.setState({ messages: [...this.state.messages, messageSock] })
+    })
     const { navigation } = this.props
     const post_id = navigation.getParam('post_id');
     console.log(post_id)
-    fetch('https://522c1ea8.ngrok.io/v1/post/' + post_id)
+    fetch('https://api.hélé.fr/v1/post/' + post_id)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -33,7 +33,9 @@ export default class BodyComplete extends Component {
       });
   }
   render() {
-    const { navigation } = this.props
+    
+  
+    // const { navigation } = this.props
     const post_name = navigation.getParam('post_name');
     const post_date = navigation.getParam('post_date');
     const post_message = navigation.getParam('post_message');
@@ -41,9 +43,9 @@ export default class BodyComplete extends Component {
     const HttpReply = this.state.dataSource.map((message, key) => (
       <BackgroundComment {...this.props} key={key} message={message.content} date={message.created_at} name={message.user.username} />)
     )
-    // const NewComment = this.state.messages.map((message, key) => (
-    //   <BackgroundComment key={key} message={message.message} date={message.date} name={message.name} />)
-    // )
+    const NewComment = this.state.messages.map((message, key) => (
+      <BackgroundComment key={key} message={message.message} date={message.date} name={message.name} />)
+    )
     return (
       <View style={styles.view}>
         <BlocPost
@@ -51,6 +53,13 @@ export default class BodyComplete extends Component {
           post_date={post_date}
           post_message={post_message} />
         {HttpReply}
+      </View>,
+      <View style={styles.view}>
+        <BlocPost
+          post_name={post_name}
+          post_date={post_date}
+          post_message={post_message} />
+        {NewComment}
       </View>
     );
   }

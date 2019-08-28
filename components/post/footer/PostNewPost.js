@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity, Platform } from 'react-native';
-import chat from '../../SocketConn.js';
+import Connexion from '../../SocketConn.js';
 
 export default class PostNewPost extends Component {
     constructor(props) {
@@ -12,10 +12,9 @@ export default class PostNewPost extends Component {
     onPress = () => {
       const message = {
         message: this.state.text,
-        date: "12/12/12",
-        name: 'Dr Robin'
+        
       }
-      chat.emit('message', message)
+      post.emit('message', message)
       this.setState({ text: '' })
     }
     return (
