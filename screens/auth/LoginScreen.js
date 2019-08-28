@@ -3,9 +3,9 @@ import { AsyncStorage, StyleSheet, TextInput, Button, View, KeyboardAvoidingView
 import {Platform} from 'react-native';
 
 import axios from 'axios';
+import Logo from '../../assets/LogoHele.svg';
 
 import Api from '../../config/Api';
-import Hele from './LogoHele300.png';
 
 
 
@@ -24,24 +24,24 @@ export default class LoginScreen extends Component {
     
     render() {
         return (
-            <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', alignItems: 'stretch', margin: 20, }} behavior='padding' >
-            <View>
-            <Image
-            style={styles.stretch}
-            source={require('./LogoHele300.png')}/>
+            <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', margin: '11%', }} behavior='padding' >
+            <View style={styles.logo}>
+            <Logo width={200} height={100}/>
             </View> 
-            <Text style= {styles.Text} >Connexion </Text>    
+            <Text style= {styles.Text} >Connexion</Text> 
+            <View style={styles.input}>   
             <TextInput  style={styles.TextInput} value={this.state.phone} onChangeText={text => this.setState({phone: text})} textContentType='telephoneNumber' placeholder="Phone" />
             <TextInput  style={styles.TextInput} value={this.state.password} onChangeText={text => this.setState({password: text})} textContentType='password' secureTextEntry={true} placeholder="Password" />
+            </View>
             <TouchableOpacity
             style = {styles.buttonLogin}
             onPress={this._loginAsync} >
-            <Text  style = {styles.Login}> Login</Text>
+            <Text  style = {styles.Login}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity
             style={styles.buttonRegister}
             onPress={this._redirectRegister}  style={styles.buttonRegister} >
-            <Text  style = {styles.Register}> Register</Text>
+            <Text  style = {styles.Register}>Register</Text>
             </TouchableOpacity>
             </KeyboardAvoidingView>
             );
@@ -71,7 +71,7 @@ export default class LoginScreen extends Component {
             flex: 1,
             ...Platform.select({
               ios: {
-                backgroundColor: 'red',
+                  
               },
               android: {
                 backgroundColor: 'blue',
@@ -80,38 +80,67 @@ export default class LoginScreen extends Component {
           },
     
         buttonLogin:{
-            backgroundColor: '#59358B',
-            borderRadius: 20,
-            marginBottom: 10,
-            bottom: '20%',
-            padding: 7, 
-            height: '6%'
+            ...Platform.select({
+                ios: {
+                backgroundColor: '#59358B',
+                borderRadius: 20,
+                marginBottom: 6,
+                padding: 10,
+                },
+                android: {
+                    backgroundColor: '#59358B',
+                    borderRadius: 20,
+                    marginBottom: 6,
+                    padding: 6,
+                },
+              }),
+            
+
         },
         buttonRegister:{
-            backgroundColor: '#FBBA00',
-            borderRadius: 20,
-            bottom: '20%',
-            padding: 7,
-            height: '6%'
-        },
+            
+            ...Platform.select({
+                ios: {
+                backgroundColor: '#FBBA00',
+                borderRadius: 20,
+                marginBottom: 6,
+                padding: 10,
+                },
+                android: {
+                    backgroundColor: '#FBBA00',
+                    borderRadius: 20,
+                    marginBottom: 6,
+                    padding: 6,
+                },
+              }),
+            },
+            
         TextInput:{
+            ...Platform.select({
+                ios: {
             backgroundColor: 'white',
-            width: 250,
-            height: 38,
-            fontSize: 15,
+            fontSize: 16,
             color: '#59358B',
-            left: '20%',
-            bottom: '25%',
+            margin: 6,
+            padding: 3,
             borderBottomColor: '#FBBA00',
             borderBottomWidth: 1,
-            
+                },
+                android: {
+            backgroundColor: 'white',
+            fontSize: 15,
+            margin: '1%',
+            color: '#59358B',
+            borderBottomColor: '#FBBA00',
+            borderBottomWidth: 1,
+                },
+              }),
         },
         Text:{
             color: '#59358B',
-            fontSize: 30,
+            fontSize: 20,
             textAlign: 'center',
-            bottom: '30%',
-           
+            marginBottom: '5%',
         },
         placeholder:{
             color: 'black'
@@ -119,19 +148,26 @@ export default class LoginScreen extends Component {
         Login:{
             textAlign: 'center',
             color: 'white',
-            marginTop: '1%',
         },
         Register:{
             textAlign: 'center',
             color: 'white',
-            marginTop: '1%'
         },
-        stretch:{
-            resizeMode: 'contain',
-            width: '55%',
-            height: '50%',
-            bottom: '10%',
-            left: '20%', 
-            // backgroundColor: 'red'
-        }
+        logo:{
+            justifyContent:"center",
+            alignItems:"center",
+            marginBottom:"6%"
+        },
+        input:{
+            ...Platform.select({
+                ios: {
+            marginBottom:40,
+            marginTop:20
+                },
+                android: {
+            marginBottom:"10%"
+                },
+              }),
+            }
+            
     })
