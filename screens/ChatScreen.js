@@ -97,16 +97,16 @@ function ChatScreen(props){
         return(
             <View>
                 {item.item.user.id == authId  ? 
-                    <Text style={styles.auth}>
+                    <TouchableOpacity style={styles.auth}>
                         <Text style={styles.pseudo}>{("Moi" + "\n")}</Text>
                         <Text>{item.item.content + "\n"}</Text>
                         <Text style={styles.pseudo}>{item.item.created_at}</Text>  
-                    </Text> : 
-                    <Text style={styles.other}>
+                    </TouchableOpacity> : 
+                    <TouchableOpacity style={styles.other}>
                         <Text style={styles.pseudo}>{(item.item.user.username + "\n")}</Text>
                         <Text style={styles.pseudo}>{item.item.content + "\n"}</Text>
                         <Text style={styles.pseudo}>{item.item.created_at}</Text>  
-                    </Text>
+                    </TouchableOpacity>
                 }
             </View>
         )
