@@ -1,33 +1,46 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Api from '../config/Api';
-import { View, Text} from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage} from 'react-native';
 import axios from 'axios';
-
 import MapHeader from '../components/Map/MapHeader';
 import MapDisplay from '../components/Map/MapDisplay';
 import MapModal from '../components/Map/MapModal';
 
-export default class MapScreen extends React.Component
-{
+export default class MapScreen extends Component {
     static navigationOptions = {
         title: 'Carte',
+        headerStyle:{
+            shadowColor:"transparent", 
+            elevation: 0
+        },
+        headerTintColor: "#FBBA00", 
+        headerTitleStyle :{
+            color: "#59358B",
+            fontSize: 20,
+        },
     };
 
-    constructor() {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
-            region: '',
-            pois: [],
             modalVisible: false,
-            idPoi: []
-        };
+            pois: [],
+            idPoi: [],
+            nameRegion : '', 
+            region: {
+                latitude: 48.858372,
+                longitude: 2.294481,
+                latitudeDelta: 7.0,
+                longitudeDelta: 4.0,
+            }
+        }
 
-        // TODO: get user details here and passthem to the MapHeader in props
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeModal = this.handleChangeModal.bind(this)
     }
 
+    
     handleChangeModal(value, id) {
         if (id !== '') {
             axios.get(Api.url(`/poi/edit/${id}`))
@@ -48,12 +61,19 @@ export default class MapScreen extends React.Component
         }
     }
 
-    handleChange = (region) => {
-        this.setState({region: region})
-
+    handleChange(region) {
         axios.get(Api.url(`/region/${region}`))
         .then(async response => {
-            this.setState({ pois: response.data })
+            this.setState({
+                region: {
+                    latitude: response.data.latitude,
+                    longitude: response.data.longitude,
+                    latitudeDelta: 10 * response.data.latitudeDelta,
+                    longitudeDelta: 10 *response.data.longitudeDelta,
+                },
+                pois: response.data.pois,
+                nameRegion: response.data.name
+            })
         })
         .catch(error => {
             console.log(error.response.data);
@@ -62,17 +82,29 @@ export default class MapScreen extends React.Component
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <MapModal
                     modalVisible={this.state.modalVisible}
                     modal={this.handleChangeModal}
                     poi={this.state.idPoi} />
                 <MapHeader
-                    change={this.handleChange} />
+                    handleChange={this.handleChange} nameRegion={this.state.nameRegion} />
                 <MapDisplay
                     pois={this.state.pois}
-                    modal={this.handleChangeModal} />
+                    modal={this.handleChangeModal}
+                    region={this.state.region}
+                />
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
+        backgroundColor: '#fff',
+    },
+});
