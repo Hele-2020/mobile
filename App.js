@@ -15,12 +15,14 @@ import HomeScreen from './screens/HomeScreen';
 import SlotformScreen from './screens/SlotformScreen';
 // import ChatScreen from './screens/ChatScreen';
 import MapScreen from './screens/MapScreen';
+import ArticlesScreen  from './screens/ArticlesScreen';
 
 const AppStack = createStackNavigator({
     Home: HomeScreen,
     Slotform : SlotformScreen,
     // Chat: ChatScreen,
     Map: MapScreen,
+    Articles: ArticlesScreen
 });
   
 
