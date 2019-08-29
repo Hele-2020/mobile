@@ -25,7 +25,7 @@ export default class ArticlesScreen extends Component
     }
 
     componentDidMount = async () =>{
-
+        
         const token = await AsyncStorage.getItem('userToken')
         const headers = {
             'Authorization': 'bearer ' + token,
@@ -38,6 +38,7 @@ export default class ArticlesScreen extends Component
             .catch(error => {
                 console.log(error.response.data);
             })
+       
     }
 
     render(){
