@@ -3,38 +3,34 @@ import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpaci
 import Connexion from '../../SocketConn.js';
 
 export default class PostNewPost extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-          post: null,
-          text: ''
-         };
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      post: null,
+      message: ''
+    };
+    Connexion().then(({ post }) => {
+      this.setState({ post })
+    })
+  }
   render() {
     onPress = () => {
-      Connexion().then(({post}) => {
-        const message = { text: this.state.text }
-        post.emit('text', message) 
-        /*console.log("C'EST LA")
-        console.log(message)
-        console.log("C'ETAIT LA ^")*/
-        this.setState({post}) 
-      })
-      
+      const message = this.state.message
+      this.state.post.emit('message', message)
+      this.setState({ message: '' })
     }
     return (
-      <KeyboardAvoidingView keyboardVerticalOffset= {Platform.select({ios: 80, android: 83})} style={styles.keyboard} behavior="padding" enabled>
+      <KeyboardAvoidingView keyboardVerticalOffset={Platform.select({ ios: 80, android: 83 })} style={styles.keyboard} behavior="padding" enabled>
         <View style={styles.view} >
-            <TextInput multiline style={styles.textInput} placeholder="votre commentaire ... "
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text} autoCorrect={false} onSubmitEditing={this._submit}/>
-            <TouchableOpacity onPress={()=> onPress()} style={styles.touchableButton}>
-              <Text style={styles.text}>envoyer</Text>
-            </TouchableOpacity>
+          <TextInput multiline style={styles.textInput} placeholder="votre commentaire ... "
+            onChangeText={(message) => this.setState({ message })}
+            value={this.state.message} autoCorrect={false} onSubmitEditing={this._submit} />
+          <TouchableOpacity onPress={() => onPress()} style={styles.touchableButton}>
+            <Text style={styles.text}>envoyer</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     );
-    this.setState({ text: '' })
   }
 }
 const styles = StyleSheet.create({
@@ -48,7 +44,7 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row" ,
+    flexDirection: "row",
     width: "100%",
   },
   textInput: {
@@ -58,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F1F0EF",
     color: "grey",
     width: "70%",
-    padding:"2%",
+    padding: "2%",
   },
   text: {
     color: "white",

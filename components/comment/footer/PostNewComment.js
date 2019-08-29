@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
-import comment from '../../SocketConn.js';
+import Connexion from '../../SocketConn.js';
 
 export default class PostNewComment extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      text: ''
+      text: '',
+      comment: null
     };
+    Connexion().then(({comment}) => {
+      this.setState({comment})
+    })
   }
   render() {
     const { id } = this.props
@@ -17,7 +21,7 @@ export default class PostNewComment extends Component {
         message: this.state.text,
         date: '',
       }
-      comment.emit('message', message)
+      this.state.comment.emit('message', message)
       this.setState({ text: '' })
     }
     return (
