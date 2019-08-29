@@ -15,19 +15,19 @@ import RegisterScreen from './screens/auth/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 // import ChatScreen from './screens/ChatScreen';
 import MapScreen from './screens/MapScreen';
+import ContactInfos from './screens/auth/ContactInfos';
 
 const AppStack = createStackNavigator({
     Home: HomeScreen,
     // Chat: ChatScreen,
     Map: MapScreen,
+    contact : ContactInfos,
 });
   
 
 const AuthStack = createSwitchNavigator({
-    // welcome: Welcome,
     Login: LoginScreen,
     Register: RegisterScreen,
-   
 });
 
 export default createAppContainer(createSwitchNavigator({

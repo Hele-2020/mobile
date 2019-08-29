@@ -37,7 +37,11 @@ export default class HomeScreen extends Component {
              onPress={this._signOutAsync}   >
                   <Text  style = {styles.titre}> Deconnexion </Text>
             </TouchableOpacity>
-              
+            <TouchableOpacity
+             style= {styles.ButtonContact}
+             onPress={this._contact}  >
+                  <Text  style = {styles.titre}>Contact </Text>
+            </TouchableOpacity>
              </KeyboardAvoidingView>
         );
     }
@@ -45,6 +49,11 @@ export default class HomeScreen extends Component {
     _signOutAsync = async () => {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
+    };
+
+
+    _contact = async () => {
+        this.props.navigation.navigate('Contact');
     };
 
     _MapAsync = async () => {

@@ -43,6 +43,9 @@ export default class LoginScreen extends Component {
             onPress={this._redirectRegister}  style={styles.buttonRegister} >
             <Text  style = {styles.Register}>Register</Text>
             </TouchableOpacity>
+            <View>
+                
+            </View>
             </KeyboardAvoidingView>
             );
         };
