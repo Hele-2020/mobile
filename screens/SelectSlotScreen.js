@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {AsyncStorage,Text, View, StyleSheet,TouchableOpacity, Alert, Button } from 'react-native';
-import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import axios from 'axios';
 import Api from '../config/Api'
 
@@ -13,17 +12,17 @@ export default class SelectSlotScreen extends Component {
         super(props);
         this.state = {
           tableData: [],
-          token: '',
+          Token: ''
         }
     }
     
     async componentDidMount() {
 
         const token = await AsyncStorage.getItem('userToken');
+        this.setState({Token : token})
         const headers = {
             'Authorization': 'bearer ' + token,
         }
-
           axios.get( Api.url('/get/slot'),{headers: headers})
           .then((response) => {
             const tab =  response.data.result
@@ -32,20 +31,21 @@ export default class SelectSlotScreen extends Component {
           .catch(function (error) {
               console.log(error);
           });
-
     }
-
 
     _SelectIndex(index) {
       
-      // axios.get( Api.url('/get/slot'),{headers: headers})
-      // .then((response) => {
-      //   const tab =  response.data.result
-      //   this.setState({tableData: tab})
-      // })
-      // .catch(function (error) {
-      //     console.log(error);
-      // });
+      const headers = {
+        'Authorization': 'bearer ' + this.state.Token,
+    }
+
+      axios.post(Api.url('/select/'+index), {}, {headers: headers})
+      .then((response) => {
+      console.log(response)
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
     }
 
       render() {

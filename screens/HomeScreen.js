@@ -17,7 +17,6 @@ export default class HomeScreen extends Component {
     async componentDidMount() {
 
         this.setState( { Roles : await AsyncStorage.getItem('userRoles')});
-        console.log(this.state.Roles)
     }
 
     displayButtonPro() {
