@@ -4,7 +4,7 @@ import {AsyncStorage} from 'react-native';
 export default async function Connexion(id){
     const token = await AsyncStorage.getItem('userToken')
 
-    const ws = Ws('ws://api.hélé.fr')    
+    const ws = Ws('ws://api.xn--hl-bjab.fr')    
     ws.withJwtToken(token).connect()
 
     const id_user = await AsyncStorage.getItem('userId')
