@@ -13,7 +13,7 @@ import {
     Image
 } from 'react-native';
 
-import Hele from './LogoHele300.png';
+import Logo from '../../assets/LogoHele.svg';
 import axios from 'axios';
 import SelectRegions from './SelectRegions';
 import ModalSelector from 'react-native-modal-selector';
@@ -51,19 +51,19 @@ export default class RegisterScreen extends Component {
     render() {
         return (
             <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', alignItems: 'stretch', margin: 20}} behavior='padding'>
-              <View>
-            <Image
-            style={styles.stretch}
-            source={require('./LogoHele300.png')}
-            />
+            <View style={styles.logo}>
+            <Logo width={200} height={100}/>
             </View> 
-            <View style={styles.selectInput}>
-            <SelectRegions />
-            </View>
             <Text style={styles.Text}>Inscription</Text>  
+            <View style={styles.input}>   
+          
             <TextInput  style={styles.TextInput} value={this.state.phone} onChangeText={text => this.setState({phone: text})} textContentType='telephoneNumber' placeholder="Phone" />
             <TextInput style={styles.TextInput} value={this.state.username} onChangeText={text => this.setState({username: text})} textContentType='username' placeholder="Username" />
             <TextInput style={styles.TextInput} value={this.state.age} onChangeText={text => this.setState({age: text})} placeholder="Age" />
+            </View>
+            <View style={styles.selectInput}>
+            <SelectRegions />
+            </View>
             <TouchableOpacity
             style={styles.buttonRegister}
             onPress={this._registerAsync} >
@@ -103,67 +103,117 @@ export default class RegisterScreen extends Component {
             container: {
                 flex: 1,
                 ...Platform.select({
-                  ios: {
-                    backgroundColor: 'red',
-                  },
-                  android: {
-                    backgroundColor: 'blue',
-                  },
+                    ios: {
+                        
+                    },
+                    android: {
+                        // backgroundColor: 'blue',
+                    },
                 }),
-              },
+            },
+            
             buttonLogin:{
-                backgroundColor: '#59358B',
-                borderRadius: 20,
-                marginBottom: 10,
-                bottom: '25%',
-                padding: 7, 
-                height: '6%'
+                ...Platform.select({
+                    ios: {
+                        backgroundColor: '#59358B',
+                        borderRadius: 20,
+                        marginBottom: 6,
+                        padding: 10,
+                    },
+                    android: {
+                        backgroundColor: '#59358B',
+                        borderRadius: 20,
+                        marginBottom: 6,
+                        padding: 6,
+                    },
+                }),
+                
+                
             },
             buttonRegister:{
-                backgroundColor: '#FBBA00',
-                borderRadius: 20,
-                bottom: '27%',
-                padding: 7,
-                height: '6%'
+                
+                ...Platform.select({
+                    ios: {
+                        backgroundColor: '#FBBA00',
+                        borderRadius: 20,
+                        marginBottom: 6,
+                        padding: 10,
+                    },
+                    android: {
+                        backgroundColor: '#FBBA00',
+                        borderRadius: 20,
+                        marginBottom: 6,
+                        padding: 6,
+                    },
+                }),
             },
+            
             TextInput:{
-                backgroundColor: 'white',
-                width: 250,
-                height: 38,
-                fontSize: 15,
-                color: '#59358B',
-                left: '20%',
-                bottom: '40%',
-                borderBottomColor: '#FBBA00',
-                borderBottomWidth: 1,
+                ...Platform.select({
+                    ios: {
+                        backgroundColor: 'white',
+                        fontSize: 16,
+                        color: '#59358B',
+                        margin: 6,
+                        padding: 3,
+                        borderBottomColor: '#FBBA00',
+                        borderBottomWidth: 1,
+                    },
+                    android: {
+                        backgroundColor: 'white',
+                        fontSize: 15,
+                        margin: '1%',
+                        color: '#59358B',
+                        borderBottomColor: '#FBBA00',
+                        borderBottomWidth: 1,
+                    },
+                }),
             },
             Text:{
                 color: '#59358B',
-            fontSize: 30,
-            textAlign: 'center',
-            bottom: '50%',
+                fontSize: 20,
+                textAlign: 'center',
+                marginBottom: '5%',
+            },
+            placeholder:{
+                color: 'black'
             },
             Login:{
                 textAlign: 'center',
                 color: 'white',
-                marginTop: '1%',
             },
             Register:{
                 textAlign: 'center',
                 color: 'white',
-                marginTop: '1%',
             },
-            stretch:{
-                resizeMode: 'contain',
-                width: '55%',
-                height: '50%',
-                bottom: '10%',
-                left: '20%', 
+            logo:{
+                justifyContent:"center",
+                alignItems:"center",
+                marginBottom:"6%"
+            },
+            input:{
+                ...Platform.select({
+                    ios: {
+                        marginBottom:40,
+                        marginTop:20
+                    },
+                    android: {
+                        marginBottom:"10%"
+                    },
+                }),
             },
             selectInput:{
-                top: '-36%',
-                left: '1%',
-
-            }
-            
-        })
+                ...Platform.select({
+                    ios: {
+                        top: '-5%',
+                        left: '-1%',
+                        width: '17%',
+                    },
+                    android: {
+                        top: '-5%',
+                        left: '-1%',
+                        width: '17%',
+                    },
+                }),
+            },
+        })           
