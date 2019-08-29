@@ -12,10 +12,10 @@ export default class HomeScreen extends Component {
                 <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
                 <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
                 <Button title="Map" onPress={this._MapAsync} />
+                <Button title="PostPro" onPress={this._PostProAsync} />
             </View>
         );
     }
-
     _signOutAsync = async () => {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
@@ -27,5 +27,9 @@ export default class HomeScreen extends Component {
     
     _MapAsync = async () => {
         this.props.navigation.navigate('Map');
+    };
+
+    _PostProAsync = async () => {
+        this.props.navigation.navigate('PostPro');
     };
 }
