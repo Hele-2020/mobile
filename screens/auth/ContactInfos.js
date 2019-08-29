@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { AsyncStorage, StyleSheet, TextInput, Button, View, KeyboardAvoidingView, Text, TouchableOpacity, Image} from 'react-native';
-import {Platform} from 'react-native';
+import { AsyncStorage, Platform, StyleSheet, TextInput, Button, View, KeyboardAvoidingView, Text, TouchableOpacity, Image,  Linking} from 'react-native';
+
 
 import axios from 'axios';
 import Logo from '../../assets/LogoHele.svg';
@@ -16,81 +16,86 @@ export default class ContactInfos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           
+            
         };
     }
+    dialCall = (number) => {
+        let phoneNumber = '';
+        if (Platform.OS === 'android') {
+            phoneNumber = `tel:${number}`;
+        } else {
+            phoneNumber = `telprompt:${number}`;
+        }
+        Linking.openURL(phoneNumber);
+    };
     
     render() {
         return (
-            <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', margin: '11%', }} behavior='padding' >
+            <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', color: 'white', }} behavior='padding' >
             <View style={styles.logo}>
             <Logo width={200} height={100}/>
             </View> 
-            <Text style= {styles.Text}>Contact</Text> 
-            <View style={styles.input}>   
+            <View style={styles.container} >
             <TouchableOpacity
-            style = {styles.button}
-            onPress={this._contact}  
-            > <Text  style={styles.titre}>Numéro : 3020</Text>
+            style = {styles.info}>
+            <Text  style = {styles.infos}>Telephone </Text>
+            <Text style={{textDecorationLine: "none", color:"white",  fontSize: 20,    textAlign: 'right' }} selectable={true} onPress={()=> {this.dialCall('3020')} }>3020 &#8250;</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+            style = {styles.info}>
+            <Text  style = {styles.infos} >Site </Text>
+            <Text onPress={()=>{ Linking.openURL('https://www.nonauharcelement.education.gouv.fr/')}} style={{textDecorationLine: "none", color:"white",    textAlign: 'right', fontSize: 20, }} selectable={true} >Click &#8250;</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style = {styles.info}>
+            <Text  style = {styles.infos} >Infos</Text>
+            <Text style={{textDecorationLine: "none", color:"white",    textAlign: 'right', fontSize: 20, }} selectable={true} >En savoir plus sur hélé &#8250;</Text>
+            </TouchableOpacity>
+            <View  style = {styles.cacher}></View>
             </View>
             </KeyboardAvoidingView>
             );
         };
-        // _redirectRegister = () => {
-        //     this.props.navigation.navigate('HomeScreen');
-        // }
+        
     }
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             ...Platform.select({
-              ios: {
-                  
-              },
-              android: {
-                // backgroundColor: 'blue',
-              },
-            }),
-          },
-          Text:{
-            color: '#59358B',
-            fontSize: 20,
-            textAlign: 'center',
-            marginBottom: '5%',
-        },
-        input:{
-            ...Platform.select({
                 ios: {
-                    marginBottom:40,
-                    marginTop:20
+                    backgroundColor: '#59358B',
+                    borderRadius: 10 * 30 * 50 * 70,
+                    height: '40%',
+                    bottom: '-5s%',
                 },
                 android: {
-                    marginBottom:"10%"
-                },
-            }),
-        },
-        button:{
-                
-            ...Platform.select({
-                ios: {
-                    backgroundColor: '#FBBA00',
-                    borderRadius: 20,
-                    marginBottom: 6,
-                    padding: 10,
-                },
-                android: {
-                    backgroundColor: '#FBBA00',
-                    borderRadius: 20,
-                    marginBottom: 6,
-                    padding: 6,
+                    
                 },
             }),
         },
         logo:{
             justifyContent:"center",
             alignItems:"center",
-            marginBottom:"6%"
+            backgroundColor: 'white',
+            top: '5%'
         },
-    
+        info:{
+            textAlign: 'center',
+            borderBottomColor: '#FBBA00',
+            borderBottomWidth: 1,
+            padding: 7,
+            width: '80%',
+            left: '10%',
+            top: '25%',
+        },
+        infos:{
+            fontSize: 20,
+            color: 'white',
+        },
+        cacher:{
+            backgroundColor: '#59358B',
+            height: '30%',
+            width: '100%',
+            top: '40%'
+        }
     })

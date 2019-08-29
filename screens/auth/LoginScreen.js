@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import { AsyncStorage, StyleSheet, TextInput, Button, View, KeyboardAvoidingView, Text, TouchableOpacity, Image} from 'react-native';
+import React, { Component } from 'react';
 import {Platform} from 'react-native';
-
+import { AsyncStorage, StyleSheet, TextInput, Button, View, KeyboardAvoidingView, Text, TouchableOpacity, Image} from 'react-native';
 import axios from 'axios';
 import Logo from '../../assets/LogoHele.svg';
 
@@ -43,9 +42,6 @@ export default class LoginScreen extends Component {
             onPress={this._redirectRegister}  style={styles.buttonRegister} >
             <Text  style = {styles.Register}>Register</Text>
             </TouchableOpacity>
-            <View>
-                
-            </View>
             </KeyboardAvoidingView>
             );
         };
