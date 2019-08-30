@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { AsyncStorage, Button, View,Text } from 'react-native';
 import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor';
+import AdviceCard from '../components/AdviceCard'
 
 export default class HomeScreen extends Component {
     constructor(props) {
@@ -36,10 +37,12 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View>
+                <AdviceCard/>
                 <Button title="Actually, sign me out :)" onPress={this._signOutAsync} /> 
                 {this.displayButtonPro()}
                 <Button title="Map" onPress={this._MapAsync} />
                 {this.displayButtonYoung()}
+                <Button title="Listes des Articles" onPress={this._ArticleAsync} />
                 <Button title="PostPro" onPress={this._PostProAsync} />
             </View>
         );
@@ -63,6 +66,9 @@ export default class HomeScreen extends Component {
         this.props.navigation.navigate('IndexSlot')
     }
 
+    _ArticleAsync = async () => {
+        this.props.navigation.navigate('Articles')
+    }
     _PostProAsync = async () => {
         this.props.navigation.navigate('PostPro');
     };
