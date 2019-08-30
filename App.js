@@ -13,6 +13,7 @@ import RegisterScreen from './screens/auth/RegisterScreen';
 import SelectSlotScreen from './screens/SelectSlotScreen';
 import HomeScreen from './screens/HomeScreen';
 // import ChatScreen from './screens/ChatScreen';
+import SlotformScreen from './screens/SlotformScreen';
 import MapScreen from './screens/MapScreen';
 import IndexSlotPro from './screens/IndexSlotPro'
 import PostsScreen from './screens/psy/PostsScreen';
@@ -25,7 +26,8 @@ const AppStack = createStackNavigator({
     SelectSlot: SelectSlotScreen,
     IndexSlot : IndexSlotPro,
     PostPro: PostsScreen,
-    PostCommentsPsy: PostCommentsScreen
+    PostCommentsPsy: PostCommentsScreen,
+    Slotform : SlotformScreen
 });
    
   
