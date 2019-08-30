@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
-import {Text, View, FlatList, StyleSheet, AsyncStorage } from 'react-native';
+import {
+    Text, 
+    View, 
+    FlatList, 
+    StyleSheet, 
+    AsyncStorage,
+    Platform
+    ,TouchableHighlight,
+    Share, 
+} from 'react-native';
 import axios from 'axios';
 import Api from '../config/Api';
 
@@ -8,20 +17,8 @@ export default class ArticlesScreen extends Component
     constructor(){
         super()
         this.state = {
-            data :[
-                {key: 'Devin'},
-                {key: 'Dan'},
-                {key: 'Dominic'},
-                {key: 'Jackson'},
-                {key: 'James'},
-                {key: 'Joel'},
-                {key: 'John'},
-                {key: 'Jillian'},
-                {key: 'Jimmy'},
-                {key: 'Julie'}
-            ]
+            articles : null
         }
-
     }
 
     componentDidMount = async () =>{
@@ -33,7 +30,8 @@ export default class ArticlesScreen extends Component
 
         axios.get(Api.url(`/articles`), {headers: headers})
             .then(async response => {
-                console.log(response)
+                console.log(response.data[0].path)
+                this.setState({articles: response.data})
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -41,24 +39,42 @@ export default class ArticlesScreen extends Component
        
     }
 
+    download = (url) => {
+        axios(Api.BASE_URL + url,{
+            method: 'GET',
+            responseType: 'blob', 
+          }).then((response) => {
+             const urlPdf = window.URL.createObjectURL(new Blob([response.data]));
+             console.log(response)
+            // const link = document.createElement('a');
+            // link.href = url;
+            // link.setAttribute('download', 'file.pdf');
+            // document.body.appendChild(link);
+            // link.click();
+          });
+    }
     render(){
         return(
-            <View>
-                  <FlatList
-                  data={[ {key: 'Devin'},
-                  {key: 'Dan'},
-                  {key: 'Dominic'},
-                  {key: 'Jackson'},
-                  {key: 'James'},
-                  {key: 'Joel'},
-                  {key: 'John'},
-                  {key: 'Jillian'},
-                  {key: 'Jimmy'},
-                  {key: 'Julie'}]}
-                 
-                  renderItem={({item}) => <Text  renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}>{item.key}</Text>}
+            <View style={styles.container}>
+                  <FlatList                   
+                    style={styles.item}
+                    data={this.state.articles}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({item, separators}) => (
+                        
+                        <TouchableHighlight
+                          key={item.id}
+                          onPress={() => this.download(item.path)}
+                          onShowUnderlay={separators.highlight}
+                          onHideUnderlay={separators.unhighlight}
+                          >
+                          
+                          <View style={{backgroundColor: 'white'}}>
+                            <Text  style={styles.title}>{item.title}</Text>
+                          </View>
+                        </TouchableHighlight>
+                      )}  
                   />
-                {/* <Text> les fichiers Conseils </Text> */}
             </View>
         ); 
     }
@@ -68,10 +84,18 @@ const styles = StyleSheet.create({
     container: {
      flex: 1,
      paddingTop: 22
+
     },
     item: {
-      padding: 10,
+      padding: 15,
       fontSize: 18,
+      marginBottom: 30,
       height: 44,
     },
+    separator : {
+        borderBottomColor: "black", 
+        borderBottomWidth: 5
+    }, title :{
+        fontSize: 25
+    }
   })

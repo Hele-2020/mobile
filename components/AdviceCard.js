@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, View, AsyncStorage} from 'react-native'
+import {Text, View, AsyncStorage, ActivityIndicator} from 'react-native'
 import axios from 'axios';
 import Api from '../config/Api';
 
@@ -7,12 +7,15 @@ export default class AdviceCard extends React.Component {
     constructor(){
         super()
         this.state = {
-            advice : " "
+            advice : ' ',
+            isLoading: true
         }
     }
 
     componentDidMount = async () =>{
-        setInterval(async ()  => {
+        if(this.state.advice === ' '){
+            this.setState({isLoading: false})
+        }
             const token = await AsyncStorage.getItem('userToken')
             const headers = {
                 'Authorization': 'bearer ' + token,
@@ -20,7 +23,7 @@ export default class AdviceCard extends React.Component {
 
             axios.get(Api.url(`/advice-card/random`), {headers: headers})
             .then(async response => {
-                console.log(response.data.content)
+                // console.log(response.data.content)
                 if(this.state.advice !== ''){
                     this.setState({advice: ' ' })
                 }
@@ -31,7 +34,7 @@ export default class AdviceCard extends React.Component {
                 console.log(error.response.data);
             })
 
-        } , 3000)
+        
     }
     render(){
         return (
