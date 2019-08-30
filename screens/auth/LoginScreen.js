@@ -36,11 +36,11 @@ export default class LoginScreen extends Component {
     _loginAsync = () => {
         axios.post(Api.url('/auth/login'), this.state)
         .then(async response => {
-
+            
             await AsyncStorage.setItem('userToken', response.data.access_token.token);
             await AsyncStorage.setItem('userId', response.data.user.id.toString());
-            await AsyncStorage.setItem('userUsername', response.data.user.username.toString());
-
+            await AsyncStorage.setItem('username', response.data.user.username.toString());
+            await AsyncStorage.setItem('userRoles', response.data.user.roles.toString());
             this.props.navigation.navigate('App');
         })
         .catch(error => {

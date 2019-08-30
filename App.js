@@ -10,10 +10,12 @@ import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
 
 import LoginScreen from './screens/auth/LoginScreen';
 import RegisterScreen from './screens/auth/RegisterScreen';
-
+import SelectSlotScreen from './screens/SelectSlotScreen';
 import HomeScreen from './screens/HomeScreen';
-// import ChatScreen from './screens/ChatScreen';
+import ChatScreen from './screens/ChatScreen';
+import SlotformScreen from './screens/SlotformScreen';
 import MapScreen from './screens/MapScreen';
+import IndexSlotPro from './screens/IndexSlotPro'
 import ArticlesScreen  from './screens/ArticlesScreen';
 import PostsScreen from './screens/psy/PostsScreen';
 import PostCommentsScreen from './screens/psy/PostCommentsScreen.js';
@@ -22,10 +24,14 @@ const AppStack = createStackNavigator({
     Home: HomeScreen,
     // Chat: ChatScreen,
     Map: MapScreen,
+    SelectSlot: SelectSlotScreen,
+    IndexSlot : IndexSlotPro,
     Articles: ArticlesScreen,
     PostPro: PostsScreen,
-    PostCommentsPsy: PostCommentsScreen
-  });
+    PostCommentsPsy: PostCommentsScreen,
+    Slotform : SlotformScreen
+});
+   
   
 const AuthStack = createSwitchNavigator({
     Login: LoginScreen,
