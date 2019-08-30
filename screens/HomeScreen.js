@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Api from '../config/Api';
 import { AsyncStorage, StyleSheet, Button, View, TouchableOpacity, Text } from 'react-native';
+import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor';
 import AdviceCard from '../components/AdviceCard'
 
 export default class HomeScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            Roles:'',
+        }
+    }
+    
     static navigationOptions = {
         title: 'Home',
     };
@@ -14,12 +22,11 @@ export default class HomeScreen extends Component {
         this.state = {
             chats: [],
             id: "",
-        };
-
-        
+        };        
     }
 
     componentDidMount(){ 
+        this.setState( { Roles : await AsyncStorage.getItem('userRoles')});
         this._userToken();
     };
 
@@ -44,26 +51,37 @@ export default class HomeScreen extends Component {
 
     };
 
-    
+    displayButtonPro() {
+        if (this.state.Roles === 'PROFESSIONAL') {
+            return  (<><Button title='Crée un Créneaux' onPress={this._SlotAsync} />
+                    <View><Button title='Mes Créneaux' onPress={this._SlotindexAsync} /></View>
+                   </> )
+        }
+    }
+
+    displayButtonYoung() {
+        if (this.state.Roles === 'YOUNG') {
+            return  <Button title="Voir les créneaux disponibles" onPress={this._SlotSelectorAsync} />
+        }
+    }
 
     render() {
         return (
             <View>
             <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
             {this.state.chats.map((index) =>
-                // <View key={index}>
-                //     <Button title="Chat"/>
-                // </View>
                 <TouchableOpacity key={index.id} onPress={(event) => this._chat(event, index)}>
                     <Text>Conversation {(index.users.map((username) => 
                     username.username).join(", "))}</Text>
                 </TouchableOpacity>
             )}
                 <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
-                <Button title="Map" onPress={this._MapAsync} />
-                <Button title="Listes des Articles" onPress={this._ArticleAsync} />
-
                 <AdviceCard/>
+                <Button title="Actually, sign me out :)" onPress={this._signOutAsync} /> 
+                {this.displayButtonPro()}
+                <Button title="Map" onPress={this._MapAsync} />
+                {this.displayButtonYoung()}
+                <Button title="Listes des Articles" onPress={this._ArticleAsync} />
                 <Button title="PostPro" onPress={this._PostProAsync} />
             </View>
         );
@@ -91,6 +109,12 @@ export default class HomeScreen extends Component {
     _MapAsync = async () => {
         this.props.navigation.navigate('Map');
     };
+    _SlotSelectorAsync = async => {
+        this.props.navigation.navigate('SelectSlot')
+    };
+    _SlotindexAsync = async =>{
+        this.props.navigation.navigate('IndexSlot')
+    }
 
     _ArticleAsync = async () => {
         this.props.navigation.navigate('Articles')
