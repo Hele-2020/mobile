@@ -16,10 +16,10 @@ export default class HomeScreen extends Component {
                 <Button title="Listes des Articles" onPress={this._ArticleAsync} />
 
                 <AdviceCard/>
+                <Button title="PostPro" onPress={this._PostProAsync} />
             </View>
         );
     }
-
     _signOutAsync = async () => {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
@@ -36,4 +36,7 @@ export default class HomeScreen extends Component {
     _ArticleAsync = async () => {
         this.props.navigation.navigate('Articles')
     }
+    _PostProAsync = async () => {
+        this.props.navigation.navigate('PostPro');
+    };
 }
