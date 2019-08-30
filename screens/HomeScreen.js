@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Api from '../config/Api';
-
 import { AsyncStorage, StyleSheet, Button, View, TouchableOpacity, Text } from 'react-native';
+import AdviceCard from '../components/AdviceCard'
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
@@ -61,10 +61,13 @@ export default class HomeScreen extends Component {
             )}
                 <Button title='Ouvrir un Créneau' onPress={this._SlotAsync} />
                 <Button title="Map" onPress={this._MapAsync} />
+                <Button title="Listes des Articles" onPress={this._ArticleAsync} />
+
+                <AdviceCard/>
+                <Button title="PostPro" onPress={this._PostProAsync} />
             </View>
         );
     }
-
     _signOutAsync = async () => {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
@@ -87,5 +90,12 @@ export default class HomeScreen extends Component {
     
     _MapAsync = async () => {
         this.props.navigation.navigate('Map');
+    };
+
+    _ArticleAsync = async () => {
+        this.props.navigation.navigate('Articles')
+    }
+    _PostProAsync = async () => {
+        this.props.navigation.navigate('PostPro');
     };
 }
