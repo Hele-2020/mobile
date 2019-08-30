@@ -42,6 +42,7 @@ export default class LoginScreen extends Component {
             await AsyncStorage.setItem('username', response.data.user.username.toString());
             await AsyncStorage.setItem('userRoles', response.data.user.roles.toString());
             this.props.navigation.navigate('App');
+            
         })
         .catch(error => {
             console.log(error);

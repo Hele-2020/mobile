@@ -1,13 +1,10 @@
 import React from 'react';
-
 import {
     createStackNavigator,
     createSwitchNavigator,
     createAppContainer,
 } from 'react-navigation';
-
 import AuthLoadingScreen from './screens/auth/AuthLoadingScreen';
-
 import LoginScreen from './screens/auth/LoginScreen';
 import RegisterScreen from './screens/auth/RegisterScreen';
 import SelectSlotScreen from './screens/SelectSlotScreen';
@@ -22,7 +19,8 @@ import PostCommentsScreen from './screens/psy/PostCommentsScreen.js';
 
 const AppStack = createStackNavigator({
     Home: HomeScreen,
-    // Chat: ChatScreen,
+    Slotform : SlotformScreen,
+    Chat: ChatScreen,
     Map: MapScreen,
     SelectSlot: SelectSlotScreen,
     IndexSlot : IndexSlotPro,
