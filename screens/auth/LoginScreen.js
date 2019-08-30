@@ -23,7 +23,7 @@ export default class LoginScreen extends Component {
     
     render() {
         return (
-            <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', margin: '11%', }} behavior='padding' >
+            <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', margin: 20, }} behavior='padding' >
             <View style={styles.logo}>
             <Logo width={200} height={100}/>
             </View> 

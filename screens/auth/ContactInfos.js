@@ -141,7 +141,7 @@ export default class ContactInfos extends Component {
                     color: 'white',
                 },
                 android: {
-                    fontSize: 20,
+                    fontSize: 17,
                     color: 'white',
                  
                 },
