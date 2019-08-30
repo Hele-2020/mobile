@@ -41,7 +41,6 @@ export default class SlotformScreen extends Component {
 
         axios.post(Api.url('/make/slot'),{start_time : this.state.slot},{headers: headers})
         .then(function (response) {
-            console.log(response)
             alert('Vous venez de crée un créneau pour le '+ date + ' à ' + hours)
         })
         .catch(function (error) {

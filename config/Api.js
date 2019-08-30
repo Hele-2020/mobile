@@ -1,7 +1,7 @@
 const Api = {
     VERSION: 'v1/', // doit finir par un '/'
 
-    BASE_URL: 'https://3b8d72c8.ngrok.io/', // doit finir par un '/'
+    BASE_URL: 'https://d73f5567.ngrok.io/', // doit finir par un '/'
     // BASE_URL: 'https://api.hélé.fr/', // doit finir par un '/'
 
     url: function(route = '/') {

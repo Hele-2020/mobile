@@ -41,10 +41,10 @@ export default class SelectSlotScreen extends Component {
 
       axios.post(Api.url('/select/'+index), {}, {headers: headers})
       .then((response) => {
-      console.log(response)
+        alert('Vous venez de vous inscrir à un créneau!')
       })
       .catch(function (error) {
-          console.log(error);
+        alert("Désoler ce créneau n'existe plus")
       });
     }
 

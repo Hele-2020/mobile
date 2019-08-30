@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Button, View } from 'react-native';
+import { AsyncStorage, Button, View,Text } from 'react-native';
 import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor';
 
 export default class HomeScreen extends Component {
@@ -21,13 +21,15 @@ export default class HomeScreen extends Component {
 
     displayButtonPro() {
         if (this.state.Roles === 'PROFESSIONAL') {
-            return  <Button title='Crée un Créneau' onPress={this._SlotAsync} />
+            return  (<><Button title='Crée un Créneaux' onPress={this._SlotAsync} />
+                    <View><Button title='Mes Créneaux' onPress={this._SlotindexAsync} /></View>
+                   </> )
         }
     }
 
     displayButtonYoung() {
         if (this.state.Roles === 'YOUNG') {
-            return <Button title="Voir les créneaux disponibles" onPress={this._SlotSelectorAsync} />
+            return  <Button title="Voir les créneaux disponibles" onPress={this._SlotSelectorAsync} />
         }
     }
 
@@ -57,4 +59,7 @@ export default class HomeScreen extends Component {
     _SlotSelectorAsync = async => {
         this.props.navigation.navigate('SelectSlot')
     };
+    _SlotindexAsync = async =>{
+        this.props.navigation.navigate('IndexSlot')
+    }
 }
