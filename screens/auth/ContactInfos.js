@@ -66,36 +66,103 @@ export default class ContactInfos extends Component {
                     backgroundColor: '#59358B',
                     borderRadius: 10 * 30 * 50 * 70,
                     height: '40%',
-                    bottom: '-5s%',
+                    bottom: '-5%',
                 },
                 android: {
-                    
+                    backgroundColor: '#59358B',
+                    //borderRadius: 10 * 30 * 50 * 70,
+                    borderTopLeftRadius: 170,
+                    borderTopRightRadius: 170,
+                    height: '40%',
+                    bottom: '-5%',
                 },
             }),
         },
         logo:{
-            justifyContent:"center",
-            alignItems:"center",
-            backgroundColor: 'white',
-            top: '5%'
+            ...Platform.select({
+                ios: {
+                    justifyContent:"center",
+                    alignItems:"center",
+                    backgroundColor: 'white',
+                    top: '5%'
+                },
+                android: {
+                    justifyContent:"center",
+                    alignItems:"center",
+                    //    backgroundColor: 'white',
+                    top: '5%'
+                },
+            }),
         },
+        
+        
+        // logo:{
+        //     justifyContent:"center",
+        //     alignItems:"center",
+        //     backgroundColor: 'white',
+        //     top: '5%'
+        // },
         info:{
-            textAlign: 'center',
-            borderBottomColor: '#FBBA00',
-            borderBottomWidth: 1,
-            padding: 7,
-            width: '80%',
-            left: '10%',
-            top: '25%',
+            ...Platform.select({
+                ios: {
+                    textAlign: 'center',
+                    borderBottomColor: '#FBBA00',
+                    borderBottomWidth: 1,
+                    padding: 7,
+                    width: '80%',
+                    left: '10%',
+                    top: '25%',
+                },
+                android: {
+                    textAlign: 'center',
+                    borderBottomColor: '#FBBA00',
+                    borderBottomWidth: 1,
+                    padding: 7,
+                    width: '80%',
+                    left: '10%',
+                    top: '25%',
+                },
+            }),
         },
+        // info:{
+        //     textAlign: 'center',
+        //     borderBottomColor: '#FBBA00',
+        //     borderBottomWidth: 1,
+        //     padding: 7,
+        //     width: '80%',
+        //     left: '10%',
+        //     top: '25%',
+        // },
+        
         infos:{
-            fontSize: 20,
-            color: 'white',
+            ...Platform.select({
+                ios: {
+                    fontSize: 20,
+                    color: 'white',
+                },
+                android: {
+                    fontSize: 20,
+                    color: 'white',
+                 
+                },
+            }),
         },
         cacher:{
-            backgroundColor: '#59358B',
-            height: '30%',
-            width: '100%',
-            top: '40%'
-        }
+            ...Platform.select({
+                ios: {
+                    backgroundColor: '#59358B',
+                    height: '30%',
+                    width: '100%',
+                    top: '40%'
+                },
+                android: {
+                //     backgroundColor: '#59358B',
+                //     height: '50%',
+                //     width: '100%',
+                //      top: '20%',
+                    
+                // 
+            },
+            }),
+        },
     })
