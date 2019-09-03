@@ -3,8 +3,8 @@ import { AsyncStorage, Platform, StyleSheet, TextInput, Button, View, KeyboardAv
 
 
 import axios from 'axios';
-import Logo from '../../assets/LogoHele.svg';
-import Api from '../../config/Api';
+import Logo from '../assets/LogoHele.svg';
+import Api from '../config/Api';
 
 
 
