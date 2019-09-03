@@ -16,7 +16,7 @@ import {
 
 import Logo from '../../assets/LogoHele.svg';
 import axios from 'axios';
-import ModalSelector from 'react-native-modal-selector';
+import RegionSelect from '../../components/Map/RegionSelect';
 
 import Api from '../../config/Api';
 
@@ -37,17 +37,23 @@ export default class RegisterScreen extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.focusNextField = this.focusNextField.bind(this)
+    this.inputs = {}
   }
 
-  componentDidMount = async () => {
+  focusNextField (id) {
+    this.inputs[id].focus()
+  }
+
+  componentDidMount = () => {
     axios.get(Api.url('/region'))
-    .then(async regions => {
+    .then(regions => {
       this.setState({ regions: regions.data})
     })
   }
 
-  handleChange () {
-    this.setState({  })
+  handleChange = (region_id) => {
+    this.setState({ region_id: region_id })
   }
 
   render () {
@@ -56,51 +62,49 @@ export default class RegisterScreen extends Component {
         <View style={styles.logo}>
           <Logo width={200} height={100}/>
         </View>
-        <Text style={styles.Text}>Inscription</Text>
+        <Text style={styles.text}>Inscription</Text>
         <View style={styles.input}>
-          <TextInput  style={styles.TextInput} value={this.state.phone} onChangeText={text => this.setState({phone: text})} textContentType='telephoneNumber' placeholder="Phone" />
-          <TextInput style={styles.TextInput} value={this.state.username} onChangeText={text => this.setState({username: text})} textContentType='username' placeholder="Username" />
-          <TextInput style={styles.TextInput} value={this.state.age} onChangeText={text => this.setState({age: text})} placeholder="Age" />
-        </View>
-        <View style={styles.selectInput}>
-          <ModalSelector
-            optionTextStyle={styles.optionTextStyle}
-            overlayStyle={styles.overlayStyle}
-            optionContainer={styles.optionContainer}
-            cancelContainer={styles.cancelContainer}
-            selectStyle={styles.selectStyle}
-            selectTextStyle={styles.selectTextStyle}
-            optionStyle={styles.optionStyle}
-            cancelStyle={styles.cancelStyle}
-            sectionStyle={styles.sectionStyle}
-            sectionTextStyle={styles.sectionTextStyle}
-            initValueTextStyle={styles.initValueTextStyle}
-            data={this.state.regions}
-            cancelText={'Annuler'}
-            selectedKey={this.state.userRegionId}
-            keyExtractor={item => item.id}
-            labelExtractor={item => item.name}
-            accessible={true}
-            scrollViewAccessibilityLabel={'Scrollable options'}
-            cancelButtonAccessibilityLabel={'Cancel Button'}
-            onChange={(option)=>{this.handleChange(option.id)}}>
-            <TextInput
-              style={styles.textInput}
-              editable={false}
-              placeholderTextColor = "#808080"
-              placeholder="&#x1F50D; Rechercher..."
-              value={this.props.nameRegion} />
-          </ModalSelector>
+          <TextInput
+            style={styles.textInput}
+            keyboardType={"number-pad"}
+            returnKeyType={"next"}
+            blurOnSubmit={false}
+            onSubmitEditing={() => { this.focusNextField('username') }}
+            ref={input => { this.inputs['phone'] = input }}
+            value={this.state.phone}
+            onChangeText={text => this.setState({phone: text})}
+            textContentType='telephoneNumber'
+            placeholder="Téléphone" />
+          <TextInput
+            style={styles.textInput}
+            keyboardType={"numeric"}
+            returnKeyType={"next"}
+            blurOnSubmit={false}
+            onSubmitEditing={() => { this.focusNextField('age') }}
+            ref={input => { this.inputs['username'] = input }}
+            value={this.state.username}
+            onChangeText={text => this.setState({username: text})}
+            textContentType='username'
+            placeholder="Pseudonyme" />
+          <TextInput
+            style={styles.textInput}
+            returnKeyType={"done"}
+            blurOnSubmit={false}
+            ref={input => { this.inputs['age'] = input }}
+            value={this.state.age}
+            onChangeText={text => this.setState({age: text})}
+            placeholder="Age" />
+          <RegionSelect handleChange={ this.handleChange } />
         </View>
         <TouchableOpacity
           style={styles.buttonRegister}
-          onPress={this._registerAsync} >
-          <Text  style = {styles.Login}>Register</Text>
+          onPress={this._registerAsync}>
+          <Text style={styles.register}>Inscription</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonLogin}
           onPress={this._redirectLogin}>
-          <Text style={styles.Login}>Login</Text>
+          <Text style={styles.login}>Connexion</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -131,118 +135,52 @@ export default class RegisterScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    ...Platform.select({
-      ios: {
-
-      },
-      android: {
-
-      },
-    }),
   },
-
-  buttonLogin:{
-    ...Platform.select({
-      ios: {
-        backgroundColor: '#59358B',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 10,
-      },
-      android: {
-        backgroundColor: '#59358B',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 6,
-      },
-    }),
-
-
+  buttonLogin: {
+    backgroundColor: '#59358B',
+    borderRadius: 20,
+    marginBottom: 6,
+    padding: 10,
   },
-  buttonRegister:{
-
-    ...Platform.select({
-      ios: {
-        backgroundColor: '#FBBA00',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 10,
-      },
-      android: {
-        backgroundColor: '#FBBA00',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 6,
-      },
-    }),
+  buttonRegister: {
+    backgroundColor: '#FBBA00',
+    borderRadius: 20,
+    marginBottom: 6,
+    padding: 10,
   },
-
-  TextInput:{
-    ...Platform.select({
-      ios: {
-        backgroundColor: 'white',
-        fontSize: 16,
-        color: '#59358B',
-        margin: 6,
-        padding: 3,
-        borderBottomColor: '#FBBA00',
-        borderBottomWidth: 1,
-      },
-      android: {
-        backgroundColor: 'white',
-        fontSize: 15,
-        margin: '1%',
-        color: '#59358B',
-        borderBottomColor: '#FBBA00',
-        borderBottomWidth: 1,
-      },
-    }),
+  textInput: {
+    backgroundColor: 'white',
+    fontSize: 16,
+    color: '#59358B',
+    margin: 6,
+    padding: 3,
+    borderBottomColor: '#FBBA00',
+    borderBottomWidth: 1,
   },
-  Text:{
+  text: {
     color: '#59358B',
     fontSize: 20,
     textAlign: 'center',
     marginBottom: '5%',
   },
-  placeholder:{
+  placeholder: {
     color: 'black'
   },
-  Login:{
+  login: {
     textAlign: 'center',
     color: 'white',
   },
-  Register:{
+  register: {
     textAlign: 'center',
     color: 'white',
   },
-  logo:{
+  logo: {
     justifyContent:"center",
     alignItems:"center",
     marginBottom:"6%"
   },
-  input:{
-    ...Platform.select({
-      ios: {
-        marginBottom:40,
-        marginTop:20
-      },
-      android: {
-        marginBottom:"10%"
-      },
-    }),
-  },
-  selectInput:{
-    ...Platform.select({
-      ios: {
-        top: '-5%',
-        left: '-1%',
-        width: '17%',
-      },
-      android: {
-        top: '-5%',
-        left: '-1%',
-        width: '17%',
-      },
-    }),
+  input: {
+    marginBottom: 40,
+    marginTop: 20
   },
 })

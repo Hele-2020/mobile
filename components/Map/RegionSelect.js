@@ -1,50 +1,33 @@
-import React, { Component } from 'react'
-
-import {
-  AsyncStorage,
-  Clipboard,
-  StyleSheet,
-  TextInput,
-  Button,
-  View,
-  KeyboardAvoidingView,
-  Text
-} from 'react-native';
+import React, { Component } from 'react';
+import { TextInput, StyleSheet } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
-
+import Api from '../../config/Api';
 import axios from 'axios';
 
-import Api from '../../config/Api';
-
-export default class SelectRegions extends Component {
-  constructor(props) {
-    super(props);
-
+export default class RegionSelect extends Component {
+  constructor (props) {
+    super(props)
     this.state = {
-      phone: '',
-      username: '',
-      age: '',
-      region_id: '',
       regions: [],
-      selectedRegion: '',
-      userRegionId: null
-    };
+      regionName: '',
+      loading: true
+    }
   }
 
-  componentDidMount = async () => {
+  componentDidMount () {
     axios.get(Api.url('/region'))
     .then(async regions => {
-      this.setState({ regions: regions.data})
+      this.setState({ regions: regions.data })
     })
     .catch(error => {
       console.log(error.response.data);
     })
   }
 
-  render() {
+  render () {
     return (
-
       <ModalSelector
+        {...this.props}
         optionTextStyle={styles.optionTextStyle}
         overlayStyle={styles.overlayStyle}
         optionContainer={styles.optionContainer}
@@ -58,57 +41,36 @@ export default class SelectRegions extends Component {
         initValueTextStyle={styles.initValueTextStyle}
         data={this.state.regions}
         cancelText={'Annuler'}
-        selectedKey={this.state.userRegionId}
         keyExtractor={item => item.id}
         labelExtractor={item => item.name}
         accessible={true}
         scrollViewAccessibilityLabel={'Scrollable options'}
         cancelButtonAccessibilityLabel={'Cancel Button'}
-        onChange={(option)=>{ this.setState({selectedRegion:option.name})}}>
-        <TextInput style= {styles.selectInput} value={this.state.region_id} onChangeText={text => this.setState({region_id: text})} textContentType='addressState' placeholder="Region" />
+        onChange={option => {
+          this.setState({ regionName: option.name})
+          this.props.handleChange(option.id)
+        }}>
+        <TextInput
+          style={styles.textInput}
+          editable={false}
+          placeholder="Region"
+          value={this.state.regionName} />
       </ModalSelector>
-
-    );
-  };
+    )
+  }
 }
+
 const styles = StyleSheet.create({
-  buttonLogin:{
-    backgroundColor: '#59358B',
-    borderRadius: 20,
-    top: '30%',
-    padding: 7
-  },
-  buttonRegister:{
-    backgroundColor: '#FBBA00',
-    borderRadius: 20,
-    marginBottom: 10,
-    top: '30%',
-    padding: 7
-  },
-  selectInput:{
+  textInput: {
     backgroundColor: 'white',
-    width: 250,
-    height: 38,
-    fontSize: 15,
+    fontSize: 16,
     color: '#59358B',
-    left: '20%',
-    // top: '50%',
+    margin: 6,
+    padding: 3,
     borderBottomColor: '#FBBA00',
     borderBottomWidth: 1,
   },
-  textInput: {
-    backgroundColor: 'rgba(0,0,0,.04)',
-    borderWidth: 1,
-    borderColor: '#DCDCDC',
-    padding: 7,
-    height: 35,
-    marginTop: 18,
-    borderRadius: 30,
-    marginBottom: 18,
-    marginRight: 40,
-    marginLeft: 40,
-    fontSize: 15,
-  }, overlayStyle: {
+  overlayStyle: {
     flex:            1,
     padding:         '5%',
     justifyContent:  'center',

@@ -10,7 +10,7 @@ export default class MapDisplay extends React.Component
   constructor(props) {
     super(props)
   }
-  
+
   componentDidUpdate() {
     this.map.animateToRegion(this.props.region);
   }

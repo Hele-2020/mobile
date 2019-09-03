@@ -132,14 +132,6 @@ export default class HomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  ButtonActually: {
-    top: '30%',
-    padding: 7,
-    borderBottomColor: '#FBBA00',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderTopColor: '#FBBA00',
-  },
   Button: {
     borderBottomColor: '#FBBA00',
     borderBottomWidth: 1,
