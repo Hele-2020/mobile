@@ -8,15 +8,15 @@ import Api from '../../config/Api';
 
 
 
-export default class ContactInfos extends Component {
+export default class ContactInfosScreen extends Component {
     static navigationOptions = {
         title: 'Contact',
     };
-    
+
     constructor(props) {
         super(props);
         this.state = {
-            
+
         };
     }
     dialCall = (number) => {
@@ -28,13 +28,13 @@ export default class ContactInfos extends Component {
         }
         Linking.openURL(phoneNumber);
     };
-    
+
     render() {
         return (
             <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', color: 'white', }} behavior='padding' >
             <View style={styles.logo}>
             <Logo width={200} height={100}/>
-            </View> 
+            </View>
             <View style={styles.container} >
             <TouchableOpacity
             style = {styles.info}>
@@ -56,7 +56,7 @@ export default class ContactInfos extends Component {
             </KeyboardAvoidingView>
             );
         };
-        
+
     }
     const styles = StyleSheet.create({
         container: {
@@ -94,8 +94,8 @@ export default class ContactInfos extends Component {
                 },
             }),
         },
-        
-        
+
+
         // logo:{
         //     justifyContent:"center",
         //     alignItems:"center",
@@ -133,7 +133,7 @@ export default class ContactInfos extends Component {
         //     left: '10%',
         //     top: '25%',
         // },
-        
+
         infos:{
             ...Platform.select({
                 ios: {
@@ -143,7 +143,7 @@ export default class ContactInfos extends Component {
                 android: {
                     fontSize: 17,
                     color: 'white',
-                 
+
                 },
             }),
         },
@@ -160,8 +160,8 @@ export default class ContactInfos extends Component {
                 //     height: '50%',
                 //     width: '100%',
                 //      top: '20%',
-                    
-                // 
+
+                //
             },
             }),
         },
