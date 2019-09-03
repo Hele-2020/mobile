@@ -10,14 +10,13 @@ import {
   KeyboardAvoidingView,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  Platform
 } from 'react-native';
 
 import Logo from '../../assets/LogoHele.svg';
 import axios from 'axios';
-import SelectRegions from './SelectRegions';
 import ModalSelector from 'react-native-modal-selector';
-import {Platform} from 'react-native';
 
 import Api from '../../config/Api';
 
@@ -36,6 +35,8 @@ export default class RegisterScreen extends Component {
       regions: [],
       selectedRegion: ''
     }
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount = async () => {
@@ -45,22 +46,51 @@ export default class RegisterScreen extends Component {
     })
   }
 
-  render() {
+  handleChange () {
+    this.setState({  })
+  }
+
+  render () {
     return (
       <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', alignItems: 'stretch', margin: 20}} behavior='padding'>
         <View style={styles.logo}>
           <Logo width={200} height={100}/>
         </View>
-        <Text style={styles.Text}>
-          Inscription
-        </Text>
+        <Text style={styles.Text}>Inscription</Text>
         <View style={styles.input}>
           <TextInput  style={styles.TextInput} value={this.state.phone} onChangeText={text => this.setState({phone: text})} textContentType='telephoneNumber' placeholder="Phone" />
           <TextInput style={styles.TextInput} value={this.state.username} onChangeText={text => this.setState({username: text})} textContentType='username' placeholder="Username" />
           <TextInput style={styles.TextInput} value={this.state.age} onChangeText={text => this.setState({age: text})} placeholder="Age" />
         </View>
         <View style={styles.selectInput}>
-          <SelectRegions />
+          <ModalSelector
+            optionTextStyle={styles.optionTextStyle}
+            overlayStyle={styles.overlayStyle}
+            optionContainer={styles.optionContainer}
+            cancelContainer={styles.cancelContainer}
+            selectStyle={styles.selectStyle}
+            selectTextStyle={styles.selectTextStyle}
+            optionStyle={styles.optionStyle}
+            cancelStyle={styles.cancelStyle}
+            sectionStyle={styles.sectionStyle}
+            sectionTextStyle={styles.sectionTextStyle}
+            initValueTextStyle={styles.initValueTextStyle}
+            data={this.state.regions}
+            cancelText={'Annuler'}
+            selectedKey={this.state.userRegionId}
+            keyExtractor={item => item.id}
+            labelExtractor={item => item.name}
+            accessible={true}
+            scrollViewAccessibilityLabel={'Scrollable options'}
+            cancelButtonAccessibilityLabel={'Cancel Button'}
+            onChange={(option)=>{this.handleChange(option.id)}}>
+            <TextInput
+              style={styles.textInput}
+              editable={false}
+              placeholderTextColor = "#808080"
+              placeholder="&#x1F50D; Rechercher..."
+              value={this.props.nameRegion} />
+          </ModalSelector>
         </View>
         <TouchableOpacity
           style={styles.buttonRegister}
@@ -106,7 +136,7 @@ const styles = StyleSheet.create({
 
       },
       android: {
-        
+
       },
     }),
   },

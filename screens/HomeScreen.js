@@ -19,7 +19,7 @@ export default class HomeScreen extends Component {
     }
   };
 
-  componentDidMount(){
+  componentDidMount = async () => {
     this.setState({ role : await AsyncStorage.getItem('userRoles') });
     this._userToken();
   };
@@ -77,7 +77,7 @@ export default class HomeScreen extends Component {
         <TouchableOpacity style={styles.Button} onPress={this._ArticleAsync}>
           <Text style={styles.titre}>Liste des Articles</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.ButtonContact} onPress={this._contactAsync}>
+        <TouchableOpacity style={styles.Button} onPress={this._contactAsync}>
           <Text style={styles.titre}>Contact</Text>
         </TouchableOpacity>
         <AdviceCard/>
@@ -132,7 +132,7 @@ export default class HomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  ButtonActually:{
+  ButtonActually: {
     top: '30%',
     padding: 7,
     borderBottomColor: '#FBBA00',
@@ -140,21 +140,20 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#FBBA00',
   },
-  Button:{
+  Button: {
     borderBottomColor: '#FBBA00',
     borderBottomWidth: 1,
   },
-  titre:{
+  titre: {
     color: '#59358B',
     fontSize: 23,
     textAlign: 'center',
     padding: '3%'
   },
-  ButtonDeconnexion:{
+  ButtonDeconnexion: {
     top: '15%',
-    // textAlign: 'right'
   },
-  titreDeconnexion:{
+  titreDeconnexion: {
     textAlign: 'right',
     color: '#FBBA00',
     fontSize: 20
