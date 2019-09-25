@@ -13,7 +13,7 @@ import HomeScreen from './screens/HomeScreen';
 import ChatScreen from './screens/ChatScreen';
 import SlotformScreen from './screens/SlotformScreen';
 import MapScreen from './screens/MapScreen';
-import ContactInfos from './screens/auth/ContactInfos';
+import ContactInfosScreen from './screens/ContactInfosScreen';
 import IndexSlotPro from './screens/IndexSlotPro'
 import ArticlesScreen  from './screens/ArticlesScreen';
 import PostsScreen from './screens/psy/PostsScreen';
@@ -24,7 +24,7 @@ const AppStack = createStackNavigator({
   Slotform : SlotformScreen,
   Chat: ChatScreen,
   Map: MapScreen,
-  Contact : ContactInfos,
+  Contact : ContactInfosScreen,
   SelectSlot: SelectSlotScreen,
   IndexSlot : IndexSlotPro,
   Articles: ArticlesScreen,

@@ -6,43 +6,74 @@ import Logo from '../../assets/LogoHele.svg';
 
 import Api from '../../config/Api';
 
-
-
 export default class LoginScreen extends Component {
   static navigationOptions = {
     title: 'Login',
   };
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
+
     this.state = {
       phone: '',
       password: ''
-    };
+    }
+
+    this.focusNextField = this.focusNextField.bind(this)
+    this.inputs = {}
   }
 
-  render() {
+  focusNextField (id) {
+    this.inputs[id].focus()
+  }
+
+  render () {
     return (
       <KeyboardAvoidingView style={{flex: 1, justifyContent: 'center', margin: 20, }} behavior='padding' >
         <View style={styles.logo}>
           <Logo width={200} height={100}/>
         </View>
-        <Text style={styles.Text}>
+        <Text style={styles.text}>
           Connexion
         </Text>
         <View style={styles.input}>
-          <TextInput  style={styles.TextInput} value={this.state.phone} onChangeText={text => this.setState({phone: text})} textContentType='telephoneNumber' placeholder="Phone" />
-          <TextInput  style={styles.TextInput} value={this.state.password} onChangeText={text => this.setState({password: text})} textContentType='password' secureTextEntry={true} placeholder="Password" />
+          <TextInput
+            style={styles.textInput}
+            keyboardType={"number-pad"}
+            returnKeyType={"next"}
+            blurOnSubmit={false}
+            onSubmitEditing={() => { this.focusNextField('password') }}
+            ref={input => { this.inputs['phone'] = input }}
+            value={this.state.phone}
+            onChangeText={text => this.setState({phone: text})}
+            textContentType='telephoneNumber'
+            placeholder="Téléphone" />
+          <TextInput
+            style={styles.textInput}
+            returnKeyType={"done"}
+            blurOnSubmit={false}
+            onSubmitEditing={this._loginAsync}
+            ref={input => { this.inputs['password'] = input }}
+            value={this.state.password}
+            onChangeText={text => this.setState({password: text})}
+            textContentType='password'
+            secureTextEntry={true}
+            placeholder="Mot de passe" />
         </View>
         <TouchableOpacity
-          style = {styles.buttonLogin}
-          onPress={this._loginAsync} >
-          <Text  style = {styles.Login}>Login</Text>
+          style={styles.buttonLogin}
+          onPress={this._loginAsync}>
+          <Text style={styles.login}>Connexion</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonForgotPassword}
+          onPress={null}>
+          <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonRegister}
-          onPress={this._redirectRegister}  style={styles.buttonRegister} >
-          <Text  style = {styles.Register}>Register</Text>
+          onPress={this._redirectRegister}>
+          <Text style={styles.register}>Inscription</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -72,105 +103,62 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    ...Platform.select({
-      ios: {
-
-      },
-      android: {
-        backgroundColor: 'blue',
-      },
-    }),
   },
-
-  buttonLogin:{
-    ...Platform.select({
-      ios: {
-        backgroundColor: '#59358B',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 10,
-      },
-      android: {
-        backgroundColor: '#59358B',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 6,
-      },
-    }),
-
-
+  buttonLogin: {
+    backgroundColor: '#59358B',
+    borderRadius: 20,
+    marginBottom: 6,
+    padding: 10,
   },
-  buttonRegister:{
-
-    ...Platform.select({
-      ios: {
-        backgroundColor: '#FBBA00',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 10,
-      },
-      android: {
-        backgroundColor: '#FBBA00',
-        borderRadius: 20,
-        marginBottom: 6,
-        padding: 6,
-      },
-    }),
+  buttonForgotPassword: {
+    backgroundColor: '#948E8D',
+    borderRadius: 20,
+    marginBottom: 6,
+    padding: 10,
   },
-
-  TextInput:{
-    ...Platform.select({
-      ios: {
-        backgroundColor: 'white',
-        fontSize: 16,
-        color: '#59358B',
-        margin: 6,
-        padding: 3,
-        borderBottomColor: '#FBBA00',
-        borderBottomWidth: 1,
-      },
-      android: {
-        backgroundColor: 'white',
-        fontSize: 15,
-        margin: '1%',
-        color: '#59358B',
-        borderBottomColor: '#FBBA00',
-        borderBottomWidth: 1,
-      },
-    }),
+  buttonRegister: {
+    backgroundColor: '#FBBA00',
+    borderRadius: 20,
+    marginBottom: 6,
+    padding: 10,
   },
-  Text:{
+  textInput: {
+    backgroundColor: 'white',
+    fontSize: 16,
+    color: '#59358B',
+    margin: 6,
+    padding: 3,
+    borderBottomColor: '#FBBA00',
+    borderBottomWidth: 1,
+  },
+  text: {
     color: '#59358B',
     fontSize: 20,
     textAlign: 'center',
     marginBottom: '5%',
   },
-  placeholder:{
+  placeholder: {
     color: 'black'
   },
-  Login:{
+  login: {
     textAlign: 'center',
     color: 'white',
   },
-  Register:{
+  forgotPassword: {
     textAlign: 'center',
     color: 'white',
   },
-  logo:{
-    justifyContent:"center",
-    alignItems:"center",
-    marginBottom:"6%"
+  register: {
+    textAlign: 'center',
+    color: 'white',
   },
-  input:{
-    ...Platform.select({
-      ios: {
-        marginBottom:40,
-        marginTop:20
-      },
-      android: {
-        marginBottom:"10%"
-      },
-    }),
+  logo: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "6%"
+  },
+  input: {
+    marginBottom: 40,
+    marginTop: 20
   }
-
 })

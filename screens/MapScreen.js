@@ -10,10 +10,10 @@ export default class MapScreen extends Component {
     static navigationOptions = {
         title: 'Carte',
         headerStyle:{
-            shadowColor:"transparent", 
+            shadowColor:"transparent",
             elevation: 0
         },
-        headerTintColor: "#FBBA00", 
+        headerTintColor: "#FBBA00",
         headerTitleStyle :{
             color: "#59358B",
             fontSize: 20,
@@ -27,7 +27,6 @@ export default class MapScreen extends Component {
             modalVisible: false,
             pois: [],
             idPoi: [],
-            nameRegion : '', 
             region: {
                 latitude: 48.858372,
                 longitude: 2.294481,
@@ -40,7 +39,7 @@ export default class MapScreen extends Component {
         this.handleChangeModal = this.handleChangeModal.bind(this)
     }
 
-    
+
     handleChangeModal(value, id) {
         if (id !== '') {
             axios.get(Api.url(`/poi/edit/${id}`))
@@ -61,8 +60,8 @@ export default class MapScreen extends Component {
         }
     }
 
-    handleChange(region) {
-        axios.get(Api.url(`/region/${region}`))
+    handleChange(region_id) {
+        axios.get(Api.url(`/region/${region_id}`))
         .then(async response => {
             this.setState({
                 region: {
@@ -72,7 +71,6 @@ export default class MapScreen extends Component {
                     longitudeDelta: 10 *response.data.longitudeDelta,
                 },
                 pois: response.data.pois,
-                nameRegion: response.data.name
             })
         })
         .catch(error => {
@@ -88,7 +86,7 @@ export default class MapScreen extends Component {
                     modal={this.handleChangeModal}
                     poi={this.state.idPoi} />
                 <MapHeader
-                    handleChange={this.handleChange} nameRegion={this.state.nameRegion} />
+                    handleChange={this.handleChange} />
                 <MapDisplay
                     pois={this.state.pois}
                     modal={this.handleChangeModal}
