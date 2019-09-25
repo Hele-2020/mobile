@@ -77,7 +77,6 @@ export default class RegisterScreen extends Component {
             placeholder="Téléphone" />
           <TextInput
             style={styles.textInput}
-            keyboardType={"numeric"}
             returnKeyType={"next"}
             blurOnSubmit={false}
             onSubmitEditing={() => { this.focusNextField('age') }}
@@ -88,6 +87,7 @@ export default class RegisterScreen extends Component {
             placeholder="Pseudonyme" />
           <TextInput
             style={styles.textInput}
+            keyboardType={"numeric"}
             returnKeyType={"done"}
             blurOnSubmit={false}
             ref={input => { this.inputs['age'] = input }}
