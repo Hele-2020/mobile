@@ -84,9 +84,9 @@ class HeleHttpService {
       HeleApiException: () { _showToast(context, "Erreur serveur. Veuillez réessayer dans quelques minutes."); },
       ...functions,
     };
-    Function func = funcs[e];
+    Function func = funcs[e.runtimeType];
     if (func != null) {
-      func();
+      func(e);
     } else {
       _showToast(context, "Erreur non gérée (${e.runtimeType})");
     }
@@ -120,7 +120,15 @@ class FetchDataException extends HeleApiException {
 }
 
 class BadRequestException extends HeleApiException {
-  BadRequestException([message]) : super(message, "Invalid request: ");
+  dynamic json;
+
+  BadRequestException([message]) : super(message, "Invalid request: ") {
+    try {
+      this.json = jsonDecode(message);
+    } catch (e) {
+      this.json = null;
+    }
+  }
 }
 
 class UnauthorizedException extends HeleApiException {

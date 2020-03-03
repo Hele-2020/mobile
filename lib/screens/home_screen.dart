@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
                 await prefs.remove('jwt_refresh_token');
                 Navigator.pushReplacementNamed(context, '/login');
               },
-              child: Text('Déconnexion')
+              child: Text('USER SCREEN')
             )
           )
         )
