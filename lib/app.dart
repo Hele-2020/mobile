@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'screens/home_pro_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
@@ -15,7 +16,8 @@ class App extends StatelessWidget {
         '/': (BuildContext context) => SplashScreen(context),
         '/login': (BuildContext context) => LoginScreen(),
         '/register': (BuildContext context) => RegisterScreen(),
-        '/home': (BuildContext context) => HomeScreen()
+        '/home': (BuildContext context) => HomeScreen(),
+        '/pro/home': (BuildContext context) => HomeProScreen(),
       }
     );
   }

@@ -51,4 +51,9 @@ class User {
       updatedAt: json['updatedAt'] as DateTime,
     );
   }
+
+  bool isYoung() => this.role == "YOUNG";
+  bool isMod() => this.role == "MODERATOR";
+  bool isPro() => this.role == "PROFESSIONAL";
+  bool isAdmin() => this.role == "ADMIN";
 }

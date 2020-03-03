@@ -30,6 +30,8 @@ dependencies:
 
   # Form validators https://pub.dev/packages/validators
   validators: ^2.0.0
+  # Used to launch web browser or phone app https://pub.dev/packages/url_launcher
+  url_launcher: ^5.4.2
 
 dev_dependencies:
   flutter_test:
