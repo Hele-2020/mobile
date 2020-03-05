@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hele/helpers/launch_url.dart';
 import 'package:hele/responses/register_response.dart';
@@ -44,24 +42,13 @@ class RegisterScreenState extends State<StatefulWidget> {
         'establishment_code': this._establishmentCode,
       });
       setState(() { _registerButtonState = HeleButtonState.success; _error = null; });
-      print("My password is ${res.password} <- <- <- <-");
+      print(res);
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
+      setState(() { _registerButtonState = HeleButtonState.idle; });
       heleHttpService.errorHandler(_context, e, {
         BadRequestException: (BadRequestException e) {
-          if (e.json['message'] == null || e.json['message'][0] == null) return;
-          var msg = e.json['message'][0];
-          switch (msg['field']) {
-            case "username":
-              setState(() { _registerButtonState = HeleButtonState.error; _error = "Ce nom d'utilisateur est déjà pris."; });
-              break;
-            case "phone":
-              setState(() { _registerButtonState = HeleButtonState.error; _error = "Ce n° de téléphone est déjà enregistré."; });
-              break;
-            default:
-              setState(() { _registerButtonState = HeleButtonState.error; _error = "Une erreur est survenue... Réessayez dans quelques minutes."; });
-              break;
-          }
+          setState(() { _error = e.errors.join('\n'); });
         }
       });
       print(e.toString());
