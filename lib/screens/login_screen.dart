@@ -49,9 +49,7 @@ class LoginScreenState extends State<StatefulWidget> {
   }
 
   void _loginFailed(Exception e) {
-    setState(() {
-      _error = "N° de téléphone ou mot de passe incorrect.";
-    });
+    setState(() { _error = "N° de téléphone ou mot de passe incorrect."; });
   }
 
   void _loginSuccess(User user) {

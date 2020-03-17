@@ -12,9 +12,11 @@ class LoginResponse {
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    User u = User.fromJson(json['user']);
+    AccessToken at = AccessToken.fromJson(json['accessToken']);
     return LoginResponse(
-      user: User.fromJson(json['user']),
-      accessToken: AccessToken.fromJson(json['access_token']),
+      user: u,
+      accessToken: at,
     );
   }
 }

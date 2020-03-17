@@ -42,7 +42,7 @@ class RegisterScreenState extends State<StatefulWidget> {
         'establishment_code': this._establishmentCode,
       });
       setState(() { _registerButtonState = HeleButtonState.success; _error = null; });
-      print(res);
+      print(res.password);
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
       setState(() { _registerButtonState = HeleButtonState.idle; });

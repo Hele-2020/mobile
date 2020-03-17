@@ -8,7 +8,7 @@ import 'package:hele/responses/register_response.dart';
 
 import 'error_codes.dart';
 
-const BASE_URL = "http://localhost:3333/v1";
+const BASE_URL = "http://localhost:3333";
 
 class HeleHttpService {
   // Add routes here
@@ -129,9 +129,9 @@ class BadRequestException extends HeleApiException {
     try {
       errors = new List<String>();
       this.json = jsonDecode(message);
-      if (this.json['message'] == null) return;
-      for (var i = 0; i < this.json['message'].length; ++i) {
-        var currentError = this.json['message'][i];
+      if (this.json['errors'] == null) return;
+      for (var i = 0; i < this.json['errors'].length; ++i) {
+        var currentError = this.json['errors'][i];
         if (currentError == null || currentError['message'] == null) {
           continue;
         }
