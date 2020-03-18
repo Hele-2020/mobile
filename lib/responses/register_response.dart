@@ -13,7 +13,7 @@ class RegisterResponse {
   factory RegisterResponse.fromJson(Map<String, dynamic> json) {
     return RegisterResponse(
       user: User.fromJson(json['user']),
-      password: json['access_token'],
+      password: json['password'],
     );
   }
 }

@@ -37,6 +37,9 @@ class LoginScreenState extends State<StatefulWidget> {
       await prefs.setString('jwt_refresh_token', response.accessToken.refreshToken);
       _loginSuccess(response.user);
     } catch (e) {
+      setState(() {
+        _loginButtonState = HeleButtonState.error;
+      });
       heleHttpService.errorHandler(_context, e, {
         UnauthorizedException: _loginFailed,
         NotFoundException: _loginFailed,
@@ -45,11 +48,8 @@ class LoginScreenState extends State<StatefulWidget> {
     }
   }
 
-  void _loginFailed() {
-    setState(() {
-      _loginButtonState = HeleButtonState.idle;
-      _error = "N° de téléphone ou mot de passe incorrect.";
-    });
+  void _loginFailed(Exception e) {
+    setState(() { _error = "N° de téléphone ou mot de passe incorrect."; });
   }
 
   void _loginSuccess(User user) {

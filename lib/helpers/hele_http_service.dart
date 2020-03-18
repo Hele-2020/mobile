@@ -6,7 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:hele/responses/login_response.dart';
 import 'package:hele/responses/register_response.dart';
 
-const BASE_URL = "http://localhost:3333/v1";
+import 'error_codes.dart';
+
+const BASE_URL = "http://localhost:3333";
 
 class HeleHttpService {
   // Add routes here
@@ -78,10 +80,10 @@ class HeleHttpService {
 
   void errorHandler(context, Exception e, Map<Type, Function> functions) {
     Map<Type, Function> funcs = {
-      SocketException: () { _showToast(context, "Pas de connexion internet"); },
-      UnauthorizedException: () { _showToast(context, "Erreur non gérée (401)."); },
-      NotFoundException: () { _showToast(context, "Erreur non gérée (404)."); },
-      HeleApiException: () { _showToast(context, "Erreur serveur. Veuillez réessayer dans quelques minutes."); },
+      SocketException: (Exception e) { _showToast(context, "Pas de connexion internet"); },
+      UnauthorizedException: (Exception e) { _showToast(context, "Non autorisé."); },
+      NotFoundException: (Exception e) { _showToast(context, "Élément non trouvé."); },
+      HeleApiException: (Exception e) { _showToast(context, "Erreur serveur. Veuillez réessayer dans quelques minutes."); },
       ...functions,
     };
     Function func = funcs[e.runtimeType];
@@ -121,10 +123,20 @@ class FetchDataException extends HeleApiException {
 
 class BadRequestException extends HeleApiException {
   dynamic json;
+  List<String> errors;
 
   BadRequestException([message]) : super(message, "Invalid request: ") {
     try {
+      errors = new List<String>();
       this.json = jsonDecode(message);
+      if (this.json['errors'] == null) return;
+      for (var i = 0; i < this.json['errors'].length; ++i) {
+        var currentError = this.json['errors'][i];
+        if (currentError == null || currentError['message'] == null) {
+          continue;
+        }
+        errors.add(getErrorMessage(currentError['message']));
+      }
     } catch (e) {
       this.json = null;
     }
