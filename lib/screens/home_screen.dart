@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'package:hele/helpers/globals.dart' as globals;
+
+class HomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new HomeScreenState();
+  }
+}
+
+class HomeScreenState extends State<StatefulWidget> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _logoutAsync(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('jwt_token');
+    await prefs.remove('jwt_refresh_token');
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,12 +36,9 @@ class HomeScreen extends StatelessWidget {
             margin: const EdgeInsets.all(20.0),
             child: GestureDetector(
               onTap: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.remove('jwt_token');
-                await prefs.remove('jwt_refresh_token');
-                Navigator.pushReplacementNamed(context, '/login');
+                this._logoutAsync(context);
               },
-              child: Text('USER SCREEN')
+              child: Text(globals.loggedInUser.username)
             )
           )
         )

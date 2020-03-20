@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hele/helpers/launch_url.dart';
-import 'package:hele/responses/register_response.dart';
+import 'package:hele/responses/auth/register_response.dart';
 import 'package:hele/widgets/hele_button.dart';
 import 'package:validators/validators.dart';
 import 'package:hele/helpers/hele_http_service.dart';
@@ -42,7 +42,9 @@ class RegisterScreenState extends State<StatefulWidget> {
         'establishment_code': this._establishmentCode,
       });
       setState(() { _registerButtonState = HeleButtonState.success; _error = null; });
-      print(res.password);
+      if (res.password != null) {
+        print(res.password);
+      }
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
       setState(() { _registerButtonState = HeleButtonState.idle; });
@@ -137,7 +139,7 @@ class RegisterScreenState extends State<StatefulWidget> {
           fontSize: 16.0,
         ),
       )
-    ); 
+    );
   }
 
   Widget _setupForm() {
