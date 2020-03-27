@@ -6,7 +6,7 @@ import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/home_screen.dart';
 
-class App extends StatelessWidget {
+class HeleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
