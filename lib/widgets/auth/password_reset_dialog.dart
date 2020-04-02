@@ -109,7 +109,7 @@ class PasswordResetDialog {
               Text('Un code vous a été envoyé par SMS ...'),
               TextFormField(
                 onSaved: (value) => this._code = value,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(labelText: 'Code de vérification'),
               )
             ],
