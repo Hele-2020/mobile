@@ -21,8 +21,6 @@ class LoginScreenState extends State<StatefulWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final passwordResetDialog = new PasswordResetDialog();
 
-  BuildContext _context;
-
   @override
   void initState() {
     super.initState();
@@ -41,9 +39,8 @@ class LoginScreenState extends State<StatefulWidget> {
       setState(() {
         _loginButtonState = HeleButtonState.error;
       });
-      heleHttpService.errorHandler(_context, e, {
-        UnauthorizedException: _loginFailed,
-        NotFoundException: _loginFailed,
+      heleHttpService.errorHandler(e, {
+        BadRequestException: _loginFailed,
       });
       print(e.toString());
     }
@@ -93,13 +90,11 @@ class LoginScreenState extends State<StatefulWidget> {
     );
   }
 
-
-
   Widget _setupForgotPasswordLink(BuildContext context) {
     return GestureDetector(
       onTap: () {
         this._formKey.currentState.save();
-        this.passwordResetDialog.showForgotPasswordDialog(context, this._identification);
+        this.passwordResetDialog.showForgotPasswordDialog(context, identification: this._identification);
       },
       child: Text.rich(
         TextSpan(
@@ -189,42 +184,37 @@ class LoginScreenState extends State<StatefulWidget> {
         title: Text('LoginScreen'),
       ),
       body:
-        Builder(
-          builder: (BuildContext newContext) {
-            _context = newContext;
-            return Center(
-              child: Container(
-                height: double.maxFinite,
-                margin: EdgeInsets.all(20.0),
-                child: new Stack(
-                  //alignment:new Alignment(x, y)
-                  children: <Widget>[
-                    new Positioned(
-                      child: _setupForm(context)
-                    ),
-                    new Positioned(
-                      child: new Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 64.0),
-                          child: _setupRegisterLink(context)
-                        )
-                      ),
-                    ),
-                    new Positioned(
-                      child: new Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 32.0),
-                          child: _setupForgotPasswordLink(context)
-                        )
-                      ),
-                    )
-                  ],
+        Center(
+          child: Container(
+            height: double.maxFinite,
+            margin: EdgeInsets.all(20.0),
+            child: new Stack(
+              //alignment:new Alignment(x, y)
+              children: <Widget>[
+                new Positioned(
+                  child: _setupForm(context)
                 ),
-              )
-            );
-          }
+                new Positioned(
+                  child: new Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 64.0),
+                      child: _setupRegisterLink(context)
+                    )
+                  ),
+                ),
+                new Positioned(
+                  child: new Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 32.0),
+                      child: _setupForgotPasswordLink(context)
+                    )
+                  ),
+                )
+              ],
+            ),
+          )
         )
     );
   }
