@@ -5,7 +5,6 @@ import 'package:hele/widgets/hele_button.dart';
 import 'package:validators/validators.dart';
 import 'package:hele/helpers/hele_http_service.dart';
 
-
 class RegisterScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -23,8 +22,6 @@ class RegisterScreenState extends State<StatefulWidget> {
   int _regionId = 2;
   bool _agreeTos = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  BuildContext _context;
 
   @override
   void initState() {
@@ -48,7 +45,7 @@ class RegisterScreenState extends State<StatefulWidget> {
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
       setState(() { _registerButtonState = HeleButtonState.idle; });
-      heleHttpService.errorHandler(_context, e, {
+      heleHttpService.errorHandler(e, {
         BadRequestException: (BadRequestException e) {
           setState(() { _error = e.errors.join('\n'); });
         }
@@ -212,33 +209,29 @@ class RegisterScreenState extends State<StatefulWidget> {
         title: Text('RegisterScreen'),
       ),
       body:
-        Builder(
-          builder: (BuildContext newContext) {
-            _context = newContext;
-            return Center(
-              child: Container(
-                height: double.maxFinite,
-                margin: EdgeInsets.all(20.0),
-                child: new Stack(
-                  //alignment:new Alignment(x, y)
-                  children: <Widget>[
-                    new Positioned(
-                      child: _setupForm()
-                    ),
-                    new Positioned(
-                      child: new Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 64.0),
-                          child: _setupLoginLink()
-                        )
-                      ),
-                    )
-                  ],
+        Center(
+          child: Container(
+            height: double.maxFinite,
+            margin: EdgeInsets.all(20.0),
+            child: new Stack(
+              //alignment:new Alignment(x, y)
+              children: <Widget>[
+                new Positioned(
+                  child: _setupForm()
                 ),
-              )
-          );
-        })
+                new Positioned(
+                  child: new Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 64.0),
+                      child: _setupLoginLink()
+                    )
+                  ),
+                )
+              ],
+            ),
+          )
+      )
     );
   }
 }

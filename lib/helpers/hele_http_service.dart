@@ -8,6 +8,7 @@ import 'package:hele/responses/auth/register_response.dart';
 import 'package:hele/responses/auth/token_check_response.dart';
 import 'package:hele/responses/auth/password_request.dart';
 import 'package:hele/responses/auth/password_reset.dart';
+import 'package:oktoast/oktoast.dart';
 
 import 'error_codes.dart';
 
@@ -96,29 +97,21 @@ class HeleHttpService {
     }
   }
 
-  void errorHandler(BuildContext context, Exception e, Map<Type, Function> functions) {
+  void errorHandler(Exception e, Map<Type, Function> functions) {
     Map<Type, Function> funcs = {
-      SocketException: (Exception e) { _showToast(context, "Pas de connexion internet"); },
-      UnauthorizedException: (Exception e) { _showToast(context, "Non autorisé."); },
-      NotFoundException: (Exception e) { _showToast(context, "Élément non trouvé."); },
-      HeleApiException: (Exception e) { _showToast(context, "Erreur serveur. Veuillez réessayer dans quelques minutes."); },
+      SocketException: (Exception e) { showToast("Pas de connexion internet"); },
+      BadRequestException: (Exception e) { showToast("Requête invalide."); },
+      UnauthorizedException: (Exception e) { showToast("Non autorisé."); },
+      NotFoundException: (Exception e) { showToast("Élément non trouvé."); },
+      HeleApiException: (Exception e) { showToast("Erreur serveur. Veuillez réessayer dans quelques minutes."); },
       ...functions,
     };
     Function func = funcs[e.runtimeType];
     if (func != null) {
       func(e);
     } else {
-      _showToast(context, "Erreur non gérée (${e.runtimeType})");
+      showToast("Erreur non gérée (${e.runtimeType})");
     }
-  }
-
-  void _showToast(BuildContext context, String text) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(text),
-      ),
-    );
   }
 }
 

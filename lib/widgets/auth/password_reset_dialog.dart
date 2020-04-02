@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hele/helpers/hele_http_service.dart';
 import 'package:hele/responses/auth/password_request.dart';
 import 'package:hele/responses/auth/password_reset.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:validators/validators.dart';
 
 
 class PasswordResetDialog {
@@ -22,7 +24,10 @@ class PasswordResetDialog {
         Navigator.of(context).pop();
         this._showForgotPasswordDialog2(context);
       } catch (e) {
-        heleHttpService.errorHandler(context, e, {});
+        heleHttpService.errorHandler(e, {
+          BadRequestException: _tooManyAttempts
+        });
+        print(e.toString());
       }
     }
   }
@@ -38,12 +43,22 @@ class PasswordResetDialog {
         }
         Navigator.of(context).pop();
       } catch (e) {
-        heleHttpService.errorHandler(context, e, {});
+        heleHttpService.errorHandler(e, {
+          BadRequestException: _badCode
+        });
       }
     }
   }
 
-  showForgotPasswordDialog(BuildContext context, [String identification = '']) async {
+  _badCode() {
+    showToast("Code invalide. Veuillez réessayer.");
+  }
+
+  _tooManyAttempts() {
+    showToast("Vous devez patienter avant de demander un nouveau code.");
+  }
+
+  showForgotPasswordDialog(BuildContext context, {String identification, Function onError}) async {
     return showDialog(
       context: context,
       builder: (_context) => AlertDialog(
@@ -60,6 +75,12 @@ class PasswordResetDialog {
                 onSaved: (value) => this._phone = value,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(labelText: 'N° de téléphone'),
+                validator: (value) {
+                  if (!matches(value, r'^[0|\+33][6-7][0-9]{8}$')) {
+                    return 'Entrez un numéro de téléphone mobile valide.';
+                  }
+                  return null;
+                },
               )
             ],
           )
