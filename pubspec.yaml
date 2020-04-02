@@ -1,5 +1,6 @@
 name: hele
 description: Lutter contre le harcèlement scolaire.
+homepage: https://xn--hl-bjab.fr/
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -32,6 +33,10 @@ dependencies:
   validators: ^2.0.0
   # Used to launch web browser or phone app https://pub.dev/packages/url_launcher
   url_launcher: ^5.4.2
+  # https://github.com/OpenFlutter/flutter_oktoast
+  oktoast: ^2.3.1
+
+  sentry: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
   flutter_test:

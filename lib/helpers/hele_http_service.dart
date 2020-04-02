@@ -3,8 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:hele/responses/login_response.dart';
-import 'package:hele/responses/register_response.dart';
+import 'package:hele/responses/auth/login_response.dart';
+import 'package:hele/responses/auth/register_response.dart';
+import 'package:hele/responses/auth/token_check_response.dart';
+import 'package:hele/responses/auth/password_request.dart';
+import 'package:hele/responses/auth/password_reset.dart';
+import 'package:oktoast/oktoast.dart';
 
 import 'error_codes.dart';
 
@@ -15,6 +19,9 @@ class HeleHttpService {
   static const Map<String, Map<String, String>> _routes = {
     'login': {'method': 'POST', 'url': '/auth/login'},
     'register': {'method': 'POST', 'url': '/auth/register'},
+    'check': {'method': 'GET', 'url': '/auth/me'},
+    'password.request': {'method': 'POST', 'url': '/auth/password/request'},
+    'password.reset': {'method': 'POST', 'url': '/auth/password/reset'},
   };
 
   // I did not find how to call http.get for example with 'get' in
@@ -34,6 +41,9 @@ class HeleHttpService {
   get _factories => {
     LoginResponse: (dynamic json) => LoginResponse.fromJson(json),
     RegisterResponse: (dynamic json) => RegisterResponse.fromJson(json),
+    TokenCheckResponse: (dynamic json) => TokenCheckResponse.fromJson(json),
+    PasswordRequestResponse: (dynamic json) => PasswordRequestResponse.fromJson(json),
+    PasswordResetResponse: (dynamic json) => PasswordResetResponse.fromJson(json),
   };
 
   Future<http.Response> _call(String routeName, {Map<String, String> headers, body}) async {
@@ -42,11 +52,20 @@ class HeleHttpService {
       throw Exception("Route '$routeName' is not implemented.");
     }
     String method = route['method'].toLowerCase();
-    return await _httpHelper[method](BASE_URL + route['url'], body: body, headers: headers);
+    if (body != null) {
+      return await _httpHelper[method](BASE_URL + route['url'], body: body, headers: headers);
+    } else {
+      return await _httpHelper[method](BASE_URL + route['url'], headers: headers);
+    }
   }
 
-  Future<T> call<T>(String routeName, {Map<String, String> headers, body}) async {
-    _factories[Future] = (dynamic json) => "";
+  Future<T> call<T>(String routeName, {Map<String, String> headers, body, String accessToken}) async {
+    if (headers == null) {
+      headers = new Map<String, String>();
+    }
+    if (accessToken != null) {
+      headers[HttpHeaders.authorizationHeader] = "Bearer $accessToken";
+    }
     var res = await _call(routeName, body: body, headers: headers);
     dynamic jsonContent = _verifyResponse(res);
     Function factoryFunc = _factories[T];
@@ -78,29 +97,21 @@ class HeleHttpService {
     }
   }
 
-  void errorHandler(context, Exception e, Map<Type, Function> functions) {
+  void errorHandler(Exception e, Map<Type, Function> functions) {
     Map<Type, Function> funcs = {
-      SocketException: (Exception e) { _showToast(context, "Pas de connexion internet"); },
-      UnauthorizedException: (Exception e) { _showToast(context, "Non autorisé."); },
-      NotFoundException: (Exception e) { _showToast(context, "Élément non trouvé."); },
-      HeleApiException: (Exception e) { _showToast(context, "Erreur serveur. Veuillez réessayer dans quelques minutes."); },
+      SocketException: (Exception e) { showToast("Pas de connexion internet"); },
+      BadRequestException: (Exception e) { showToast("Requête invalide."); },
+      UnauthorizedException: (Exception e) { showToast("Non autorisé."); },
+      NotFoundException: (Exception e) { showToast("Élément non trouvé."); },
+      HeleApiException: (Exception e) { showToast("Erreur serveur. Veuillez réessayer dans quelques minutes."); },
       ...functions,
     };
     Function func = funcs[e.runtimeType];
     if (func != null) {
       func(e);
     } else {
-      _showToast(context, "Erreur non gérée (${e.runtimeType})");
+      showToast("Erreur non gérée (${e.runtimeType})");
     }
-  }
-
-  void _showToast(BuildContext context, String text) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(text),
-      ),
-    );
   }
 }
 
@@ -109,9 +120,9 @@ final heleHttpService = HeleHttpService();
 class HeleApiException implements Exception {
   final _message;
   final _prefix;
-  
+
   HeleApiException([this._message, this._prefix]);
-  
+
   String toString() {
     return "$_prefix$_message";
   }

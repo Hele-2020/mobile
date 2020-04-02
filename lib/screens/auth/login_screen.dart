@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hele/helpers/hele_http_service.dart';
-import 'package:hele/models/user.dart';
-import 'package:hele/responses/login_response.dart';
+import 'package:hele/widgets/auth/password_reset_dialog.dart';
+import 'package:hele/responses/auth/login_response.dart';
 import 'package:hele/widgets/hele_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
@@ -19,8 +19,7 @@ class LoginScreenState extends State<StatefulWidget> {
   String _identification;
   String _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  BuildContext _context;
+  final passwordResetDialog = new PasswordResetDialog();
 
   @override
   void initState() {
@@ -35,14 +34,13 @@ class LoginScreenState extends State<StatefulWidget> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('jwt_token', response.accessToken.token);
       await prefs.setString('jwt_refresh_token', response.accessToken.refreshToken);
-      _loginSuccess(response.user);
+      _loginSuccess();
     } catch (e) {
       setState(() {
         _loginButtonState = HeleButtonState.error;
       });
-      heleHttpService.errorHandler(_context, e, {
-        UnauthorizedException: _loginFailed,
-        NotFoundException: _loginFailed,
+      heleHttpService.errorHandler(e, {
+        BadRequestException: _loginFailed,
       });
       print(e.toString());
     }
@@ -52,12 +50,8 @@ class LoginScreenState extends State<StatefulWidget> {
     setState(() { _error = "N° de téléphone ou mot de passe incorrect."; });
   }
 
-  void _loginSuccess(User user) {
-    String route = '/';
-    if (user.isPro()) {
-      route = '/pro/home';
-    }
-    Navigator.pushReplacementNamed(context, route);
+  void _loginSuccess() {
+    Navigator.pushReplacementNamed(context, '/');
   }
 
   Map<String, String> _getForm() {
@@ -72,7 +66,7 @@ class LoginScreenState extends State<StatefulWidget> {
     return form;
   }
 
-  Widget _setupRegisterLink() {
+  Widget _setupRegisterLink(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacementNamed(context, '/register');
@@ -81,19 +75,47 @@ class LoginScreenState extends State<StatefulWidget> {
         TextSpan(
           text: "Vous n'avez pas de compte ? ",
           children: <TextSpan>[
-            TextSpan(text: 'Enregistrez-vous', style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.lightBlue,
-              decoration: TextDecoration.underline,
-              decorationColor: Colors.lightBlue,
-            )),
+            TextSpan(
+              text: 'Enregistrez-vous',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.lightBlue,
+                decoration: TextDecoration.underline,
+                decorationColor: Colors.lightBlue,
+              )
+            ),
           ],
         ),
       )
     );
   }
 
-  Widget _setupLoginButton() {
+  Widget _setupForgotPasswordLink(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        this._formKey.currentState.save();
+        this.passwordResetDialog.showForgotPasswordDialog(context, identification: this._identification);
+      },
+      child: Text.rich(
+        TextSpan(
+          text: "Mot de passe oublié ? ",
+          children: <TextSpan>[
+            TextSpan(
+              text: "Réinitialisez-le",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.lightBlue,
+                decoration: TextDecoration.underline,
+                decorationColor: Colors.lightBlue,
+              )
+            )
+          ]
+        )
+      )
+    );
+  }
+
+  Widget _setupLoginButton(BuildContext context) {
     return HeleButton(onClick: () {
       if (_loginButtonState == HeleButtonState.loading) {
         return;
@@ -115,10 +137,10 @@ class LoginScreenState extends State<StatefulWidget> {
           fontSize: 16.0,
         ),
       )
-    ); 
+    );
   }
 
-  Widget _setupForm() {
+  Widget _setupForm(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
@@ -149,7 +171,7 @@ class LoginScreenState extends State<StatefulWidget> {
             },
           ),
           _setupErrorMessage(),
-          _setupLoginButton()
+          _setupLoginButton(context)
         ],
       )
     );
@@ -162,33 +184,37 @@ class LoginScreenState extends State<StatefulWidget> {
         title: Text('LoginScreen'),
       ),
       body:
-        Builder(
-          builder: (BuildContext newContext) {
-            _context = newContext;
-            return Center(
-              child: Container(
-                height: double.maxFinite,
-                margin: EdgeInsets.all(20.0),
-                child: new Stack(
-                  //alignment:new Alignment(x, y)
-                  children: <Widget>[
-                    new Positioned(
-                      child: _setupForm()
-                    ),
-                    new Positioned(
-                      child: new Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 64.0),
-                          child: _setupRegisterLink()
-                        )
-                      ),
-                    )
-                  ],
+        Center(
+          child: Container(
+            height: double.maxFinite,
+            margin: EdgeInsets.all(20.0),
+            child: new Stack(
+              //alignment:new Alignment(x, y)
+              children: <Widget>[
+                new Positioned(
+                  child: _setupForm(context)
                 ),
-              )
-            );
-          }
+                new Positioned(
+                  child: new Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 64.0),
+                      child: _setupRegisterLink(context)
+                    )
+                  ),
+                ),
+                new Positioned(
+                  child: new Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 32.0),
+                      child: _setupForgotPasswordLink(context)
+                    )
+                  ),
+                )
+              ],
+            ),
+          )
         )
     );
   }

@@ -12,8 +12,8 @@ class RegisterResponse {
 
   factory RegisterResponse.fromJson(Map<String, dynamic> json) {
     return RegisterResponse(
-      user: User.fromJson(json['user']),
-      password: json['password'],
+      user: json['user'] == null ? User.fromJson(json['user']) : null,
+      password: json['password'] ?? null,
     );
   }
 }

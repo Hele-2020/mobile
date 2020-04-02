@@ -1,30 +1,51 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hele/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:hele/helpers/hele_http_service.dart';
+import 'package:hele/responses/auth/token_check_response.dart';
+
+import 'package:hele/helpers/globals.dart' as globals;
+
 
 class SplashScreen extends StatelessWidget {
 
   SplashScreen(BuildContext context) {
-    this.getTokenAsync().then((token) {
+    this.getTokenAsync().then((String token) {
       if (token != null) {
-        // TODO: check if token is valid using the
-        // GET /auth/me route to retrieve user profile
-        Navigator.pushReplacementNamed(context, '/home');
+        this.checkTokenAsync(token).then((User user) {
+          if (user == null) {
+            globals.loggedInUser = null;
+            globals.jwtToken = null;
+            Navigator.pushReplacementNamed(context, '/login');
+          } else {
+            globals.loggedInUser = user;
+            globals.jwtToken = token;
+            if (user.isPro()) {
+              Navigator.pushReplacementNamed(context, '/home');
+            } else {
+              Navigator.pushReplacementNamed(context, '/pro/home');
+            }
+          }
+        });
       } else {
+        globals.loggedInUser = null;
+        globals.jwtToken = null;
         Navigator.pushReplacementNamed(context, '/login');
       }
-      //Navigator.pushReplacementNamed(context, '/login');
     });
   }
 
   Future<String> getTokenAsync() async {
-    await new Future.delayed(const Duration(seconds : 2));
+    await new Future.delayed(const Duration(seconds : 1));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // int counter = (prefs.getInt('counter') ?? 0) + 1;
-    // print('Pressed $counter times.');
-    // await prefs.setInt('counter', counter);
-    return prefs.getString('jwt_token' ?? null);
+    return prefs.getString('jwt_token') ?? null;
+  }
+
+  Future<User> checkTokenAsync(String token) async {
+    TokenCheckResponse response = await heleHttpService.call<TokenCheckResponse>('check', accessToken: token);
+    return response.user;
   }
 
   @override
