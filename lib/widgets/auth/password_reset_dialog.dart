@@ -25,7 +25,7 @@ class PasswordResetDialog {
         this._showForgotPasswordDialog2(context);
       } catch (e) {
         heleHttpService.errorHandler(e, {
-          BadRequestException: _tooManyAttempts
+          UnauthorizedException: _tooManyAttempts
         });
         print(e.toString());
       }
@@ -50,11 +50,11 @@ class PasswordResetDialog {
     }
   }
 
-  _badCode() {
+  _badCode(BadRequestException e) {
     showToast("Code invalide. Veuillez réessayer.");
   }
 
-  _tooManyAttempts() {
+  _tooManyAttempts(UnauthorizedException e) {
     showToast("Vous devez patienter avant de demander un nouveau code.");
   }
 

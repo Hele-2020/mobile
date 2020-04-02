@@ -4,6 +4,21 @@ import 'package:flutter/material.dart';
 
 import 'app.dart';
 
+bool get isInDebugMode {
+  // Assume you're in production mode.
+  bool inDebugMode = false;
+
+  // Assert expressions are only evaluated during development. They are ignored
+  // in production. Therefore, this code only sets `inDebugMode` to true
+  // in a development environment.
+  assert(inDebugMode = true);
+
+  return inDebugMode;
+}
+
+// TODO: put the url in a config
+SentryClient _sentry = SentryClient(dsn: "https://3b0099a1c96042f7a621d2553edbe980@sentry.io/5177713");
+
 void main() {
   // Run the whole app in a zone to capture all uncaught errors.
   runZoned(
@@ -19,10 +34,18 @@ void main() {
   };
 }
 
-void sentryReport(Object exception, StackTrace stackTrace) {
-  // TODO: put the url in a config
-  SentryClient(dsn: "https://3b0099a1c96042f7a621d2553edbe980@sentry.io/5177713").captureException(
-    exception: exception,
-    stackTrace: stackTrace,
-  );
+void sentryReport(Object error, StackTrace stackTrace) {
+    // Print the exception to the console.
+    print('Caught error: $error');
+    if (isInDebugMode) {
+      // Print the full stacktrace in debug mode.
+      print(stackTrace);
+      return;
+    } else {
+      // Send the Exception and Stacktrace to Sentry in Production mode.
+      _sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }
 }
