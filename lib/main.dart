@@ -3,18 +3,7 @@ import 'package:sentry/sentry.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
-
-bool get isInDebugMode {
-  // Assume you're in production mode.
-  bool inDebugMode = false;
-
-  // Assert expressions are only evaluated during development. They are ignored
-  // in production. Therefore, this code only sets `inDebugMode` to true
-  // in a development environment.
-  assert(inDebugMode = true);
-
-  return inDebugMode;
-}
+import 'helpers/globals.dart';
 
 // TODO: put the url in a config
 SentryClient _sentry = SentryClient(dsn: "https://3b0099a1c96042f7a621d2553edbe980@sentry.io/5177713");

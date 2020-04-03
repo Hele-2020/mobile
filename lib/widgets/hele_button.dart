@@ -27,12 +27,19 @@ class HeleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialButton(
-      child: getComponent(),
+    return new FlatButton(
+      child: new LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Container(
+            width: constraints.maxWidth,
+            child: getComponent(),
+          );
+        }
+      ),
       onPressed: onClick,
-      elevation: 4.0,
-      minWidth: double.infinity,
-      height: 48.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(18.0),
+      ),
       color: colors[state],
     );
   }
@@ -41,6 +48,7 @@ class HeleButton extends StatelessWidget {
     if (state == HeleButtonState.idle || state == HeleButtonState.error) {
       return Text(
         text,
+        textAlign: TextAlign.center,
         style: const TextStyle(
           color: Colors.white,
           fontSize: 16.0,

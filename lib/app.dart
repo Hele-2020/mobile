@@ -13,6 +13,12 @@ class HeleApp extends StatelessWidget {
     return OKToast(
       /// set toast style, optional
       child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'Montserrat',
+          brightness: Brightness.light,
+          primaryColor: Color(0xFF59358B),
+          accentColor: Color(0xFFFBBA00),
+        ),
         title: 'Hélé',
         initialRoute: '/',
         routes: <String, WidgetBuilder>{

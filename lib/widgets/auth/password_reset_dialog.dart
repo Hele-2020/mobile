@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hele/helpers/hele_http_service.dart';
 import 'package:hele/responses/auth/password_request.dart';
 import 'package:hele/responses/auth/password_reset.dart';
+import 'package:hele/widgets/hele_link_text.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:validators/validators.dart';
 
@@ -12,14 +13,16 @@ class PasswordResetDialog {
   String _phone;
   String _code;
 
-  _sendPasswordRequest(BuildContext context) async {
+  _sendPasswordRequest(BuildContext context, [bool makeRequest = true]) async {
     if (_formKeys[0].currentState.validate()) {
       _formKeys[0].currentState.save();
-      print('Demande de code for ' + this._phone);
       try {
-        var response = await heleHttpService.call<PasswordRequestResponse>('password.request', body: { 'phone': this._phone });
-        if (response.code != null) {
-          print(response.code);
+        if (makeRequest) {
+          print('Demande de code for ' + this._phone);
+          var response = await heleHttpService.call<PasswordRequestResponse>('password.request', body: { 'phone': this._phone });
+          if (response.code != null) {
+            print(response.code);
+          }
         }
         Navigator.of(context).pop();
         this._showForgotPasswordDialog2(context);
@@ -81,11 +84,15 @@ class PasswordResetDialog {
                   }
                   return null;
                 },
-              )
+              ),
             ],
           )
         ),
         actions: <Widget>[
+          new FlatButton(
+            child: Text('J\'ai déjà un code'),
+            onPressed: () => this._sendPasswordRequest(_context, false)
+          ),
           new FlatButton(
             child: Text('Envoyer'),
             onPressed: () => this._sendPasswordRequest(_context)

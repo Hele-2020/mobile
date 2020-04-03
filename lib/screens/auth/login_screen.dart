@@ -3,6 +3,7 @@ import 'package:hele/helpers/hele_http_service.dart';
 import 'package:hele/widgets/auth/password_reset_dialog.dart';
 import 'package:hele/responses/auth/login_response.dart';
 import 'package:hele/widgets/hele_button.dart';
+import 'package:hele/widgets/hele_link_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
 
@@ -67,51 +68,33 @@ class LoginScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupRegisterLink(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushReplacementNamed(context, '/register');
-      },
-      child: Text.rich(
-        TextSpan(
-          text: "Vous n'avez pas de compte ? ",
-          children: <TextSpan>[
-            TextSpan(
-              text: 'Enregistrez-vous',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.lightBlue,
-                decoration: TextDecoration.underline,
-                decorationColor: Colors.lightBlue,
-              )
-            ),
-          ],
-        ),
-      )
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Vous n'avez pas de compte ? "),
+        HeleLinkText(
+          text: "Enregistrez-vous",
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/register');
+          }
+        )
+      ]
     );
   }
 
   Widget _setupForgotPasswordLink(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        this._formKey.currentState.save();
-        this.passwordResetDialog.showForgotPasswordDialog(context, identification: this._identification);
-      },
-      child: Text.rich(
-        TextSpan(
-          text: "Mot de passe oublié ? ",
-          children: <TextSpan>[
-            TextSpan(
-              text: "Réinitialisez-le",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.lightBlue,
-                decoration: TextDecoration.underline,
-                decorationColor: Colors.lightBlue,
-              )
-            )
-          ]
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Mot de passe oublié ? "),
+        HeleLinkText(
+          text: "Réinitialisez-le",
+          onTap: () {
+            this._formKey.currentState.save();
+            this.passwordResetDialog.showForgotPasswordDialog(context, identification: this._identification);
+          }
         )
-      )
+      ]
     );
   }
 

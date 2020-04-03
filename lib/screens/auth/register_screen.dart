@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hele/helpers/launch_url.dart';
 import 'package:hele/responses/auth/register_response.dart';
 import 'package:hele/widgets/hele_button.dart';
+import 'package:hele/widgets/hele_link_text.dart';
 import 'package:validators/validators.dart';
 import 'package:hele/helpers/hele_http_service.dart';
 
@@ -55,50 +56,39 @@ class RegisterScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupLoginLink() {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushReplacementNamed(context, '/login');
-      },
-      child: Text.rich(
-        TextSpan(
-          text: "Vous avez déjà un compte ? ",
-          children: <TextSpan>[
-            TextSpan(text: 'Connectez-vous', style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.lightBlue,
-              decoration: TextDecoration.underline,
-              decorationColor: Colors.lightBlue,
-            )),
-          ],
-        ),
-      )
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Vous avez déjà un compte ? "),
+        HeleLinkText(
+          text: "Connectez-vous",
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        )
+      ]
     );
   }
 
   Widget _setupTosCheckbox() {
+    ThemeData theme = Theme.of(context);
     return Container(
       child: Column(
         children: <Widget>[
           new CheckboxListTile(
               value: _agreeTos,
               onChanged: (bool value) => setState(() => _agreeTos = value),
-              title: GestureDetector(
-                onTap: () {
-                  launchURL("https://hele-app.fr/cg-app.html");
-                },
-                child: Text.rich(
-                  TextSpan(
-                    text: "J'accepte les ",
-                    children: <TextSpan>[
-                      TextSpan(text: 'Conditions Générales', style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.lightBlue,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.lightBlue,
-                      )),
-                    ],
-                  ),
-                )
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("J'accepte les "),
+                  HeleLinkText(
+                    text: "Conditions Générales",
+                    onTap: () {
+                      launchURL("https://hele-app.fr/cg-app.html");
+                    }
+                  )
+                ]
               ),
               controlAffinity: ListTileControlAffinity.leading,
           ),
