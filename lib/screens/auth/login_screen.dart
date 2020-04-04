@@ -98,7 +98,7 @@ class LoginScreenState extends State<StatefulWidget> {
     );
   }
 
-  Widget _setupLoginButton(BuildContext context) {
+  Widget _setupLoginButton() {
     return HeleButton(onClick: () {
       if (_loginButtonState == HeleButtonState.loading) {
         return;
@@ -108,6 +108,21 @@ class LoginScreenState extends State<StatefulWidget> {
         this._loginAsync();
       }
     }, state: _loginButtonState, text: "CONNEXION");
+  }
+
+  Widget _setupQuickLoginYoungButton() {
+    return HeleButton(onClick: () {
+      this._identification = '0659929405';
+      this._password = 'l98cmyrj5f';
+      this._loginAsync();
+    }, state: HeleButtonState.idle, text: "[DEV] Quick co YOUNG");
+  }
+  Widget _setupQuickLoginProButton() {
+    return HeleButton(onClick: () {
+      this._identification = '0600000000';
+      this._password = 'l3wqzy5yav';
+      this._loginAsync();
+    }, state: HeleButtonState.idle, text: "[DEV] Quick co PRO");
   }
 
   Widget _setupErrorMessage() {
@@ -154,7 +169,9 @@ class LoginScreenState extends State<StatefulWidget> {
             },
           ),
           _setupErrorMessage(),
-          _setupLoginButton(context)
+          _setupLoginButton(),
+          _setupQuickLoginYoungButton(),
+          _setupQuickLoginProButton(),
         ],
       )
     );
@@ -164,7 +181,7 @@ class LoginScreenState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LoginScreen'),
+        title: Text('Connexion'),
       ),
       body:
         Center(

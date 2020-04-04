@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 enum HeleButtonState {
   idle,
+  disabled,
   loading,
   success,
   error
@@ -11,22 +12,30 @@ class HeleButton extends StatelessWidget {
   final HeleButtonState state;
   final Function onClick;
   final String text;
-  get colors => {
-    HeleButtonState.idle: Colors.lightGreen,
-    HeleButtonState.loading: Colors.lightGreen[300],
-    HeleButtonState.success: Colors.lightGreen[200],
-    //HeleButtonState.error: Colors.red
-    HeleButtonState.error: Colors.lightGreen
-  };
+  final String color;
 
   HeleButton({
     @required this.onClick,
     @required this.state,
     @required this.text,
+    this.color,
   });
+
+  Color _getColor(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    final Map<String, Color> colors = {
+      'primary': theme.primaryColor,
+      'secondary': theme.accentColor,
+    };
+    if (this.color == null) {
+      return colors['primary'];
+    }
+    return colors[this.color] != null ? colors[this.color] : colors['primary'];
+  }
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return new FlatButton(
       child: new LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -36,11 +45,13 @@ class HeleButton extends StatelessWidget {
           );
         }
       ),
-      onPressed: onClick,
+      onPressed: state == HeleButtonState.disabled || state == HeleButtonState.loading ? null : onClick,
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(18.0),
       ),
-      color: colors[state],
+      color: _getColor(context),
+      disabledColor: theme.primaryColorLight,
+      
     );
   }
 
@@ -55,8 +66,13 @@ class HeleButton extends StatelessWidget {
         ),
       );
     } else if (state == HeleButtonState.loading) {
-      return CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          )
+        ]
       );
     } else {
       return Icon(Icons.check, color: Colors.white);

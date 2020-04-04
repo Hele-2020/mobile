@@ -5,6 +5,8 @@ import 'screens/splash_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/home_screen.dart';
+import 'themes/light.dart';
+import 'themes/dark.dart';
 import 'package:oktoast/oktoast.dart';
 
 class HeleApp extends StatelessWidget {
@@ -13,12 +15,7 @@ class HeleApp extends StatelessWidget {
     return OKToast(
       /// set toast style, optional
       child: MaterialApp(
-        theme: ThemeData(
-          fontFamily: 'Montserrat',
-          brightness: Brightness.light,
-          primaryColor: Color(0xFF59358B),
-          accentColor: Color(0xFFFBBA00),
-        ),
+        theme: darkTheme,
         title: 'Hélé',
         initialRoute: '/',
         routes: <String, WidgetBuilder>{

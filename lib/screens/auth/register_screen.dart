@@ -18,7 +18,7 @@ class RegisterScreenState extends State<StatefulWidget> {
   String _error;
   String _phone;
   String _username;
-  String _establishmentCode = "BDX";
+  String _establishmentCode;
   int _age;
   int _regionId = 2;
   bool _agreeTos = false;
