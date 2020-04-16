@@ -74,6 +74,7 @@ class RegisterScreenState extends State<StatefulWidget> {
     ThemeData theme = Theme.of(context);
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           new CheckboxListTile(
               value: _agreeTos,
@@ -105,10 +106,13 @@ class RegisterScreenState extends State<StatefulWidget> {
       if (!_agreeTos) {
         setState(() {
           _registerButtonState = HeleButtonState.idle;
-          _error = "Vous devez acceptez les Conditions Générales.";
+          _error = "Vous devez accepter les Conditions Générales.";
         });
         return;
       }
+        setState(() {
+          _error = null;
+        });
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         this._registerAsync();
@@ -117,7 +121,7 @@ class RegisterScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupErrorMessage() {
-    return new Padding(
+    return _error == null ? Container() : new Padding(
       padding: const EdgeInsets.all(16.0),
       child: new Text(
         _error == null ? "" : _error,
@@ -136,6 +140,10 @@ class RegisterScreenState extends State<StatefulWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Center(
+            child: Image.asset('assets/logo-hele-large.png')
+          ),
+          SizedBox(height: 48),
           TextFormField(
             onSaved: (value) => this._phone = value,
             keyboardType: TextInputType.phone,
@@ -213,7 +221,7 @@ class RegisterScreenState extends State<StatefulWidget> {
                   child: new Align(
                     alignment: FractionalOffset.bottomCenter,
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 64.0),
+                      padding: const EdgeInsets.only(bottom: 16.0),
                       child: _setupLoginLink()
                     )
                   ),

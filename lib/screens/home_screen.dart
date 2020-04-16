@@ -92,12 +92,12 @@ class HomeScreenState extends State<StatefulWidget> {
                 Navigator.pop(context);
               },
             ),
-            Container(
+            SizedBox(height: 24),
+            Center(
               child: Text(
                 "Connecté en tant que " + globals.loggedInUser.username,
                 textAlign: TextAlign.right,
               ),
-              padding: EdgeInsets.only(right: 12)
             )
           ],
         ),

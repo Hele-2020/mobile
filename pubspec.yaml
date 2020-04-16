@@ -55,6 +55,7 @@ flutter:
   uses-material-design: true
   assets:     
     - assets/logo-hele.png
+    - assets/logo-hele-large.png
 
   fonts:
     - family: Montserrat

@@ -4,6 +4,7 @@ import 'package:hele/widgets/auth/password_reset_dialog.dart';
 import 'package:hele/responses/auth/login_response.dart';
 import 'package:hele/widgets/hele_button.dart';
 import 'package:hele/widgets/hele_link_text.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
 
@@ -117,12 +118,19 @@ class LoginScreenState extends State<StatefulWidget> {
       this._loginAsync();
     }, state: HeleButtonState.idle, text: "[DEV] Quick co YOUNG");
   }
+
   Widget _setupQuickLoginProButton() {
     return HeleButton(onClick: () {
       this._identification = '0600000000';
       this._password = 'l3wqzy5yav';
       this._loginAsync();
     }, state: HeleButtonState.idle, text: "[DEV] Quick co PRO");
+  }
+
+  Widget _setupTestToastButton() {
+    return HeleButton(onClick: () {
+      showToast("Blah blah");
+    }, state: HeleButtonState.idle, text: "[DEV] Show toast");
   }
 
   Widget _setupErrorMessage() {
@@ -145,6 +153,10 @@ class LoginScreenState extends State<StatefulWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Center(
+            child: Image.asset('assets/logo-hele-large.png')
+          ),
+          SizedBox(height: 48),
           TextFormField(
             onSaved: (value) => this._identification = value,
             keyboardType: TextInputType.phone,
@@ -172,6 +184,7 @@ class LoginScreenState extends State<StatefulWidget> {
           _setupLoginButton(),
           _setupQuickLoginYoungButton(),
           _setupQuickLoginProButton(),
+          _setupTestToastButton(),
         ],
       )
     );

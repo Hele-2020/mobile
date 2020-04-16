@@ -13,9 +13,17 @@ class HeleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OKToast(
-      /// set toast style, optional
+      position: ToastPosition.bottom,
+      animationCurve: Curves.easeIn,
+      animationBuilder: Miui10AnimBuilder(),
+      animationDuration: Duration(milliseconds: 200),
+      duration: Duration(seconds: 3),
+      radius: 0,
+      textPadding: EdgeInsets.all(16),
       child: MaterialApp(
-        theme: darkTheme,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.system,
         title: 'Hélé',
         initialRoute: '/',
         routes: <String, WidgetBuilder>{
