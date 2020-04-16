@@ -50,7 +50,7 @@ class HomeScreenState extends State<StatefulWidget> {
             ),
             ListTile(
               leading: Icon(Icons.calendar_today,),
-              title: Text('Calendrier & Réservation'),
+              title: Text('Calendrier & Rendez-vous'),
               onTap: () {
                 Navigator.pop(context);
                 _goToCalendar();
