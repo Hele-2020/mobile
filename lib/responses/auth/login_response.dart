@@ -4,7 +4,7 @@ import 'package:hele/models/user.dart';
 
 class LoginResponse {
   final User user;
-  final AccessToken accessToken;
+  final String accessToken;
 
   LoginResponse({
     @required this.user,
@@ -13,10 +13,10 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     User u = User.fromJson(json['user']);
-    AccessToken at = AccessToken.fromJson(json['accessToken']);
+    //AccessToken at = AccessToken.fromJson(json['accessToken']);
     return LoginResponse(
       user: u,
-      accessToken: at,
+      accessToken: json['accessToken'],
     );
   }
 }

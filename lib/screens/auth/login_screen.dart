@@ -3,6 +3,8 @@ import 'package:hele/helpers/hele_http_service.dart';
 import 'package:hele/widgets/auth/password_reset_dialog.dart';
 import 'package:hele/responses/auth/login_response.dart';
 import 'package:hele/widgets/hele_button.dart';
+import 'package:hele/widgets/hele_link_text.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
 
@@ -32,10 +34,12 @@ class LoginScreenState extends State<StatefulWidget> {
       var response = await heleHttpService.call<LoginResponse>('login', body: _getForm());
       setState(() { _loginButtonState = HeleButtonState.success; });
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', response.accessToken.token);
-      await prefs.setString('jwt_refresh_token', response.accessToken.refreshToken);
+      await prefs.setString('jwt_token', response.accessToken);
+      // await prefs.setString('jwt_refresh_token', response.accessToken.refreshToken);
       _loginSuccess();
     } catch (e) {
+      print("----edenzei");
+      print(e.toString());
       setState(() {
         _loginButtonState = HeleButtonState.error;
       });
@@ -46,7 +50,7 @@ class LoginScreenState extends State<StatefulWidget> {
     }
   }
 
-  void _loginFailed(Exception e) {
+  void _loginFailed(Error e) {
     setState(() { _error = "N° de téléphone ou mot de passe incorrect."; });
   }
 
@@ -67,55 +71,37 @@ class LoginScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupRegisterLink(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushReplacementNamed(context, '/register');
-      },
-      child: Text.rich(
-        TextSpan(
-          text: "Vous n'avez pas de compte ? ",
-          children: <TextSpan>[
-            TextSpan(
-              text: 'Enregistrez-vous',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.lightBlue,
-                decoration: TextDecoration.underline,
-                decorationColor: Colors.lightBlue,
-              )
-            ),
-          ],
-        ),
-      )
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Vous n'avez pas de compte ? "),
+        HeleLinkText(
+          text: "Enregistrez-vous",
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/register');
+          }
+        )
+      ]
     );
   }
 
   Widget _setupForgotPasswordLink(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        this._formKey.currentState.save();
-        this.passwordResetDialog.showForgotPasswordDialog(context, identification: this._identification);
-      },
-      child: Text.rich(
-        TextSpan(
-          text: "Mot de passe oublié ? ",
-          children: <TextSpan>[
-            TextSpan(
-              text: "Réinitialisez-le",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.lightBlue,
-                decoration: TextDecoration.underline,
-                decorationColor: Colors.lightBlue,
-              )
-            )
-          ]
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Mot de passe oublié ? "),
+        HeleLinkText(
+          text: "Réinitialisez-le",
+          onTap: () {
+            this._formKey.currentState.save();
+            this.passwordResetDialog.showForgotPasswordDialog(context, identification: this._identification);
+          }
         )
-      )
+      ]
     );
   }
 
-  Widget _setupLoginButton(BuildContext context) {
+  Widget _setupLoginButton() {
     return HeleButton(onClick: () {
       if (_loginButtonState == HeleButtonState.loading) {
         return;
@@ -127,16 +113,41 @@ class LoginScreenState extends State<StatefulWidget> {
     }, state: _loginButtonState, text: "CONNEXION");
   }
 
+  Widget _setupQuickLoginYoungButton() {
+    return HeleButton(onClick: () {
+      this._identification = '0600000000';
+      this._password = 'C/a8}k}f+K';
+      this._loginAsync();
+    }, state: HeleButtonState.idle, text: "[DEV] Quick co YOUNG");
+  }
+
+  Widget _setupQuickLoginProButton() {
+    return HeleButton(onClick: () {
+      this._identification = '0600000001';
+      this._password = 'bN2BVC<(QV';
+      this._loginAsync();
+    }, state: HeleButtonState.idle, text: "[DEV] Quick co PRO");
+  }
+
+  Widget _setupTestToastButton() {
+    return HeleButton(onClick: () {
+      showToast("Blah blah");
+    }, state: HeleButtonState.idle, text: "[DEV] Show toast");
+  }
+
   Widget _setupErrorMessage() {
-    return new Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: new Text(
-        _error == null ? "" : _error,
-        style: const TextStyle(
-          color: Colors.red,
-          fontSize: 16.0,
-        ),
-      )
+    return new Visibility(
+      child: new Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: new Text(
+          _error == null ? "" : _error,
+          style: const TextStyle(
+            color: Colors.red,
+            fontSize: 16.0,
+          ),
+        )
+      ),
+      visible: _error != null
     );
   }
 
@@ -147,6 +158,10 @@ class LoginScreenState extends State<StatefulWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Center(
+            child: Image.asset('assets/logo-hele-large.png')
+          ),
+          SizedBox(height: 48),
           TextFormField(
             onSaved: (value) => this._identification = value,
             keyboardType: TextInputType.phone,
@@ -171,7 +186,16 @@ class LoginScreenState extends State<StatefulWidget> {
             },
           ),
           _setupErrorMessage(),
-          _setupLoginButton(context)
+          SizedBox(height: 12),
+          _setupLoginButton(),
+          SizedBox(height: 12),
+          _setupRegisterLink(context),
+          SizedBox(height: 12),
+          _setupForgotPasswordLink(context),
+          SizedBox(height: 12),
+          _setupQuickLoginYoungButton(),
+          _setupQuickLoginProButton(),
+          _setupTestToastButton(),
         ],
       )
     );
@@ -181,40 +205,13 @@ class LoginScreenState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LoginScreen'),
+        title: Text('Connexion'),
       ),
-      body:
-        Center(
+      body: SingleChildScrollView(
           child: Container(
-            height: double.maxFinite,
             margin: EdgeInsets.all(20.0),
-            child: new Stack(
-              //alignment:new Alignment(x, y)
-              children: <Widget>[
-                new Positioned(
-                  child: _setupForm(context)
-                ),
-                new Positioned(
-                  child: new Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 64.0),
-                      child: _setupRegisterLink(context)
-                    )
-                  ),
-                ),
-                new Positioned(
-                  child: new Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 32.0),
-                      child: _setupForgotPasswordLink(context)
-                    )
-                  ),
-                )
-              ],
-            ),
-          )
+            child: _setupForm(context)
+          ),
         )
     );
   }

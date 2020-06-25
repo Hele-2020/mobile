@@ -4,6 +4,7 @@ const ERROR_CODES = {
   'E_USER_IDENTIFIER_OR_PASSWORD_INCORRECT': "Identifiant ou mot de passe incorrect.",
   'E_PHONE_REQUIRED': "Entrez votre numéro de téléphone.",
   'E_PHONE_WRONG_FORMAT': "Votre numéro de téléphone est incorrect.",
+  'E_PHONE_NOT_UNIQUE': "Ce numéro de téléphone est déjà utilisé.",
   'E_USERNAME_WRONG_FORMAT': "Votre pseudo ne respecte pas les conditions.",
   'E_AGE_REQUIRED': "Entrez votre âge.",
   'E_AGE_VALIDATION': "Vous n'avez pas l'âge de vous inscrire sur cette application.",

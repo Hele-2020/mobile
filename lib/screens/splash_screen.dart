@@ -23,9 +23,9 @@ class SplashScreen extends StatelessWidget {
             globals.loggedInUser = user;
             globals.jwtToken = token;
             if (user.isPro()) {
-              Navigator.pushReplacementNamed(context, '/home');
-            } else {
               Navigator.pushReplacementNamed(context, '/pro/home');
+            } else {
+              Navigator.pushReplacementNamed(context, '/home');
             }
           }
         });

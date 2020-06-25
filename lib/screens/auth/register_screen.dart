@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hele/helpers/launch_url.dart';
 import 'package:hele/responses/auth/register_response.dart';
 import 'package:hele/widgets/hele_button.dart';
+import 'package:hele/widgets/hele_link_text.dart';
 import 'package:validators/validators.dart';
 import 'package:hele/helpers/hele_http_service.dart';
 
@@ -17,7 +18,7 @@ class RegisterScreenState extends State<StatefulWidget> {
   String _error;
   String _phone;
   String _username;
-  String _establishmentCode = "BDX";
+  String _establishmentCode;
   int _age;
   int _regionId = 2;
   bool _agreeTos = false;
@@ -33,7 +34,7 @@ class RegisterScreenState extends State<StatefulWidget> {
     try {
       RegisterResponse res = await heleHttpService.call<RegisterResponse>('register', body: {
         'phone': this._phone,
-        'username': this._username,
+        'username': this._username.toLowerCase(),
         'age': this._age.toString(),
         'region_id': this._regionId.toString(),
         'establishment_code': this._establishmentCode,
@@ -55,55 +56,44 @@ class RegisterScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupLoginLink() {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushReplacementNamed(context, '/login');
-      },
-      child: Text.rich(
-        TextSpan(
-          text: "Vous avez déjà un compte ? ",
-          children: <TextSpan>[
-            TextSpan(text: 'Connectez-vous', style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.lightBlue,
-              decoration: TextDecoration.underline,
-              decorationColor: Colors.lightBlue,
-            )),
-          ],
-        ),
-      )
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Vous avez déjà un compte ? "),
+        HeleLinkText(
+          text: "Connectez-vous",
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        )
+      ]
     );
   }
 
   Widget _setupTosCheckbox() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          new CheckboxListTile(
-              value: _agreeTos,
-              onChanged: (bool value) => setState(() => _agreeTos = value),
-              title: GestureDetector(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Column>[
+        Column(
+          children: <Widget>[
+            Checkbox(
+                value: _agreeTos,
+                onChanged: (bool value) => setState(() => _agreeTos = value),
+            ),
+          ]
+        ),
+        Column(
+          children: <Widget>[
+            Text("J'accepte les "),
+              HeleLinkText(
+                text: "Conditions Générales",
                 onTap: () {
                   launchURL("https://hele-app.fr/cg-app.html");
-                },
-                child: Text.rich(
-                  TextSpan(
-                    text: "J'accepte les ",
-                    children: <TextSpan>[
-                      TextSpan(text: 'Conditions Générales', style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.lightBlue,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.lightBlue,
-                      )),
-                    ],
-                  ),
-                )
+                }
               ),
-              controlAffinity: ListTileControlAffinity.leading,
-          ),
-        ]
-      )
+          ]
+        )
+      ]
     );
   }
 
@@ -115,10 +105,13 @@ class RegisterScreenState extends State<StatefulWidget> {
       if (!_agreeTos) {
         setState(() {
           _registerButtonState = HeleButtonState.idle;
-          _error = "Vous devez acceptez les Conditions Générales.";
+          _error = "Vous devez accepter les Conditions Générales.";
         });
         return;
       }
+        setState(() {
+          _error = null;
+        });
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         this._registerAsync();
@@ -127,15 +120,18 @@ class RegisterScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupErrorMessage() {
-    return new Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: new Text(
-        _error == null ? "" : _error,
-        style: const TextStyle(
-          color: Colors.red,
-          fontSize: 16.0,
-        ),
-      )
+    return new Visibility(
+      child: new Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: new Text(
+          _error == null ? "" : _error,
+          style: const TextStyle(
+            color: Colors.red,
+            fontSize: 16.0,
+          ),
+        )
+      ),
+      visible: _error != null
     );
   }
 
@@ -146,6 +142,12 @@ class RegisterScreenState extends State<StatefulWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Center(
+            child: Image.asset('assets/logo-hele-large.png')
+          ),
+          SizedBox(height: 48),
+          _setupLoginLink(),
+          SizedBox(height: 12),
           TextFormField(
             onSaved: (value) => this._phone = value,
             keyboardType: TextInputType.phone,
@@ -209,29 +211,12 @@ class RegisterScreenState extends State<StatefulWidget> {
         title: Text('RegisterScreen'),
       ),
       body:
-        Center(
+        SingleChildScrollView(
           child: Container(
-            height: double.maxFinite,
             margin: EdgeInsets.all(20.0),
-            child: new Stack(
-              //alignment:new Alignment(x, y)
-              children: <Widget>[
-                new Positioned(
-                  child: _setupForm()
-                ),
-                new Positioned(
-                  child: new Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 64.0),
-                      child: _setupLoginLink()
-                    )
-                  ),
-                )
-              ],
-            ),
-          )
-      )
+            child: _setupForm()
+          ),
+        )
     );
   }
 }
