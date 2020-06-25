@@ -34,10 +34,12 @@ class LoginScreenState extends State<StatefulWidget> {
       var response = await heleHttpService.call<LoginResponse>('login', body: _getForm());
       setState(() { _loginButtonState = HeleButtonState.success; });
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', response.accessToken.token);
-      await prefs.setString('jwt_refresh_token', response.accessToken.refreshToken);
+      await prefs.setString('jwt_token', response.accessToken);
+      // await prefs.setString('jwt_refresh_token', response.accessToken.refreshToken);
       _loginSuccess();
     } catch (e) {
+      print("----edenzei");
+      print(e.toString());
       setState(() {
         _loginButtonState = HeleButtonState.error;
       });
@@ -48,7 +50,7 @@ class LoginScreenState extends State<StatefulWidget> {
     }
   }
 
-  void _loginFailed(Exception e) {
+  void _loginFailed(Error e) {
     setState(() { _error = "N° de téléphone ou mot de passe incorrect."; });
   }
 
@@ -113,16 +115,16 @@ class LoginScreenState extends State<StatefulWidget> {
 
   Widget _setupQuickLoginYoungButton() {
     return HeleButton(onClick: () {
-      this._identification = '0659929405';
-      this._password = 'l98cmyrj5f';
+      this._identification = '0600000000';
+      this._password = 'C/a8}k}f+K';
       this._loginAsync();
     }, state: HeleButtonState.idle, text: "[DEV] Quick co YOUNG");
   }
 
   Widget _setupQuickLoginProButton() {
     return HeleButton(onClick: () {
-      this._identification = '0600000000';
-      this._password = 'l3wqzy5yav';
+      this._identification = '0600000001';
+      this._password = 'bN2BVC<(QV';
       this._loginAsync();
     }, state: HeleButtonState.idle, text: "[DEV] Quick co PRO");
   }
@@ -134,15 +136,18 @@ class LoginScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupErrorMessage() {
-    return new Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: new Text(
-        _error == null ? "" : _error,
-        style: const TextStyle(
-          color: Colors.red,
-          fontSize: 16.0,
-        ),
-      )
+    return new Visibility(
+      child: new Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: new Text(
+          _error == null ? "" : _error,
+          style: const TextStyle(
+            color: Colors.red,
+            fontSize: 16.0,
+          ),
+        )
+      ),
+      visible: _error != null
     );
   }
 
@@ -181,7 +186,13 @@ class LoginScreenState extends State<StatefulWidget> {
             },
           ),
           _setupErrorMessage(),
+          SizedBox(height: 12),
           _setupLoginButton(),
+          SizedBox(height: 12),
+          _setupRegisterLink(context),
+          SizedBox(height: 12),
+          _setupForgotPasswordLink(context),
+          SizedBox(height: 12),
           _setupQuickLoginYoungButton(),
           _setupQuickLoginProButton(),
           _setupTestToastButton(),
@@ -196,38 +207,11 @@ class LoginScreenState extends State<StatefulWidget> {
       appBar: AppBar(
         title: Text('Connexion'),
       ),
-      body:
-        Center(
+      body: SingleChildScrollView(
           child: Container(
-            height: double.maxFinite,
             margin: EdgeInsets.all(20.0),
-            child: new Stack(
-              //alignment:new Alignment(x, y)
-              children: <Widget>[
-                new Positioned(
-                  child: _setupForm(context)
-                ),
-                new Positioned(
-                  child: new Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 64.0),
-                      child: _setupRegisterLink(context)
-                    )
-                  ),
-                ),
-                new Positioned(
-                  child: new Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 32.0),
-                      child: _setupForgotPasswordLink(context)
-                    )
-                  ),
-                )
-              ],
-            ),
-          )
+            child: _setupForm(context)
+          ),
         )
     );
   }

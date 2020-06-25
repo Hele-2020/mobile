@@ -34,7 +34,7 @@ class RegisterScreenState extends State<StatefulWidget> {
     try {
       RegisterResponse res = await heleHttpService.call<RegisterResponse>('register', body: {
         'phone': this._phone,
-        'username': this._username,
+        'username': this._username.toLowerCase(),
         'age': this._age.toString(),
         'region_id': this._regionId.toString(),
         'establishment_code': this._establishmentCode,
@@ -71,30 +71,29 @@ class RegisterScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupTosCheckbox() {
-    ThemeData theme = Theme.of(context);
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          new CheckboxListTile(
-              value: _agreeTos,
-              onChanged: (bool value) => setState(() => _agreeTos = value),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("J'accepte les "),
-                  HeleLinkText(
-                    text: "Conditions Générales",
-                    onTap: () {
-                      launchURL("https://hele-app.fr/cg-app.html");
-                    }
-                  )
-                ]
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Column>[
+        Column(
+          children: <Widget>[
+            Checkbox(
+                value: _agreeTos,
+                onChanged: (bool value) => setState(() => _agreeTos = value),
+            ),
+          ]
+        ),
+        Column(
+          children: <Widget>[
+            Text("J'accepte les "),
+              HeleLinkText(
+                text: "Conditions Générales",
+                onTap: () {
+                  launchURL("https://hele-app.fr/cg-app.html");
+                }
               ),
-              controlAffinity: ListTileControlAffinity.leading,
-          ),
-        ]
-      )
+          ]
+        )
+      ]
     );
   }
 
@@ -121,15 +120,18 @@ class RegisterScreenState extends State<StatefulWidget> {
   }
 
   Widget _setupErrorMessage() {
-    return _error == null ? Container() : new Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: new Text(
-        _error == null ? "" : _error,
-        style: const TextStyle(
-          color: Colors.red,
-          fontSize: 16.0,
-        ),
-      )
+    return new Visibility(
+      child: new Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: new Text(
+          _error == null ? "" : _error,
+          style: const TextStyle(
+            color: Colors.red,
+            fontSize: 16.0,
+          ),
+        )
+      ),
+      visible: _error != null
     );
   }
 
@@ -144,6 +146,8 @@ class RegisterScreenState extends State<StatefulWidget> {
             child: Image.asset('assets/logo-hele-large.png')
           ),
           SizedBox(height: 48),
+          _setupLoginLink(),
+          SizedBox(height: 12),
           TextFormField(
             onSaved: (value) => this._phone = value,
             keyboardType: TextInputType.phone,
@@ -207,29 +211,12 @@ class RegisterScreenState extends State<StatefulWidget> {
         title: Text('RegisterScreen'),
       ),
       body:
-        Center(
+        SingleChildScrollView(
           child: Container(
-            height: double.maxFinite,
             margin: EdgeInsets.all(20.0),
-            child: new Stack(
-              //alignment:new Alignment(x, y)
-              children: <Widget>[
-                new Positioned(
-                  child: _setupForm()
-                ),
-                new Positioned(
-                  child: new Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: _setupLoginLink()
-                    )
-                  ),
-                )
-              ],
-            ),
-          )
-      )
+            child: _setupForm()
+          ),
+        )
     );
   }
 }
