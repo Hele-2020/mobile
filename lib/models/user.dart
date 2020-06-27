@@ -6,15 +6,15 @@ class User {
   final String phone;
   final String email;
   final String role;
-  // final bool isActive;
-  // final int birthYear;
-  // final int regionId;
-  // final String phonePro;
-  // final String profession;
-  // final String city;
-  // final DateTime lastLogin;
-  // final DateTime createdAt;
-  // final DateTime updatedAt;
+  final int active;
+  final int birthyear;
+  final int establishment_id;
+  final String phone_pro;
+  final String profession;
+  final String city;
+  final String last_login;
+  final String created_at;
+  final String updated_at;
 
   User({
     @required this.id,
@@ -22,15 +22,15 @@ class User {
     @required this.email,
     @required this.username,
     @required this.role,
-    // @required this.isActive,
-    // @required this.birthYear,
-    // @required this.regionId,
-    // @required this.phonePro,
-    // @required this.profession,
-    // @required this.city,
-    // @required this.lastLogin,
-    // @required this.createdAt,
-    // @required this.updatedAt,
+    @required this.active,
+    @required this.birthyear,
+    @required this.establishment_id,
+    @required this.phone_pro,
+    @required this.profession,
+    @required this.city,
+    @required this.last_login,
+    @required this.created_at,
+    @required this.updated_at,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -39,17 +39,16 @@ class User {
       username: json['username'] as String,
       phone: json['phone'] as String,
       email: json['email'] as String,
-      role: "YOUNG"
-      // role: json['role'] as String,
-      // isActive: json['isActive'] as bool,
-      // birthYear: json['birthYear'] as int,
-      // regionId: json['regionId'] as int,
-      // phonePro: json['phonePro'] as String,
-      // profession: json['profession'] as String,
-      // city: json['city'] as String,
-      // lastLogin: json['lastLogin'] as DateTime,
-      // createdAt: json['createdAt'] as DateTime,
-      // updatedAt: json['updatedAt'] as DateTime,
+      role: json['role'] as String,
+      active: json['active'] as int,
+      birthyear: json['birthyear'] as int,
+      establishment_id: json['establishment_id'] as int,
+      phone_pro: json['phonePro'] as String,
+      profession: json['profession'] as String,
+      city: json['city'] as String,
+      last_login: json['last_login'] as String,
+      created_at: json['createdAt'] as String,
+      updated_at: json['updated_at'] as String,
     );
   }
 

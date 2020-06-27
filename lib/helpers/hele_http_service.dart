@@ -38,27 +38,35 @@ class HeleHttpService {
   // Factories variable is a map of type:function that returns
   // an instance of the Type.
   get _factories => {
-    LoginResponse: (dynamic json) => LoginResponse.fromJson(json),
-    RegisterResponse: (dynamic json) => RegisterResponse.fromJson(json),
-    TokenCheckResponse: (dynamic json) => TokenCheckResponse.fromJson(json),
-    PasswordRequestResponse: (dynamic json) => PasswordRequestResponse.fromJson(json),
-    PasswordResetResponse: (dynamic json) => PasswordResetResponse.fromJson(json),
-  };
+        LoginResponse: (dynamic json) => LoginResponse.fromJson(json['data']),
+        RegisterResponse: (dynamic json) =>
+            RegisterResponse.fromJson(json['data']),
+        TokenCheckResponse: (dynamic json) =>
+            TokenCheckResponse.fromJson(json['data']),
+        PasswordRequestResponse: (dynamic json) =>
+            PasswordRequestResponse.fromJson(json['data']),
+        PasswordResetResponse: (dynamic json) =>
+            PasswordResetResponse.fromJson(json['data']),
+      };
 
-  Future<http.Response> _call(String routeName, {Map<String, String> headers, body}) async {
+  Future<http.Response> _call(String routeName,
+      {Map<String, String> headers, body}) async {
     Map<String, String> route = _routes[routeName];
     if (route == null) {
       throw Exception("Route '$routeName' is not implemented.");
     }
     String method = route['method'].toLowerCase();
     if (body != null) {
-      return await _httpHelper[method](BASE_URL + route['url'], body: body, headers: headers);
+      return await _httpHelper[method](BASE_URL + route['url'],
+          body: body, headers: headers);
     } else {
-      return await _httpHelper[method](BASE_URL + route['url'], headers: headers);
+      return await _httpHelper[method](BASE_URL + route['url'],
+          headers: headers);
     }
   }
 
-  Future<T> call<T>(String routeName, {Map<String, String> headers, body, String accessToken}) async {
+  Future<T> call<T>(String routeName,
+      {Map<String, String> headers, body, String accessToken}) async {
     if (headers == null) {
       headers = new Map<String, String>();
     }
@@ -69,7 +77,7 @@ class HeleHttpService {
     dynamic jsonContent = _verifyResponse(res);
     Function factoryFunc = _factories[T];
     if (factoryFunc == null) {
-      throw new Exception("Factory for type "+T.toString()+" not found !");
+      throw new Exception("Factory for type " + T.toString() + " not found !");
     }
     T response = factoryFunc(jsonContent);
     return response;
@@ -82,8 +90,7 @@ class HeleHttpService {
       return responseJson;
     }
     if (statusCode == 401 || statusCode == 403) {
-      var responseJson = json.decode(res.body.toString());
-      throw UnauthorizedException(responseJson['message'].toString());
+      throw UnauthorizedException();
     }
     if (statusCode == 404) {
       throw NotFoundException(res.body.toString());
@@ -92,17 +99,28 @@ class HeleHttpService {
       throw BadRequestException(res.body.toString());
     }
     if (statusCode >= 500) {
-      throw FetchDataException('Server error with status code : ${res.statusCode}');
+      throw FetchDataException(
+          'Server error with status code : ${res.statusCode}');
     }
   }
 
   void errorHandler(Exception e, Map<Type, Function> functions) {
     Map<Type, Function> funcs = {
-      SocketException: (Exception e) { showToast("Pas de connexion internet"); },
-      BadRequestException: (Exception e) { showToast("Requête invalide."); },
-      UnauthorizedException: (Exception e) { showToast("Non autorisé."); },
-      NotFoundException: (Exception e) { showToast("Élément non trouvé."); },
-      HeleApiException: (Exception e) { showToast("Erreur serveur. Veuillez réessayer dans quelques minutes."); },
+      SocketException: (Exception e) {
+        showToast("Pas de connexion internet");
+      },
+      BadRequestException: (Exception e) {
+        showToast("Requête invalide.");
+      },
+      UnauthorizedException: (Exception e) {
+        showToast("Non autorisé.");
+      },
+      NotFoundException: (Exception e) {
+        showToast("Élément non trouvé.");
+      },
+      HeleApiException: (Exception e) {
+        showToast("Erreur serveur. Veuillez réessayer dans quelques minutes.");
+      },
       ...functions,
     };
     Function func = funcs[e.runtimeType];
