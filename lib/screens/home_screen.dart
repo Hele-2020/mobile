@@ -6,6 +6,7 @@ import 'package:hele/helpers/globals.dart' as globals;
 
 import 'home/chat.dart';
 import 'home/wip.dart';
+import 'home/map.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class HomeScreenState extends State<StatefulWidget> {
 
   void _goToMap() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => WipScreen()));
+        context, MaterialPageRoute(builder: (context) => MapScreen()));
   }
 
   void _goToHelp() {

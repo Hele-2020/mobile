@@ -38,11 +38,11 @@ class HeleHttpService {
   // Factories variable is a map of type:function that returns
   // an instance of the Type.
   get _factories => {
-    LoginResponse: (dynamic json) => LoginResponse.fromJson(json),
-    RegisterResponse: (dynamic json) => RegisterResponse.fromJson(json),
-    TokenCheckResponse: (dynamic json) => TokenCheckResponse.fromJson(json),
-    PasswordRequestResponse: (dynamic json) => PasswordRequestResponse.fromJson(json),
-    PasswordResetResponse: (dynamic json) => PasswordResetResponse.fromJson(json),
+    LoginResponse: (dynamic json) => LoginResponse.fromJson(json['data']),
+    RegisterResponse: (dynamic json) => RegisterResponse.fromJson(json['data']),
+    TokenCheckResponse: (dynamic json) => TokenCheckResponse.fromJson(json['data']),
+    PasswordRequestResponse: (dynamic json) => PasswordRequestResponse.fromJson(json['data']),
+    PasswordResetResponse: (dynamic json) => PasswordResetResponse.fromJson(json['data']),
   };
 
   Future<http.Response> _call(String routeName, {Map<String, String> headers, body}) async {
