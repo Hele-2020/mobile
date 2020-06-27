@@ -4,6 +4,9 @@ import 'package:hele/widgets/hele_button.dart';
 
 import 'package:hele/helpers/globals.dart' as globals;
 
+import 'home/chat.dart';
+import 'home/wip.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -12,52 +15,37 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<StatefulWidget> {
-  DrawerMenu _selectedMenu = DrawerMenu.home;
-  List<Widget> _currentActions = [];
-
   @override
   void initState() {
     super.initState();
   }
 
-  void _goToHome() {
-    this.setState(() {
-      _selectedMenu = DrawerMenu.home;
-    });
-  }
-
   void _goToCalendar() {
-    this.setState(() {
-      _selectedMenu = DrawerMenu.calendar;
-    });
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WipScreen()));
   }
 
   void _goToChat() {
-    this.setState(() {
-      _selectedMenu = DrawerMenu.chat;
-    });
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ChatScreen()));
   }
 
   void _goToGroupChat() {
-    this.setState(() {
-      _selectedMenu = DrawerMenu.group_chat;
-    });
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WipScreen()));
   }
 
   void _goToMap() {
-    this.setState(() {
-      _selectedMenu = DrawerMenu.map;
-    });
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WipScreen()));
   }
 
   void _goToHelp() {
-    this.setState(() {
-      _selectedMenu = DrawerMenu.help;
-    });
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WipScreen()));
   }
 
   void _goToSettings() {
-    //Navigator.pushNamed(context, '/settings');
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SettingsScreen()));
   }
@@ -71,20 +59,10 @@ class HomeScreenState extends State<StatefulWidget> {
           DrawerHeader(
               child: Center(child: Image.asset('assets/logo-hele.png'))),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Accueil"),
-            selected: _selectedMenu == DrawerMenu.home,
-            onTap: () {
-              _goToHome();
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
             leading: Icon(
               Icons.calendar_today,
             ),
             title: Text('Calendrier & Rendez-vous'),
-            selected: _selectedMenu == DrawerMenu.calendar,
             onTap: () {
               Navigator.pop(context);
               _goToCalendar();
@@ -93,7 +71,6 @@ class HomeScreenState extends State<StatefulWidget> {
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Chat'),
-            selected: _selectedMenu == DrawerMenu.chat,
             onTap: () {
               Navigator.pop(context);
               _goToChat();
@@ -102,7 +79,6 @@ class HomeScreenState extends State<StatefulWidget> {
           ListTile(
             leading: Icon(Icons.people),
             title: Text('Chat de groupe'),
-            selected: _selectedMenu == DrawerMenu.group_chat,
             onTap: () {
               Navigator.pop(context);
               _goToGroupChat();
@@ -111,7 +87,6 @@ class HomeScreenState extends State<StatefulWidget> {
           ListTile(
             leading: Icon(Icons.map),
             title: Text('Carte'),
-            selected: _selectedMenu == DrawerMenu.map,
             onTap: () {
               Navigator.pop(context);
               _goToMap();
@@ -120,7 +95,6 @@ class HomeScreenState extends State<StatefulWidget> {
           ListTile(
             leading: Icon(Icons.help),
             title: Text('Aide & Numéros utiles'),
-            selected: _selectedMenu == DrawerMenu.help,
             onTap: () {
               Navigator.pop(context);
               _goToHelp();
@@ -129,7 +103,6 @@ class HomeScreenState extends State<StatefulWidget> {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Paramètres'),
-            selected: _selectedMenu == DrawerMenu.settings,
             onTap: () {
               Navigator.pop(context);
               _goToSettings();

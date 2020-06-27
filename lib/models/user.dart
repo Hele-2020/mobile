@@ -35,22 +35,22 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] as int,
-      username: json['username'] as String,
-      phone: json['phone'] as String,
-      email: json['email'] as String,
-      role: "YOUNG"
-      // role: json['role'] as String,
-      // isActive: json['isActive'] as bool,
-      // birthYear: json['birthYear'] as int,
-      // regionId: json['regionId'] as int,
-      // phonePro: json['phonePro'] as String,
-      // profession: json['profession'] as String,
-      // city: json['city'] as String,
-      // lastLogin: json['lastLogin'] as DateTime,
-      // createdAt: json['createdAt'] as DateTime,
-      // updatedAt: json['updatedAt'] as DateTime,
-    );
+        id: json['id'] as int,
+        username: json['username'] as String,
+        phone: json['phone'] as String,
+        email: json['email'] as String,
+        role: "YOUNG"
+        // role: json['role'] as String,
+        // isActive: json['isActive'] as bool,
+        // birthYear: json['birthYear'] as int,
+        // regionId: json['regionId'] as int,
+        // phonePro: json['phonePro'] as String,
+        // profession: json['profession'] as String,
+        // city: json['city'] as String,
+        // lastLogin: json['lastLogin'] as DateTime,
+        // createdAt: json['createdAt'] as DateTime,
+        // updatedAt: json['updatedAt'] as DateTime,
+        );
   }
 
   bool isYoung() => this.role == "YOUNG";
