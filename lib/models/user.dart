@@ -15,6 +15,8 @@ class User {
   final String last_login;
   final String created_at;
   final String updated_at;
+  final List<int> privateChats;
+  final List<int> groupChats;
 
   User({
     @required this.id,
@@ -31,6 +33,8 @@ class User {
     @required this.last_login,
     @required this.created_at,
     @required this.updated_at,
+    @required this.privateChats,
+    @required this.groupChats,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -49,6 +53,8 @@ class User {
       last_login: json['last_login'] as String,
       created_at: json['createdAt'] as String,
       updated_at: json['updated_at'] as String,
+      privateChats: new List(),
+      groupChats: new List(),
     );
   }
 
