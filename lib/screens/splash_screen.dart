@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hele/models/api_response.dart';
 import 'package:hele/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:hele/helpers/hele_http_service.dart';
-import 'package:hele/responses/auth/token_check_response.dart';
 
 import 'package:hele/helpers/globals.dart' as globals;
 
@@ -40,9 +40,19 @@ class SplashScreen extends StatelessWidget {
   }
 
   Future<User> checkTokenAsync(String token) async {
-    TokenCheckResponse response = await heleHttpService
-        .call<TokenCheckResponse>('check', accessToken: token);
-    return response.user;
+    APIResponse response =
+        await heleHttpService.call('check', accessToken: token);
+    User user = User.fromJson(response.data);
+    if (response.data.containsKey('chats')) {
+      for (final e in response.data['chats']) {
+        if (e['type'] == "PRIVATE") {
+          user.privateChats.add(e['id']);
+        } else if (e['type'] == "GROUP") {
+          user.groupChats.add(e['id']);
+        }
+      }
+    }
+    return user;
   }
 
   @override

@@ -25,9 +25,9 @@ class HomeScreenState extends State<StatefulWidget> {
         context, MaterialPageRoute(builder: (context) => WipScreen()));
   }
 
-  void _goToChat() {
+  void _goToChat(int chatId) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ChatScreen()));
+        context, MaterialPageRoute(builder: (context) => ChatScreen(chatId)));
   }
 
   void _goToGroupChat() {
@@ -73,7 +73,7 @@ class HomeScreenState extends State<StatefulWidget> {
             title: Text('Chat'),
             onTap: () {
               Navigator.pop(context);
-              _goToChat();
+              _goToChat(globals.loggedInUser.privateChats[0]);
             },
           ),
           ListTile(

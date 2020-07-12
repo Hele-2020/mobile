@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hele/helpers/hele_http_service.dart';
+import 'package:hele/models/api_response.dart';
 import 'package:hele/widgets/auth/password_reset_dialog.dart';
-import 'package:hele/responses/auth/login_response.dart';
 import 'package:hele/widgets/hele_button.dart';
 import 'package:hele/widgets/hele_link_text.dart';
 import 'package:oktoast/oktoast.dart';
@@ -34,13 +34,13 @@ class LoginScreenState extends State<StatefulWidget> {
       _error = null;
     });
     try {
-      var response =
-          await heleHttpService.call<LoginResponse>('login', body: _getForm());
+      APIResponse response =
+          await heleHttpService.call('login', body: _getForm());
       setState(() {
         _loginButtonState = HeleButtonState.success;
       });
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', response.accessToken);
+      await prefs.setString('jwt_token', response.data['accessToken']);
       // await prefs.setString('jwt_refresh_token', response.accessToken.refreshToken);
       _loginSuccess();
     } catch (e) {
@@ -116,8 +116,8 @@ class LoginScreenState extends State<StatefulWidget> {
   Widget _setupQuickLoginYoungButton() {
     return HeleButton(
         onClick: () {
-          this._identification = '0600000000';
-          this._password = 'C/a8}k}f+K';
+          this._identification = '0600000003';
+          this._password = 'young';
           this._loginAsync();
         },
         state: HeleButtonState.idle,
@@ -128,7 +128,7 @@ class LoginScreenState extends State<StatefulWidget> {
     return HeleButton(
         onClick: () {
           this._identification = '0600000001';
-          this._password = 'bN2BVC<(QV';
+          this._password = 'pro';
           this._loginAsync();
         },
         state: HeleButtonState.idle,

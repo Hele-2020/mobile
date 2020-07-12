@@ -2,16 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:hele/responses/auth/login_response.dart';
-import 'package:hele/responses/auth/register_response.dart';
-import 'package:hele/responses/auth/token_check_response.dart';
-import 'package:hele/responses/auth/password_request.dart';
-import 'package:hele/responses/auth/password_reset.dart';
+import 'package:hele/models/api_response.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'error_codes.dart';
 
-const BASE_URL = "http://localhost:3333";
+const BASE_URL = "http://192.168.1.12:3333";
+// const BASE_URL = "http://35.181.29.4";
 
 class HeleHttpService {
   // Add routes here
@@ -21,6 +18,7 @@ class HeleHttpService {
     'check': {'method': 'GET', 'url': '/auth/me'},
     'password.request': {'method': 'POST', 'url': '/auth/password/request'},
     'password.reset': {'method': 'POST', 'url': '/auth/password/reset'},
+    'chat.messages': {'method': 'GET', 'url': '/chat/private/:id'}
   };
 
   // I did not find how to call http.get for example with 'get' in
@@ -35,51 +33,39 @@ class HeleHttpService {
     'put': http.put,
   };
 
-  // Factories variable is a map of type:function that returns
-  // an instance of the Type.
-  get _factories => {
-        LoginResponse: (dynamic json) => LoginResponse.fromJson(json['data']),
-        RegisterResponse: (dynamic json) =>
-            RegisterResponse.fromJson(json['data']),
-        TokenCheckResponse: (dynamic json) =>
-            TokenCheckResponse.fromJson(json['data']),
-        PasswordRequestResponse: (dynamic json) =>
-            PasswordRequestResponse.fromJson(json['data']),
-        PasswordResetResponse: (dynamic json) =>
-            PasswordResetResponse.fromJson(json['data']),
-      };
-
   Future<http.Response> _call(String routeName,
-      {Map<String, String> headers, body}) async {
+      {Map<String, String> headers, Map<String, String> params, body}) async {
     Map<String, String> route = _routes[routeName];
+
     if (route == null) {
       throw Exception("Route '$routeName' is not implemented.");
     }
+    String url = route['url'].replaceAllMapped(
+        new RegExp(r':\w+'), (match) => params[match[0].substring(1)]);
     String method = route['method'].toLowerCase();
     if (body != null) {
-      return await _httpHelper[method](BASE_URL + route['url'],
+      return await _httpHelper[method](BASE_URL + url,
           body: body, headers: headers);
     } else {
-      return await _httpHelper[method](BASE_URL + route['url'],
-          headers: headers);
+      return await _httpHelper[method](BASE_URL + url, headers: headers);
     }
   }
 
-  Future<T> call<T>(String routeName,
-      {Map<String, String> headers, body, String accessToken}) async {
+  Future<APIResponse> call(String routeName,
+      {Map<String, String> headers,
+      Map<String, String> params,
+      body,
+      String accessToken}) async {
     if (headers == null) {
       headers = new Map<String, String>();
     }
     if (accessToken != null) {
       headers[HttpHeaders.authorizationHeader] = "Bearer $accessToken";
     }
-    var res = await _call(routeName, body: body, headers: headers);
+    var res =
+        await _call(routeName, body: body, params: params, headers: headers);
     dynamic jsonContent = _verifyResponse(res);
-    Function factoryFunc = _factories[T];
-    if (factoryFunc == null) {
-      throw new Exception("Factory for type " + T.toString() + " not found !");
-    }
-    T response = factoryFunc(jsonContent);
+    APIResponse response = APIResponse.fromJson(jsonContent);
     return response;
   }
 
