@@ -1,50 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:hele/models/api_response.dart';
 import 'package:hele/models/message.dart';
-
+import 'package:hele/helpers/hele_http_service.dart';
 import 'package:hele/helpers/globals.dart' as globals;
 import 'package:oktoast/oktoast.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatScreen extends StatefulWidget {
+  final int chatId;
+
+  const ChatScreen(int chatId) : this.chatId = chatId;
+
   @override
-  State<StatefulWidget> createState() => ChatScreenState();
+  State<StatefulWidget> createState() => ChatScreenState(this.chatId);
 }
 
 class ChatScreenState extends State<ChatScreen> {
   List<Message> _messages = [];
-
+  final int chatId;
   final TextEditingController textEditingController = TextEditingController();
-  final ScrollController listScrollController = ScrollController();
+  final ScrollController listScrollController =
+      ScrollController(keepScrollOffset: true);
   final FocusNode focusNode = FocusNode();
+  IO.Socket socket;
+
+  ChatScreenState(int chatId) : this.chatId = chatId;
 
   @override
   void initState() {
     super.initState();
+    _initConnection();
     _initMessages();
   }
 
+  void _initConnection() {
+    print(chatId);
+    this.socket = IO.io(
+        'http://192.168.1.12:3333/private-chat?chatId=${chatId}',
+        <String, dynamic>{
+          'transports': ['websocket'],
+          'autoConnect': true,
+          'extraHeaders': {'authorization': 'Bearer ${globals.jwtToken}'}
+        });
+
+    this.socket.on('connect', (data) => {print('connected')});
+    this.socket.on('message', _onMessage);
+    this.socket.on('error', (data) => {print(data)});
+  }
+
+  void _onMessage(data) {
+    _messages.add(Message.fromJson(data));
+    setState(() {
+      _messages = _messages;
+      listScrollController.animateTo(
+          listScrollController.position.maxScrollExtent + 50,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut);
+    });
+  }
+
   Future<void> _initMessages() async {
-    // TODO: call API
+    APIResponse response = await heleHttpService.call('chat.messages',
+        params: {'id': '1'}, accessToken: globals.jwtToken);
+
     List<Message> msgs = new List();
-    msgs.add(new Message(
-        id: 1,
-        username: "pro",
-        content: "Bonjour, comment puis-je vous aider ?",
-        timestamp: DateTime.now().subtract(Duration(minutes: 1))));
-    msgs.add(new Message(
-        id: 2,
-        username: "jeune",
-        content: "Bonjour, j'ai envie de me suicider",
-        timestamp: DateTime.now().subtract(Duration(seconds: 24))));
-    msgs.add(new Message(
-        id: 3,
-        username: "pro",
-        content: "Très bien vous voulez en parler ?",
-        timestamp: DateTime.now().subtract(Duration(minutes: 22))));
-    msgs.add(new Message(
-        id: 4,
-        username: "jeune",
-        content: "Nan, on fait un ping pong ?",
-        timestamp: DateTime.now().subtract(Duration(seconds: 18))));
+    for (final m in response.data) {
+      msgs.insert(0, Message.fromJson(m));
+    }
     setState(() {
       _messages = msgs;
     });
@@ -53,15 +75,13 @@ class ChatScreenState extends State<ChatScreen> {
   Widget _processMessage(Message m) {
     bool isMe = m.username == globals.loggedInUser.username;
     Color backColor = isMe ? Colors.lightBlue[300] : Colors.grey[300];
-    //Alignment alignment = isMe ? Alignment.centerRight : Alignment.centerLeft;
     return new Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: <Widget>[
           Container(
-            //alignment: alignment,
             child: Text(
-              m.content,
+              m.body,
               style: TextStyle(color: Colors.black, fontSize: 12),
             ),
             padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -74,36 +94,13 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _onSendMessage(String content, int type) {
-    if (content.trim() != '') {
+    content = content.trim();
+    if (content != '') {
       textEditingController.clear();
 
-      // var documentReference = Firestore.instance
-      //     .collection('messages')
-      //     .document(groupChatId)
-      //     .collection(groupChatId)
-      //     .document(DateTime.now().millisecondsSinceEpoch.toString());
-
-      // Firestore.instance.runTransaction((transaction) async {
-      //   await transaction.set(
-      //     documentReference,
-      //     {
-      //       'idFrom': id,
-      //       'idTo': peerId,
-      //       'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-      //       'content': content,
-      //       'type': type
-      //     },
-      //   );
-      // });
-      _messages.add(new Message(
-          id: 0,
-          username: "jeune",
-          content: content,
-          timestamp: DateTime.now()));
-      listScrollController.animateTo(0.0,
-          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+      this.socket.emit('message', content);
     } else {
-      showToast('Ecrivez quelque chose');
+      print('Here');
     }
   }
 
@@ -114,11 +111,11 @@ class ChatScreenState extends State<ChatScreen> {
         Flexible(
           child: Container(
             child: TextField(
-              style: TextStyle(fontSize: 15.0),
+              style: TextStyle(fontSize: 15.0, color: Colors.red),
               controller: textEditingController,
               decoration: InputDecoration.collapsed(
                 hintText: 'Entrez votre message',
-                //hintStyle: TextStyle(color: greyColor),
+                hintStyle: TextStyle(color: Colors.grey),
               ),
               focusNode: focusNode,
             ),
@@ -134,7 +131,7 @@ class ChatScreenState extends State<ChatScreen> {
               //color: primaryColor,
             ),
           ),
-          color: Colors.white,
+          color: Colors.red,
         ),
       ]),
       width: double.infinity,
@@ -150,23 +147,14 @@ class ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.all(10.0),
       itemBuilder: (context, index) => _processMessage(_messages[index]),
       itemCount: _messages.length,
-      //reverse: true,
+      // reverse: true,
+      // shrinkWrap: true,
       controller: listScrollController,
     ));
   }
 
   @override
   Widget build(BuildContext context) {
-    //List<Widget> widgets = _messages.map(_processMessage).toList();
-
-    // return Scaffold(
-    //     appBar: AppBar(title: Text("Chat")),
-    //     body: SingleChildScrollView(
-    //         child: Container(
-    //             margin: EdgeInsets.all(8),
-    //             child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.center,
-    //                 children: widgets))));
     return Scaffold(
         appBar: AppBar(title: Text("Chat")),
         body: WillPopScope(
@@ -176,17 +164,11 @@ class ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   // List of messages
                   _buildMessagesList(),
-
-                  // Sticker
                   Container(),
-
                   // Input content
                   _buildInput(),
                 ],
               ),
-
-              // Loading
-              //buildLoading()
             ],
           ),
           onWillPop: () {
