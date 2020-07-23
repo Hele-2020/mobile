@@ -7,8 +7,7 @@ import 'package:oktoast/oktoast.dart';
 
 import 'error_codes.dart';
 
-const BASE_URL = "http://192.168.1.12:3333";
-// const BASE_URL = "http://35.181.29.4";
+const BASE_URL = "http://35.181.29.4";
 
 class HeleHttpService {
   // Add routes here

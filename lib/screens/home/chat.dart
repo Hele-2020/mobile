@@ -35,13 +35,12 @@ class ChatScreenState extends State<ChatScreen> {
 
   void _initConnection() {
     print(chatId);
-    this.socket = IO.io(
-        'http://192.168.1.12:3333/private-chat?chatId=${chatId}',
-        <String, dynamic>{
-          'transports': ['websocket'],
-          'autoConnect': true,
-          'extraHeaders': {'authorization': 'Bearer ${globals.jwtToken}'}
-        });
+    this.socket =
+        IO.io('${BASE_URL}/private-chat?chatId=${chatId}', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': true,
+      'extraHeaders': {'authorization': 'Bearer ${globals.jwtToken}'}
+    });
 
     this.socket.on('connect', (data) => {print('connected')});
     this.socket.on('message', _onMessage);
