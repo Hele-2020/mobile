@@ -33,7 +33,10 @@ class HeleHttpService {
   };
 
   Future<http.Response> _call(String routeName,
-      {Map<String, String> headers, Map<String, String> params, body}) async {
+      {Map<String, String> headers,
+      Map<String, String> params,
+      Map<String, String> query,
+      body}) async {
     Map<String, String> route = _routes[routeName];
 
     if (route == null) {
@@ -41,6 +44,13 @@ class HeleHttpService {
     }
     String url = route['url'].replaceAllMapped(
         new RegExp(r':\w+'), (match) => params[match[0].substring(1)]);
+    if (query != null && query.length > 0) {
+      url += '?';
+      query.forEach((key, value) {
+        url += "$key=$value&";
+      });
+      url = url.substring(0, url.length - 1);
+    }
     String method = route['method'].toLowerCase();
     if (body != null) {
       return await _httpHelper[method](BASE_URL + url,
@@ -53,6 +63,7 @@ class HeleHttpService {
   Future<APIResponse> call(String routeName,
       {Map<String, String> headers,
       Map<String, String> params,
+      Map<String, String> query,
       body,
       String accessToken}) async {
     if (headers == null) {
@@ -61,8 +72,8 @@ class HeleHttpService {
     if (accessToken != null) {
       headers[HttpHeaders.authorizationHeader] = "Bearer $accessToken";
     }
-    var res =
-        await _call(routeName, body: body, params: params, headers: headers);
+    var res = await _call(routeName,
+        body: body, params: params, headers: headers, query: query);
     dynamic jsonContent = _verifyResponse(res);
     APIResponse response = APIResponse.fromJson(jsonContent);
     return response;

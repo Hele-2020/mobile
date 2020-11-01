@@ -3,8 +3,8 @@ import 'package:hele/models/api_response.dart';
 import 'package:hele/models/message.dart';
 import 'package:hele/helpers/hele_http_service.dart';
 import 'package:hele/helpers/globals.dart' as globals;
-import 'package:oktoast/oktoast.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'dart:async';
 
 class ChatScreen extends StatefulWidget {
   final int chatId;
@@ -18,6 +18,8 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> {
   List<Message> _messages = [];
   final int chatId;
+  int page = 0;
+  bool isLoading = true;
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController listScrollController =
       ScrollController(keepScrollOffset: true);
@@ -30,11 +32,12 @@ class ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     _initConnection();
-    _initMessages();
+    _getMessages();
+    listScrollController.addListener(_scrollListener);
+    Timer(Duration(seconds: 1), _fillScreen);
   }
 
   void _initConnection() {
-    print(chatId);
     this.socket =
         IO.io('${BASE_URL}/private-chat?chatId=${chatId}', <String, dynamic>{
       'transports': ['websocket'],
@@ -47,28 +50,59 @@ class ChatScreenState extends State<ChatScreen> {
     this.socket.on('error', (data) => {print(data)});
   }
 
+  void _fillScreen() async {
+    while (page != -1 && listScrollController.position.maxScrollExtent == 0) {
+      await _getMessages();
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _scrollListener() async {
+    if (listScrollController.offset >=
+            listScrollController.position.maxScrollExtent &&
+        page != -1) {
+      setState(() {
+        isLoading = true;
+      });
+      await _getMessages();
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   void _onMessage(data) {
-    _messages.add(Message.fromJson(data));
+    _messages.insert(0, Message.fromJson(data));
     setState(() {
       _messages = _messages;
       listScrollController.animateTo(
-          listScrollController.position.maxScrollExtent + 50,
+          listScrollController.position.minScrollExtent,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeOut);
     });
   }
 
-  Future<void> _initMessages() async {
-    APIResponse response = await heleHttpService.call('chat.messages',
-        params: {'id': '1'}, accessToken: globals.jwtToken);
-
-    List<Message> msgs = new List();
-    for (final m in response.data) {
-      msgs.insert(0, Message.fromJson(m));
+  Future<void> _getMessages() async {
+    if (page != -1) {
+      page += 1;
+      APIResponse response = await heleHttpService.call('chat.messages',
+          params: {'id': chatId.toString()},
+          query: {'p': page.toString()},
+          accessToken: globals.jwtToken);
+      if (response.data.length == 0) {
+        page = -1;
+      } else {
+        List<Message> msgs = new List();
+        for (final m in response.data) {
+          msgs.add(Message.fromJson(m));
+        }
+        setState(() {
+          _messages = [..._messages, ...msgs];
+        });
+      }
     }
-    setState(() {
-      _messages = msgs;
-    });
   }
 
   Widget _processMessage(Message m) {
@@ -96,10 +130,7 @@ class ChatScreenState extends State<ChatScreen> {
     content = content.trim();
     if (content != '') {
       textEditingController.clear();
-
       this.socket.emit('message', content);
-    } else {
-      print('Here');
     }
   }
 
@@ -146,10 +177,17 @@ class ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.all(10.0),
       itemBuilder: (context, index) => _processMessage(_messages[index]),
       itemCount: _messages.length,
-      // reverse: true,
+      reverse: true,
       // shrinkWrap: true,
       controller: listScrollController,
     ));
+  }
+
+  Widget _displayLoading() {
+    if (isLoading) {
+      return new CircularProgressIndicator();
+    }
+    return new Container();
   }
 
   @override
@@ -161,6 +199,7 @@ class ChatScreenState extends State<ChatScreen> {
             children: <Widget>[
               Column(
                 children: <Widget>[
+                  _displayLoading(),
                   // List of messages
                   _buildMessagesList(),
                   Container(),
